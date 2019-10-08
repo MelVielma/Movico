@@ -72,11 +72,54 @@ userSchema.statics.findByCrendentials = function(email, password) {
 					return reject('Password does not match!')
 				}
 			}).catch(function(error) {
-				return reject('USer or password does not match!')
+				return reject('User or password does not match!')
 			})
 
 		})
 	})
 }
 
-userSchema.methods
+userSchema.methods.generateToken = function() {
+	const user = this
+	if (process.env.NODE_ENV === 'production') {
+		var SECRET = process.env.SECRET
+	}
+	else
+	{
+		const config = require('../misc.js')
+		var SECRET = config.secret
+	}
+	const token = jwt.sign({ _id: user._id.toString() },  SECRET, {expiresIn: '7 days'})
+	user.tokens = user.tokens.concat({ token })
+	return new Promise(function(resolve, reject) {
+		user.save().then(function(user) {
+			return resolce(token)
+		}).catch(function(error) {
+			return reject(error)
+		})
+	})
+}
+
+// Esto debería de ser para poder hacer el update a las passwords.
+// CHECAR SI JALA O NO
+
+userSchema.pre('save', function(next) {
+  const user = this
+  console.log("ando en el método pre de save")
+  
+  if( user.isModified('password') ) {
+  	console.log("Si se modificó la password")
+    bcrypt.hash(user.password, 8).then(function(hash){
+      user.password = hash
+      next()
+    }).catch(function(error){
+      return next(error)
+    })
+  } else {
+    next()  
+  }
+})
+
+const User = mongoose.model('User', userSchema)
+
+module.exports = User
