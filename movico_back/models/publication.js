@@ -37,4 +37,6 @@ const publicationSchema = new mongoose.Schema({
 	}
 });
 
-publicationSchema.methods
+const Publication = mongoose.model('Publication', publicationSchema)
+
+module.exports = Publication
