@@ -35,7 +35,20 @@ const publicationSchema = new mongoose.Schema({
 	status: {
 		type: String
 	}
+}, {
+	toObject: {
+		virtuals: true
+	},
+	toJSON: {
+		virtuals: true
+	}
 });
+
+publicationSchema.virtual('comments', {
+	ref: 'Comment',
+	localField: '_id',
+	foreignField: 'publication'
+})
 
 const Publication = mongoose.model('Publication', publicationSchema)
 
