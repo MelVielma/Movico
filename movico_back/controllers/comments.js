@@ -1,9 +1,19 @@
 const Comment = require('../models/comment.js')
+const Publication = require('../models/publication.js')
+var jsdom = require('jsdom');
+
+if(process.env.NODE_ENV==='production'){
+  var apiKey = process.env.apiKey
+}
+else{
+  const credentials = require('../config.js')
+  var apiKey = credentials.apiKey
+}
 
 // 1. Creacion de comentario
 const createComment = function(req, res) {
 	const comment = Comment(req.body)
-	comment.save().then(function() {
+	Comment.save().then(function() {
 		return res.send(comment._id)
 	}).catch(function(error) {
 		return res.status(400).sned(error)
@@ -12,7 +22,8 @@ const createComment = function(req, res) {
 
 // 2.  Eliminar comentario
 const deleteComment = function(req, res) {
-	Comment.findByIdAndDelete({ req.body }).then(function(user) {
+	reqBody=req.body
+	Comment.findByIdAndDelete({ reqBody  }).then(function(user) {
 		if(!comment) {
 			return res.status(404).send()
 		}
