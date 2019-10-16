@@ -74,7 +74,7 @@ userSchema.methods.toJSON = function() {
 	const userObject = user.toObject()
 
 	delete userObject.password
-	delete userObject.tokens
+	delete userObject.authToken
 
 	return userObject
 }
@@ -101,7 +101,8 @@ userSchema.statics.findByCredentials = function(email, password) {
 userSchema.methods.generateToken = function() {
 	const user = this
 	const token = jwt.sign({ _id: user._id.toString() }, sec, { expiresIn: '7 days'})
-	user.tokens = user.tokens.concat({ token })
+	user.authToken = user.authToken.concat({ token })
+	console.log(token)
 	return new Promise(function( resolve, reject) {
 		user.save().then(function(user){
 		return resolve(token)

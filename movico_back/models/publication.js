@@ -14,6 +14,7 @@ const publicationSchema = new mongoose.Schema({
 	},
 	author: {
 		type: mongoose.Schema.Types.ObjectId,
+		//type: String,
 		required: true, 
 		ref: 'User'
 	},

@@ -4,8 +4,8 @@ const router = express.Router()
 router.all('*',cors())
 const users = require('./controllers/users.js')
 const comments = require('./controllers/comments.js')
-const products = require('./controllers/publications.js')
-//const auth = require('./middleware/auth.js')
+const publications = require('./controllers/publications.js')
+const auth = require('./middleware/auth.js')
 /*
 router.get('/users', auth.auth, users.getUser)
 router.post('/users/logout', auth.auth, users.logout)
@@ -26,6 +26,8 @@ router.delete('/comments/:id', auth.auth, comments.deleteComment)
 router.post('/users/login', users.login)
 router.post('/users', users.createUser) 
 
+router.post('/publications', publications.createPublication)
+router.patch('/publications',  auth.auth, publications.updatePublication)
 router.get('*', function(req, res) {
   res.send({
     error: 'This route does not exist, try /users/login'

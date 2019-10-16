@@ -40,7 +40,7 @@ const login = function(req, res) {
 
 // POST - Logout de usuario
 const logout = function(req, res){
-	req.user.tokens = req.user.tokens.filter(function(token) {
+	req.user.authToken = req.user.authToken.filter(function(token) {
 		return token.token !== req. token
 	})
 	req.user.save().then(function() {
