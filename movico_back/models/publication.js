@@ -33,7 +33,15 @@ const publicationSchema = new mongoose.Schema({
 		required: true
 	},
 	status: {
-		type: String
+		type: String,
+		required: true
+	},
+	lastModifiedBy: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	},
+	lastModified: {
+		type: Date
 	}
 }, {
 	toObject: {

@@ -3,20 +3,23 @@ const bcrypt = require('bcryptjs')
 
 // POST - Creacion de usuario
 const createUser = function(req, res) {
+	console.log("ando en create")
 	data = req.body
+	console.log(data.name)
 	info = {
 		name : data.name,
 		email : data.email,
 		password : data.password,
 		about: data.about,
-		status: 'Enable'
+		status: 'Enable',
+		typee: 'admin'
 	}
 
 	const user = new User(info)
 	user.save().then(function() {
 		return res.send(user._id)
 	}).catch(function(error) {
-		return res.status(400).send(error)
+		return res.status(408).send(error)
 	})
 }
 
@@ -24,20 +27,20 @@ const createUser = function(req, res) {
 // POST - Login de usuario
 const login = function(req, res) {
 	console.log("ando en login")
-	User.findByCredentials(req.body.email, req.body.password).then(function(user) {
+	User.findByCredentials(req.body.email, req.body.password).then(function(user){
 		user.generateToken().then(function(token){
-			return res.send({user, token})
-		}).catch(function(error) {
-			return res.status(401).send({ error:error })
+		  return res.send({user, token})
+		}).catch(function(error){
+		  return res.status(401).send({ error: error })
 		})
-	}).catch(function(error) {
-		return res.status(401).send({ error:error })
-	})
+	  }).catch(function(error) {
+		return res.status(401).send({ error: error })
+	  })
 }
 
 // POST - Logout de usuario
 const logout = function(req, res){
-	req.user.tokens = req.user.tokens.filter(function(token) {
+	req.user.authToken = req.user.authToken.filter(function(token) {
 		return token.token !== req. token
 	})
 	req.user.save().then(function() {

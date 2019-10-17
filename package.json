@@ -1,0 +1,29 @@
+{
+  "name": "movico",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node movico_back/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MelVielma/Movico.git"
+  },
+  "author": "Movico",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MelVielma/Movico/issues"
+  },
+  "homepage": "https://github.com/MelVielma/Movico#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsdom": "^15.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.5",
+    "validator": "^11.1.0"
+  }
+}

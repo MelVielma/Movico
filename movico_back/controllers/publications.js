@@ -12,7 +12,7 @@ const createPublication = function(req, res){
 		media : data.media,
 		tags : data.tags,
 		date : data.date,
-		status : 'Enable'
+		status : 'Disable'
 	}
 	const publication = new Publication(info)
 	publication.save().then(function(){
@@ -20,6 +20,7 @@ const createPublication = function(req, res){
 	}).catch(function(error){
 		return res.status(400).send(error)
 	})
+}
 
 //GET - Consulta de publicaciones autor
 const getByAuthor = function(req, res){
@@ -35,7 +36,31 @@ const getByAuthor = function(req, res){
 }
 
 //GET- Consulta de publicaciones por etiqueta
-//NO PUDE HACERLO, se debe modificar la estructura de tags en publication.js
+
+const getByTag = function(req, res){
+    const _tag=req.publication.tag
+    Publication.find({tags: { $elemMatch: { $eq: _tag } }}).then(function(publication){
+		if(!publication){
+			return res.status(404).send(publication)
+		}
+		return res.send(publication)
+	}).catch(function(error){
+		return res.status(500).send(error)
+	})
+}
+
+//GET - Consulta de publicaciones por etiquetas
+const getByTags = function(req, res){
+    const _tags=req.publication.tags
+    Publication.find({ tags: { $all: _tags } }).then(function(publication){
+		if(!publication){
+			return res.status(404).send(publication)
+		}
+		return res.send(publication)
+	}).catch(function(error){
+		return res.status(500).send(error)
+	})
+}
 
 //GET - Consulta TODAS las publicaciones
 const getAllPublications = function(req, res){
@@ -48,7 +73,12 @@ const getAllPublications = function(req, res){
 
 //UPDATE - Actualiza la informacion de una publicacion
 const updatePublication = function(req, res){
-	const _id = req.publication._id
+    console.log(req)
+    if(req.user.typee=='userOnly'){
+        return res.status(401).send({ error: 'Admins Only'})
+    }
+	const _id = req.body._id
+
 	const update = Object.keys(req.body)
 	Publication.findOneAndUpdate(_id, req.body).then(function(publication){
 		if(!publication){
@@ -62,6 +92,10 @@ const updatePublication = function(req, res){
 
 //DELETE - Borra 
 const deletePublication = function(req, res){
+    if(req.user.typee=='userOnly'){
+        return res.status(401).send({ error: 'Admins Only'})
+    }
+
 	const _id = req.publication._id
 	Publication.findOneAndDelete(_id).then(function(publication){
 		if(!publication){
@@ -78,5 +112,8 @@ module.exports = {
 	getAllPublications: getAllPublications,
 	getByAuthor: getByAuthor,
 	updatePublication: updatePublication,
-	deletePublication: deletePublication
+    deletePublication: deletePublication,
+    getByTag:getByTag,
+    getByTags:getByTags
+
 }
