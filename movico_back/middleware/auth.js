@@ -15,7 +15,7 @@ const auth = function( req, res, next ) {
   try {
     const token = req.header('Authorization').replace('Bearer ', '')
     const decoded = jwt.verify(token, sec)
-    User.findOne({ _id: decoded._id, 'tokens.token': token }).then(function(user) {
+    User.findOne({ _id: decoded._id, 'authToken.token': token }).then(function(user) {
       if(!user) {
         throw new Error()
       }

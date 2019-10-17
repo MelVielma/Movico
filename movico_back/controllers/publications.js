@@ -72,10 +72,11 @@ const getAllPublications = function(req, res){
 
 //UPDATE - Actualiza la informacion de una publicacion
 const updatePublication = function(req, res){
+    console.log(req)
     if(req.user.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
-	const _id = req.publication._id
+	const _id = req.body._id
 	const update = Object.keys(req.body)
 	Publication.findOneAndUpdate(_id, req.body).then(function(publication){
 		if(!publication){

@@ -12,7 +12,12 @@ const commentSchema = new mongoose.Schema({
 		ref: 'Publication'
 	},
 	text: {
-		type: String
+		type: String,
+		required: true
+	},
+	date: {
+		type: Date,
+		required: true
 	}
 })
 
