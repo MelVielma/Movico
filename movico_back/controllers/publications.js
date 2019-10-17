@@ -36,6 +36,7 @@ const getByAuthor = function(req, res){
 }
 
 //GET- Consulta de publicaciones por etiqueta
+
 const getByTag = function(req, res){
     const _tag=req.publication.tag
     Publication.find({tags: { $elemMatch: { $eq: _tag } }}).then(function(publication){
@@ -77,6 +78,7 @@ const updatePublication = function(req, res){
         return res.status(401).send({ error: 'Admins Only'})
     }
 	const _id = req.body._id
+
 	const update = Object.keys(req.body)
 	Publication.findOneAndUpdate(_id, req.body).then(function(publication){
 		if(!publication){
@@ -93,6 +95,7 @@ const deletePublication = function(req, res){
     if(req.user.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
+
 	const _id = req.publication._id
 	Publication.findOneAndDelete(_id).then(function(publication){
 		if(!publication){
@@ -112,4 +115,5 @@ module.exports = {
     deletePublication: deletePublication,
     getByTag:getByTag,
     getByTags:getByTags
+
 }
