@@ -64,11 +64,23 @@ const getByTags = function(req, res){
 
 //GET - Consulta TODAS las publicaciones
 const getAllPublications = function(req, res){
-	Publication.find({ status: 'Enable' }).then(function(publications){
-		return res.send(publications)
-	}).catch(function(error){
-		return res.status(500).send(error)
-	})
+	//Los usuarios solo pueden ver las publicaciones habilitadas
+	if(req.user.typee=='userOnly'){
+		Publication.find({ status: 'Enable' }).then(function(publications){
+			return res.send(publications)
+		}).catch(function(error){
+			return res.status(500).send(error)
+		})
+	}
+	else
+	{
+		//Los admin pueden ver TODAS las poblicaciones
+		Publication.find({}).then(function(publications){
+			return res.send(publications)
+		}).catch(function(error){
+			return res.status(500).send(error)
+		})	
+	}
 }
 
 //UPDATE - Actualiza la informacion de una publicacion

@@ -12,7 +12,7 @@ const createUser = function(req, res) {
 		password : data.password,
 		about: data.about,
 		status: 'Enable',
-		typee: 'admin'
+		typee: 'userOnly'
 	}
 
 	const user = new User(info)
@@ -28,11 +28,16 @@ const createUser = function(req, res) {
 const login = function(req, res) {
 	console.log("ando en login")
 	User.findByCredentials(req.body.email, req.body.password).then(function(user){
-		user.generateToken().then(function(token){
-		  return res.send({user, token})
-		}).catch(function(error){
-		  return res.status(401).send({ error: error })
-		})
+		//Checamos que no haya "Eliminado" su cuenta.
+		if (user.status == 'Disable') {
+			return res.status(401).send({error: 'Email not found.'})
+		} else {
+			user.generateToken().then(function(token){
+			  return res.send({user, token})
+			}).catch(function(error){
+			  return res.status(401).send({ error: error })
+			})
+		}
 	  }).catch(function(error) {
 		return res.status(401).send({ error: error })
 	  })
@@ -102,6 +107,8 @@ const disableUser = function(req, res) {
 	}).catch(function(error) {
 		res.status(500).send(error)
 	})
+	// Después de hacer disableUser, lo hacemos logout, para que no pueda seguir haciendo las cosas de un usuario habilitado
+	logout()
 }
 
 module.exports = {
