@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyNavbar from './components/MyNavbar';
+import MyCardDeck from './components/MyCardDeck';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
 
         </header>
       </div>
+      <MyCardDeck />
     </>
   );
 }
