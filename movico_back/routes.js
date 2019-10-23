@@ -28,8 +28,8 @@ router.post('/users/logout', auth.auth, users.logout)
 router.post('/users', users.createUser) 
 router.patch('/users/disable', auth.auth, users.disableUser)
 
-router.get('/publications', auth.auth, publications.getAllPublications)
-router.post('/publications', publications.createPublication)
+router.get('/publications', publications.getAllPublications)
+router.post('/publications', auth.auth, publications.createPublication)
 router.patch('/publications',  auth.auth, publications.updatePublication)
 router.get('*', function(req, res) {
   res.send({
