@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 
 //POST - Creacion de publicacion
 const createPublication = function(req, res){
+	console.log(req)
 	data = req.body
 	info = {
 		title : data.title,
@@ -12,6 +13,7 @@ const createPublication = function(req, res){
 		media : data.media,
 		tags : data.tags,
 		date : data.date,
+		publishedBy: req.user._id,
 		status : 'Disable'
 	}
 	const publication = new Publication(info)
@@ -65,6 +67,8 @@ const getByTags = function(req, res){
 //GET - Consulta TODAS las publicaciones
 const getAllPublications = function(req, res){
 	//Los usuarios solo pueden ver las publicaciones habilitadas
+	console.log(req)
+
 	if(req.user.typee=='userOnly'){
 		Publication.find({ status: 'Enable' }).then(function(publications){
 			return res.send(publications)

@@ -26,13 +26,14 @@ const createUser = function(req, res) {
 
 // POST - Login de usuario
 const login = function(req, res) {
-	console.log("ando en login")
 	User.findByCredentials(req.body.email, req.body.password).then(function(user){
 		//Checamos que no haya "Eliminado" su cuenta.
+		console.log(user)
 		if (user.status == 'Disable') {
 			return res.status(401).send({error: 'Email not found.'})
 		} else {
 			user.generateToken().then(function(token){
+			  req.user = user
 			  return res.send({user, token})
 			}).catch(function(error){
 			  return res.status(401).send({ error: error })
@@ -59,7 +60,7 @@ const logout = function(req, res){
 //Hice lo de regex, a ver qué tal sale 
 // GET - Consulta de usuarios por nombre de usuario
 const findUsers = function(req, res) {
-	User.find({ name: new RegExp(req.body.name, 'i') }).exec(function(error, users) {
+	User.find({ name: new RegExp(req.body.name, 'i'), status:'Enable' }).exec(function(error, users) {
 		return res.send(users)
 	}).catch(function(error){
 		res.status(500).send(error)
@@ -68,6 +69,7 @@ const findUsers = function(req, res) {
 
 // GET - Consulta de usuarios
 const getAllUsers = function(req, res) {
+	console.log(req.user)
 	User.find({ status: 'Enable' }).then(function(users) {
 		res.send(users)
 	}).catch(function(error){
@@ -99,16 +101,18 @@ const updateUser = function(req, res) {
 
 // PATCH - Eliminar una cuenta de usuario
 const disableUser = function(req, res) {
+	_id=req.user._id
+	console.log(req.user._id)
 	User.findByIdAndUpdate(_id, { status: 'Disable' }).then( function(user) {
 		if(!user) {
 			return res.status(404).send()
 		}
-		return res.send(user._id)
+		return res.send(user.id)
 	}).catch(function(error) {
 		res.status(500).send(error)
 	})
 	// Después de hacer disableUser, lo hacemos logout, para que no pueda seguir haciendo las cosas de un usuario habilitado
-	logout()
+	//logout()
 }
 
 module.exports = {

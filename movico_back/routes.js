@@ -6,9 +6,8 @@ const users = require('./controllers/users.js')
 const comments = require('./controllers/comments.js')
 const publications = require('./controllers/publications.js')
 const auth = require('./middleware/auth.js')
+
 /*
-router.get('/users', auth.auth, users.getUser)
-router.post('/users/logout', auth.auth, users.logout)
 router.post('/users', users.createUser)  // signup
 router.patch('/users', auth.auth, users.updateUser)
 
@@ -23,9 +22,13 @@ router.post('/comments/:id', auth.auth, comments.createComment)
 router.delete('/comments/:id', auth.auth, comments.deleteComment)
 */
 //Rutas de user 
+router.get('/users', auth.auth, users.getAllUsers)
 router.post('/users/login', users.login)
+router.post('/users/logout', auth.auth, users.logout)
 router.post('/users', users.createUser) 
+router.patch('/users/disable', auth.auth, users.disableUser)
 
+router.get('/publications', auth.auth, publications.getAllPublications)
 router.post('/publications', publications.createPublication)
 router.patch('/publications',  auth.auth, publications.updatePublication)
 router.get('*', function(req, res) {

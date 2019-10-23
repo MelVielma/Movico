@@ -12,10 +12,14 @@ const publicationSchema = new mongoose.Schema({
 		required: true
 
 	},
-	author: {
+	publishedBy: {
 		type: mongoose.Schema.Types.ObjectId,
 		required: true, 
 		ref: 'User'
+	},
+	author: {
+		type: String,
+		required: true
 	},
 	text: {
 		type: [String],
