@@ -67,6 +67,15 @@ const findUsers = function(req, res) {
 	})
 }
 
+// GET - Consulta de usuario por id del mismo
+const findAuthor = function(req, res) {
+	console.log(req.params.id)
+	const _id = req.params.id
+	User.findById({ _id, status:'Enable' }).exec(function(error, user) {
+		return res.send(user.name)
+	})
+}
+
 // GET - Consulta de usuarios
 const getAllUsers = function(req, res) {
 	console.log(req.user)
@@ -122,5 +131,6 @@ module.exports = {
 	findUsers : findUsers,
 	getAllUsers : getAllUsers,
 	updateUser : updateUser,
-	disableUser : disableUser
+	disableUser : disableUser,
+	findAuthor : findAuthor
 }

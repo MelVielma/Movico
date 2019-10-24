@@ -19,14 +19,26 @@ var publications2 = {
 	}
 }
 
+var nameAuthor = {
+	method: 'GET',
+	headers: {
+		'Accept': 'application/json',
+		'Contenct-Type': 'application/json',
+		'Origin': '',
+		'Host': 'http://localhost:3001'
+	}	
+}
+
 class PublicationDeck extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			publications: ''
+			publications: '',
+			nameAuthor: ''
 		}
 		this.createCard = this.createCard.bind(this)
 		this.getPublications = this.getPublications.bind(this)
+		this.getAuthor = this.getAuthor.bind(this)
 		this.afterGet = this.afterGet.bind(this) 
 	}
 
@@ -34,6 +46,14 @@ class PublicationDeck extends React.Component {
 		fetch('/publications', publications2)
 			.then(response => response.json())
 			.then(state => this.setState({publications: state}, () =>
+				this.afterGet()));
+		console.log(this.state)
+	}
+
+	getAuthor(user_id) {	
+		fetch('/publications/' + user_id, nameAuthor)
+			.then(response => response.json())
+			.then(state => this.setState({nameAuthor: state}, () =>
 				this.afterGet()));
 		console.log(this.state)
 	}
@@ -48,7 +68,7 @@ class PublicationDeck extends React.Component {
 		for(let i = 0; i< pubs.length;i++) {
 			cards.push(this.createCard(pubs[i]))
 		}
-		ReactDOM.render(<div>{cards}</div>, container);
+		ReactDOM.render(<CardDeck>{cards}</CardDeck>, container);
 	}
 
 	createCard(card) {
@@ -56,7 +76,6 @@ class PublicationDeck extends React.Component {
 		let new_html = ''
 
 		new_html = (
-			<CardDeck>
 			  <Card>
 			    <Card.Img variant="top" src="holder.js/100px160" />
 			    <Card.Body>
@@ -71,7 +90,6 @@ class PublicationDeck extends React.Component {
 			      <small className="text-muted">Fecha de publicación: {card.date}</small>
 			    </Card.Footer>
 			  </Card>
-			</CardDeck>
 		)
 		return new_html
 	}
@@ -79,7 +97,7 @@ class PublicationDeck extends React.Component {
 	render(){
 		return (
 			<div ref='container'>
-			<CardDeck>
+			  <CardDeck>
 			  <Card>
 			    <Card.Img variant="top" src="holder.js/100px160" />
 			    <Card.Body>
