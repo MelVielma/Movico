@@ -32,6 +32,9 @@ router.patch('/users/disable', auth.auth, users.disableUser)
 router.get('/publications', publications.getAllPublications)
 router.post('/publications', auth.auth, publications.createPublication)
 router.patch('/publications',  auth.auth, publications.updatePublication)
+
+router.post('/comments/:id', auth.auth, comments.createComment)
+
 router.get('*', function(req, res) {
   res.send({
     error: 'This route does not exist, try /users/login'

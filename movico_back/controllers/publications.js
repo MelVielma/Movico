@@ -13,7 +13,7 @@ const createPublication = function(req, res){
 		media : data.media,
 		tags : data.tags,
 		date : data.date,
-		publishedBy: req.user._id,
+		publishedBy: data.idpub,
 		status : 'Disable'
 	}
 	const publication = new Publication(info)
@@ -112,7 +112,7 @@ const deletePublication = function(req, res){
         return res.status(401).send({ error: 'Admins Only'})
     }
 
-	const _id = req.publication._id
+	const _id = req.params._id
 	Publication.findOneAndDelete(_id).then(function(publication){
 		if(!publication){
 			return res.status(404).send()
