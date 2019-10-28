@@ -68,9 +68,14 @@ const getByTags = function(req, res){
 const getAllPublications = function(req, res){
 	//Los usuarios solo pueden ver las publicaciones habilitadas
 	console.log(req.user)
+	console.log(typeof(req.user.typee))
+	let isUserUndefined = !(req.user === undefined)
+	let isTypeeAdmin = req.user.typee==="admin"
 
-	if(!(req.user === undefined) && req.user.typee=='adim'){
+	if(isUserUndefined && isTypeeAdmin){
 		//Los admin pueden ver TODAS las poblicaciones
+		console.log("Entro como admin")
+	
 		Publication.find({}).then(function(publications){
 			return res.send(publications)
 		}).catch(function(error){
@@ -80,6 +85,34 @@ const getAllPublications = function(req, res){
 	else
 	{
 		Publication.find({ status: 'Enable' }).then(function(publications){
+			return res.send(publications)
+		}).catch(function(error){
+			return res.status(500).send(error)
+		})	
+	}
+}
+
+//GET - Consulta la publicación especificada
+const getSinglePublication = function(req, res){
+	//Los usuarios solo pueden ver las publicaciones habilitadas
+	let isUserUndefined = !(req.user === undefined)
+	let isTypeeAdmin = req.user.typee==="admin"
+	const _id = req.params.id
+	
+
+	if(isUserUndefined && isTypeeAdmin){
+		//Los admin pueden ver TODAS las poblicaciones
+		console.log("Entro como admin")
+	
+		Publication.find({_id}).then(function(publications){
+			return res.send(publications)
+		}).catch(function(error){
+			return res.status(500).send(error)
+		})
+	}
+	else
+	{
+		Publication.find({ _id, status: 'Enable' }).then(function(publications){
 			return res.send(publications)
 		}).catch(function(error){
 			return res.status(500).send(error)
@@ -129,7 +162,8 @@ module.exports = {
 	getByAuthor: getByAuthor,
 	updatePublication: updatePublication,
     deletePublication: deletePublication,
-    getByTag:getByTag,
-    getByTags:getByTags
+    getByTag: getByTag,
+    getByTags: getByTags,
+    getSinglePublication: getSinglePublication
 
 }
