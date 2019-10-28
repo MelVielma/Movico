@@ -67,11 +67,13 @@ const getByTags = function(req, res){
 //GET - Consulta TODAS las publicaciones
 const getAllPublications = function(req, res){
 	//Los usuarios solo pueden ver las publicaciones habilitadas
-	console.log(req.user)
-	console.log(typeof(req.user.typee))
-	let isUserUndefined = !(req.user === undefined)
-	let isTypeeAdmin = req.user.typee==="admin"
-
+	let isUserUndefined = false
+	isUserUndefined = !(req.user === undefined)
+	let isTypeeAdmin = false
+	if (isUserUndefined) {
+		isTypeeAdmin = req.user.typee==="admin"
+	}
+	
 	if(isUserUndefined && isTypeeAdmin){
 		//Los admin pueden ver TODAS las poblicaciones
 		console.log("Entro como admin")
@@ -95,8 +97,12 @@ const getAllPublications = function(req, res){
 //GET - Consulta la publicación especificada
 const getSinglePublication = function(req, res){
 	//Los usuarios solo pueden ver las publicaciones habilitadas
-	let isUserUndefined = !(req.user === undefined)
-	let isTypeeAdmin = req.user.typee==="admin"
+	let isUserUndefined = false
+	isUserUndefined = !(req.user === undefined)
+	let isTypeeAdmin = false
+	if (isUserUndefined) {
+		isTypeeAdmin = req.user.typee==="admin"
+	}
 	const _id = req.params.id
 	
 

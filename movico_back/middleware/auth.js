@@ -23,10 +23,12 @@ const auth = function( req, res, next ) {
       req.user = user
       next()
     }).catch(function(error) {
-      res.status(401).send({ error: 'Authenticate plz'})
+      req.user = undefined
+    next()
     })
   } catch(e) {
-    res.status(401).send({ error: 'Authenticate plz'})
+    req.user = undefined
+    next()
   }
 }
 
