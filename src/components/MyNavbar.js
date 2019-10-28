@@ -33,7 +33,7 @@ class MyNavbar extends React.Component{
             </Modal>
 
             <Navbar bg="secondary" expand="lg" fixed="top" className="text-uppercase" id="mainNav" >
-              <Navbar.Brand href="#home">Movico</Navbar.Brand>
+              <Navbar.Brand href="/">Movico</Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 <Nav variant="pills" defaultActiveKey="#home">

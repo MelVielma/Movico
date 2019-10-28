@@ -37,10 +37,10 @@ class PublicationDeck extends React.Component {
 			publications: '',
 			nameAuthor: ''
 		}
-		this.createCard = this.createCard.bind(this)
-		this.getPublications = this.getPublications.bind(this)
-		this.getAuthor = this.getAuthor.bind(this)
-		this.afterGet = this.afterGet.bind(this)
+		this.createCard = this.createCard.bind(this);
+		this.getPublications = this.getPublications.bind(this);
+		this.getAuthor = this.getAuthor.bind(this);
+		this.afterGet = this.afterGet.bind(this);
 	}
 
 	getPublications(event) {
@@ -62,11 +62,12 @@ class PublicationDeck extends React.Component {
 	afterGet(event) {
 		var container = this.refs.container
 		var cards = [];
-
 		console.log(this.state)
 
 		const pubs = this.state.publications
 		for(let i = 0; i< pubs.length;i++) {
+			//TODO: Modificar aqui el for y agregar un if para crear
+			//mas de un solo card deck y que se vayan desplegando de tres en tres
 			cards.push(this.createCard(pubs[i]))
 		}
 		ReactDOM.render(<CardDeck>{cards}</CardDeck>, container);
@@ -74,18 +75,20 @@ class PublicationDeck extends React.Component {
 
 	createCard(card) {
 		console.log(card)
-		let new_html = ''
-
+		let new_html = '';
+		let new_href = "/publication/" + card.id;
+		//console.log(new_href);
+		//TODO: Arreglar los refs de las imagenes en BD y despues aqui
 		new_html = (
 			  <Card>
-			    <Card.Img variant="top" src="holder.js/100px160" />
+			    <Card.Img variant="top" src="https://via.placeholder.com/80x60" />
 			    <Card.Body>
 			      <Card.Title>{card.title}</Card.Title>
 			      <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
 			      <Card.Text>
 			        {card.text}
 			      </Card.Text>
-			      <Button variant="dark" >Ver mas</Button>
+			      <a className="linkToPublication" href={new_href}>Ver mas</a>
 			    </Card.Body>
 			    <Card.Footer>
 			      <small className="text-muted">Fecha de publicación: {card.date}</small>
@@ -99,48 +102,7 @@ class PublicationDeck extends React.Component {
 		return (
 			<div>
 				<CardDeck ref='container' className="indexCardDeck">
-				  <Card>
-				    <Card.Img variant="top" src="holder.js/100px160" />
-				    <Card.Body>
-				      <Card.Title>Titulo de publicacion</Card.Title>
-				      <Card.Subtitle className="mb-2 text-muted"> Autor de la publicacion </Card.Subtitle>
-				      <Card.Text>
-				        Descripcion
-				      </Card.Text>
-				      <Button variant="dark">Ver mas</Button>
-				    </Card.Body>
-				    <Card.Footer>
-				      <small className="text-muted">fecha de publicacion</small>
-				    </Card.Footer>
-				  </Card>
-				  <Card>
-				    <Card.Img variant="top" src="holder.js/100px160" />
-				    <Card.Body>
-				      <Card.Title>Titulo de publicacion</Card.Title>
-				      <Card.Subtitle className="mb-2 text-muted"> Autor de la publicacion </Card.Subtitle>
-				      <Card.Text>
-				        Descripcion
-				      </Card.Text>
-				      <Button variant="dark">Ver mas</Button>
-				    </Card.Body>
-				    <Card.Footer>
-				      <small className="text-muted">fecha de publicacion</small>
-				    </Card.Footer>
-				  </Card>
-				  <Card>
-				    <Card.Img variant="top" src="holder.js/100px160" />
-				    <Card.Body>
-				      <Card.Title>Titulo de publicacion</Card.Title>
-				      <Card.Subtitle className="mb-2 text-muted"> Autor de la publicacion </Card.Subtitle>
-				      <Card.Text>
-				        Descripcion
-				      </Card.Text>
-				      <Button variant="dark">Ver mas</Button>
-				    </Card.Body>
-				    <Card.Footer>
-				      <small className="text-muted">fecha de publicacion</small>
-				    </Card.Footer>
-				  </Card>
+
 				</CardDeck>
 			</div>
 		)
