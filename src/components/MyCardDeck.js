@@ -72,12 +72,12 @@ class PublicationDeck extends React.Component {
 	}
 
 	createCard(card) {
-		console.log(card)
+		console.log(card.media)
 		let new_html = ''
 
 		new_html = (
 			  <Card>
-			    <Card.Img variant="top" src="holder.js/100px160" />
+			    <Card.Img variant="top" src={card.media} alt="Placeholder of an image." />
 			    <Card.Body>
 			      <Card.Title>{card.title}</Card.Title>
 			      <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
