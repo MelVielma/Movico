@@ -19,7 +19,7 @@ class SuccessAlert extends Component {
   render() {
     if (this.state.isActive) {
       return (
-          <Alert variant="success" onClose={() => this.hideAlert()} dismissible>
+          <Alert variant="success" onClose={() => this.hideAlert()}>
             <Alert.Heading>{this.props.title}</Alert.Heading>
           </Alert>
       );

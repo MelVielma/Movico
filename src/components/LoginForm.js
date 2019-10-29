@@ -6,6 +6,14 @@ import {Form, Button} from 'react-bootstrap';
 import WarningAlert from './WarningAlert';
 import SuccessAlert from './SuccessAlert';
 
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
 
 class LoginForm extends React.Component{
   constructor(props){
@@ -46,13 +54,18 @@ class LoginForm extends React.Component{
     if(!localStorage.getItem('user_token')){
       localStorage.setItem('user_token', this.state.user_json.token);
     }
+    if(!localStorage.getItem('user_id')){
+      //TODO: Guardarlo de momento, despues se cambiara a que el token jale el id
+      localStorage.setItem('user_id', this.state.user_json.user.id);
+    }
     ReactDOM.render(<div /> , this.refs.loginFormDiv) //Limpiar el div en donde se pondra el asunto
     var err_html = (
       <SuccessAlert
         title="Bienvenido a Movico"
       />
     )
-    ReactDOM.render(err_html , this.refs.loginFormDiv)
+    ReactDOM.render(err_html , this.refs.loginFormDiv);
+    ReactDOM.render(<div /> , this.refs.loginFormForm);
   }
 
   //Que hacer si hay error en el login
@@ -95,16 +108,16 @@ class LoginForm extends React.Component{
 
   render() {
       return (
-        <div id="loginFormModal">
+        <div id="loginFormModal" className="m-4">
             <div ref="loginFormDiv" />
-            <Form id="loginForm" onSubmit={this.handleSubmit}>
+            <Form ref="loginFormForm" id="loginForm" onSubmit={this.handleSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" value={this.state.email} onChange={this.handleChange} placeholder="Enter email" />
+                <Form.Control type="email" value={this.state.email} onChange={this.handleChange} placeholder="Ingresar correo" />
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" />
+                <Form.Control type="password" value={this.state.password} onChange={this.handleChange} placeholder="Contraseña" />
               </Form.Group>
               <Button variant="primary" type="submit">
                 Submit

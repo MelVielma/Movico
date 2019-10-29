@@ -47,7 +47,6 @@ class PublicationDeck extends React.Component {
 			.then(response => response.json())
 			.then(state => this.setState({publications: state}, () =>
 				this.afterGet()));
-		console.log(this.state)
 	}
 
 	getAuthor(user_id) {
@@ -61,26 +60,25 @@ class PublicationDeck extends React.Component {
 	afterGet(event) {
 		var container = this.refs.container
 		var cards = [];
-		console.log(this.state)
+		const pubs = this.state.publications;
 
-		const pubs = this.state.publications
-		for(let i = 0; i< pubs.length;i++) {
+		for(let i = 0 ; i < pubs.length ; i++) {
 			//TODO: Modificar aqui el for y agregar un if para crear
 			//mas de un solo card deck y que se vayan desplegando de tres en tres
 			cards.push(this.createCard(pubs[i]))
+
 		}
-		ReactDOM.render(<CardDeck>{cards}</CardDeck>, container);
+		ReactDOM.render(cards, container);
 	}
 
 	createCard(card) {
-		console.log(card)
+		//console.log(card)
 		let new_html = '';
 		let new_href = "/publication/" + card.id;
 		//console.log(new_href);
-		//TODO: Arreglar los refs de las imagenes en BD y despues aqui
 		new_html = (
-			  <Card>
-			    <Card.Img variant="top" src={card.media} alt="Placeholder of an image." />
+			  <Card className="indexMiniCard col-md-3 m-3 justify-content-center">
+			    <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} />
 			    <Card.Body>
 			      <Card.Title>{card.title}</Card.Title>
 			      <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
@@ -99,10 +97,10 @@ class PublicationDeck extends React.Component {
 
 	render(){
 		return (
-			<div>
-				<CardDeck ref='container' className="indexCardDeck">
+			<div ref='container' className="indexCardDeck row mt-5 justify-content-center">
+				{/* <CardDeck  className="indexCardDeck">
+				</CardDeck> */}
 
-				</CardDeck>
 			</div>
 		)
 	}
