@@ -32,6 +32,7 @@ router.patch('/users/disable', auth.auth, users.disableUser)
 router.get('/publications', publications.getAllPublications)
 router.get('/publications/:id', publications.getSinglePublication)
 router.post('/publications', auth.auth, publications.createPublication)
+router.post('/publications/:id', auth.auth, publications.enablePublication)
 router.patch('/publications',  auth.auth, publications.updatePublication)
 router.delete('/publications/:id', auth.auth, publications.deletePublication)
 

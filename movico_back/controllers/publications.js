@@ -150,14 +150,31 @@ const deletePublication = function(req, res){
 	})
 }
 
+// POST - Habilita que la publicación pueda ser vista
+const enablePublication = function(req, res) {
+	if(req.user.typee=='userOnly'){
+        return res.status(401).send({ error: 'Admins Only'})
+    }
+	const _id = req.params.id
+	Publication.findOneAndUpdate({_id : _id}, {status: "Enable"}).then(function(publication){
+		if(!publication){
+			return res.status(404).send()
+		}
+		console.log(publication)
+		return res.send(publication._id)
+	}).catch(function(error){
+		res.status(500).send(error)
+	})
+}
+
 module.exports = {
 	createPublication: createPublication,
 	getAllPublications: getAllPublications,
 	getByAuthor: getByAuthor,
 	updatePublication: updatePublication,
-    deletePublication: deletePublication,
-    getByTag: getByTag,
-    getByTags: getByTags,
-    getSinglePublication: getSinglePublication
-
+  deletePublication: deletePublication,
+  getByTag: getByTag,
+  getByTags: getByTags,
+  getSinglePublication: getSinglePublication,
+  enablePublication: enablePublication
 }
