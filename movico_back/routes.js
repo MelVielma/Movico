@@ -11,13 +11,6 @@ const auth = require('./middleware/auth.js')
 router.post('/users', users.createUser)  // signup
 router.patch('/users', auth.auth, users.updateUser)
 
-
-router.get('/products/:id', auth.auth, products.getProduct)
-router.get('/products', auth.auth, products.getProducts)
-router.post('/products', auth.auth, products.createProduct)
-router.patch('/products/:id', auth.auth, products.updateProduct)
-router.delete('/products/:id', auth.auth, products.deleteProduct)
-
 router.post('/comments/:id', auth.auth, comments.createComment)
 router.delete('/comments/:id', auth.auth, comments.deleteComment)
 */

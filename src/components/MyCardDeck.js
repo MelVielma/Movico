@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Async from 'react-async';
 import '../index.css';
 
 /* para importar publication desde el archivo principal : import Publication from './path/to/component'; */
@@ -74,7 +73,6 @@ class PublicationDeck extends React.Component {
 	}
 
 	createCard(card) {
-		merged common ancestors
 		console.log(card)
 		let new_html = '';
 		let new_href = "/publication/" + card.id;
