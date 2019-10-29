@@ -6,6 +6,14 @@ import {Form, Button} from 'react-bootstrap';
 import WarningAlert from './WarningAlert';
 import SuccessAlert from './SuccessAlert';
 
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
 
 class LoginForm extends React.Component{
   constructor(props){
@@ -56,7 +64,8 @@ class LoginForm extends React.Component{
         title="Bienvenido a Movico"
       />
     )
-    ReactDOM.render(err_html , this.refs.loginFormDiv)
+    ReactDOM.render(err_html , this.refs.loginFormDiv);
+    ReactDOM.render(<div /> , this.refs.loginFormForm);
   }
 
   //Que hacer si hay error en el login
@@ -101,7 +110,7 @@ class LoginForm extends React.Component{
       return (
         <div id="loginFormModal" className="m-4">
             <div ref="loginFormDiv" />
-            <Form id="loginForm" onSubmit={this.handleSubmit}>
+            <Form ref="loginFormForm" id="loginForm" onSubmit={this.handleSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" value={this.state.email} onChange={this.handleChange} placeholder="Ingresar correo" />

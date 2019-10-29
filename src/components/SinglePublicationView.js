@@ -43,7 +43,7 @@ class SinglePublicationView extends React.Component{
         <h1> {myPublication.title} </h1>
         <h2><i> Autor: {myPublication.author} </i></h2>
         <h3>Empresa: {myPublication.business_name}</h3>
-        <img src="https://via.placeholder.com/600x300?Text=PlaceholderImg" />
+        <img src={myPublication.media} alt={myPublication.title} height="350" />
         <h5><b>Fecha: </b>{myPublication.date} </h5>
         <h6> {myPublication.text[0]} </h6>
 

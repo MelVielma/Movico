@@ -77,7 +77,7 @@ class PublicationDeck extends React.Component {
 		//console.log(new_href);
 		new_html = (
 			  <Card className="indexMiniCard col-md-3 m-3 justify-content-center">
-			    <Card.Img className="reframe index-fluid" variant="top" src={card.media} alt={card.title} />
+			    <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} />
 			    <Card.Body>
 			      <Card.Title>{card.title}</Card.Title>
 			      <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>

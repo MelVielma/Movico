@@ -138,49 +138,54 @@ class CreatePostForm extends React.Component{
   }
 
   handleDateChange = date => {
-    this.setState({
-      postDate: date
-    });
+    this.setState({ postDate: date });
   }
 
   render() {
+      let isUserLogged = this.props.isUserLogged;
       return (
         <div id="createPostModal" className="m-4">
-            <div ref="createPostFormDiv" />
-            <Form id="createPostForm" onSubmit={this.handleSubmit}>
-              <Form.Group>
-                <Form.Label> Titulo de la obra: *</Form.Label>
-                <Form.Control id="post_Title" required type="text" size="lg" value={this.state.postTitle} onChange={this.handleChange} placeholder="Titulo de la publicacion." />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label> Autor: *</Form.Label>
-                <Form.Control id="post_Author" required type="text" value={this.state.postAuthor} onChange={this.handleChange} placeholder="Autor de la publicacion." />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label> Empresa: *</Form.Label>
-                <Form.Control id="post_Business" required type="text" value={this.state.postBusiness} onChange={this.handleChange} placeholder="Empresa de la publicacion." />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label> Descripcion de la obra: * </Form.Label>
-                <Form.Control id="post_Text" required as="textarea" rows="3" value={this.state.postDescription} onChange={this.handleChange} placeholder="Acerca de la publicación, cómo se hizo, qué significa, que mensaje transmite, etc." />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label> Fecha de creación: </Form.Label>
-                <DatePicker id="post_Date" selected={this.state.postDate} onChange={this.handleDateChange} />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label> Etiquetas la obra: </Form.Label>
-                <Form.Control id="post_Tags" as="textarea" rows="2" value={this.state.postTags} onChange={this.handleChange} placeholder="Por ejemplo: Animación, Fotografía, Realidad, etc." />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label> Link de multimedia: *</Form.Label>
-                <Form.Control id="post_Media" required type="text" value={this.state.postMultimedia} onChange={this.handleChange} placeholder="Liga a una imágen, video, etc." />
-              </Form.Group>
-              <div><b> * Son campos requeridos </b></div>
-              <Button variant="primary" type="submit">
-                Subir
-              </Button>
-            </Form>
+            {!isUserLogged ? (
+              <div id="userNotLoggedDiv"><b> Primero incia sesión! </b></div>
+            ):(
+              <>
+                <div ref="createPostFormDiv" />
+                <Form id="createPostForm" onSubmit={this.handleSubmit}>
+                  <Form.Group>
+                    <Form.Label> Titulo de la obra: *</Form.Label>
+                    <Form.Control id="post_Title" required type="text" size="lg" value={this.state.postTitle} onChange={this.handleChange} placeholder="Titulo de la publicacion." />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Autor: *</Form.Label>
+                    <Form.Control id="post_Author" required type="text" value={this.state.postAuthor} onChange={this.handleChange} placeholder="Autor de la publicacion." />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Empresa: *</Form.Label>
+                    <Form.Control id="post_Business" required type="text" value={this.state.postBusiness} onChange={this.handleChange} placeholder="Empresa de la publicacion." />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Descripcion de la obra: * </Form.Label>
+                    <Form.Control id="post_Text" required as="textarea" rows="3" value={this.state.postDescription} onChange={this.handleChange} placeholder="Acerca de la publicación, cómo se hizo, qué significa, que mensaje transmite, etc." />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Fecha de creación: </Form.Label>
+                    <DatePicker id="post_Date" selected={this.state.postDate} onChange={this.handleDateChange} />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Etiquetas la obra: </Form.Label>
+                    <Form.Control id="post_Tags" as="textarea" rows="2" value={this.state.postTags} onChange={this.handleChange} placeholder="Por ejemplo: Animación, Fotografía, Realidad, etc." />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Link de multimedia: *</Form.Label>
+                    <Form.Control id="post_Media" required type="text" value={this.state.postMultimedia} onChange={this.handleChange} placeholder="Liga a una imágen, video, etc." />
+                  </Form.Group>
+                  <div><b> * Son campos requeridos </b></div>
+                  <Button variant="primary" type="submit">
+                    Subir
+                  </Button>
+                </Form>
+              </>
+            )}
         </div>
       );
     }
