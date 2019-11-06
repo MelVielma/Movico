@@ -69,7 +69,7 @@ const getAllPublications = function(req, res){
 	//Los usuarios solo pueden ver las publicaciones habilitadas
 	console.log(req.user)
 
-	if(!(req.user === undefined) && req.user.typee=='adim'){
+	if(!(req.user === undefined) && req.user.typee=='admin'){
 		//Los admin pueden ver TODAS las poblicaciones
 		Publication.find({}).then(function(publications){
 			return res.send(publications)
@@ -93,8 +93,8 @@ const updatePublication = function(req, res){
     if(req.user.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
-	const _id = req.body._id
-
+	const _id = req.params._id
+	//delete req.body._id
 	const update = Object.keys(req.body)
 	Publication.findOneAndUpdate(_id, req.body).then(function(publication){
 		if(!publication){

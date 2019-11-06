@@ -12,8 +12,13 @@ else{
 
 // 1. Creacion de comentario
 const createComment = function(req, res) {
-	const comment = Comment(req.body)
-	Comment.save().then(function() {
+	const comment = new Comment({
+		user: req.body._id,
+		publication: req.params.id,
+		text: req.body.text,
+		date: req.body.date
+	  })
+	comment.save().then(function() {
 		return res.send(comment._id)
 	}).catch(function(error) {
 		return res.status(400).sned(error)
