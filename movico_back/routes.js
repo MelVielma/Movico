@@ -16,7 +16,6 @@ router.delete('/comments/:id', auth.auth, comments.deleteComment)
 */
 //Rutas de user 
 router.get('/users', auth.auth, users.getAllUsers)
-router.get('/users/:id', auth.auth, users.findAuthor)
 router.post('/users/login', users.login)
 router.post('/users/logout', auth.auth, users.logout)
 router.post('/users', users.createUser) 
