@@ -23,6 +23,8 @@ class SinglePublicationView extends React.Component{
     };
     this.getPublicationInfo = this.getPublicationInfo.bind(this);
     this.afterGet = this.afterGet.bind(this);
+    this.headerInfo = this.headerInfo.bind(this);
+
   }
 
   getPublicationInfo(event){
@@ -31,6 +33,16 @@ class SinglePublicationView extends React.Component{
       .then(response => response.json())
       .then(state => this.setState({publication: state}, () =>
         this.afterGet()));
+  }
+
+  headerInfo(myPublication){
+    return (
+        <div className = "headerInfo">
+          <h1> {myPublication.title} </h1>
+          <h2><i> Autor: {myPublication.author} </i></h2>
+          <h3>Empresa: {myPublication.business_name}</h3>
+        </div>
+      )
   }
 
   afterGet(event){
@@ -46,9 +58,9 @@ class SinglePublicationView extends React.Component{
         <img src={myPublication.media} alt={myPublication.title} height="350" />
         <h5><b>Fecha: </b>{myPublication.date} </h5>
         <h6> {myPublication.text[0]} </h6>
-
       </Jumbotron>
     )
+    let headerInf = this.headerInfo(myPublication)
     ReactDOM.render(singlePublicationHtml, container);
   }
 
@@ -61,6 +73,7 @@ class SinglePublicationView extends React.Component{
         <div id="SinglePublicationView" ref="putSinglePubHere">
             <h1> {this.state.pubId} </h1>
         </div>
+
       );
     }
 

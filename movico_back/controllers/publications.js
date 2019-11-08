@@ -1,3 +1,4 @@
+
 const Publication = require('../models/publication.js')
 const bcrypt = require('bcryptjs')
 
@@ -182,5 +183,4 @@ module.exports = {
 	getByTags:getByTags,
 	getSinglePublication: getSinglePublication,
   enablePublication: enablePublication
-
 }
