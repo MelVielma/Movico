@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.indexCardDeck{
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+  margin-top:9vh;
+}
+
+.indexCardContainer{
+  margin-top:7vh;
+}
+
+.reframe {
+  height: 150px;
+  overflow: hidden;
+}

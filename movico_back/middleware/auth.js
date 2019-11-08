@@ -15,7 +15,7 @@ const auth = function( req, res, next ) {
   try {
     const token = req.header('Authorization').replace('Bearer ', '')
     const decoded = jwt.verify(token, sec)
-    User.findOne({ _id: decoded._id, 'authToken.token': token }).then(function(user) {
+    User.findOne({ _id: decoded._id}).then(function(user) {
       if(!user) {
         throw new Error()
       }
@@ -29,12 +29,11 @@ const auth = function( req, res, next ) {
     res.status(401).send({ error: 'Authenticate plz'})
   }
 }
-
 const auth2 = function( req, res, next ) {
   try {
     const token = req.header('Authorization').replace('Bearer ', '')
     const decoded = jwt.verify(token, sec)
-    User.findOne({ _id: decoded._id, 'authToken.token': token }).then(function(user) {
+    User.findOne({ _id: decoded._id}).then(function(user) {
       if(!user) {
         throw new Error()
       }
@@ -42,11 +41,9 @@ const auth2 = function( req, res, next ) {
       req.user = user
       next()
     }).catch(function(error) {
-      req.user = undefined
       next()
     })
   } catch(e) {
-    req.user = undefined
     next()
   }
 }

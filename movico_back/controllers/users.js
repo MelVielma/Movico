@@ -32,12 +32,15 @@ const login = function(req, res) {
 		if (user.status == 'Disable') {
 			return res.status(401).send({error: 'Email not found.'})
 		} else {
+			//return res.status(200).send(user.generateToken())
+			
 			user.generateToken().then(function(token){
 			  req.user = user
 			  return res.send({user, token})
 			}).catch(function(error){
 			  return res.status(401).send({ error: error })
 			})
+			
 		}
 	  }).catch(function(error) {
 		return res.status(401).send({ error: error })
@@ -46,14 +49,17 @@ const login = function(req, res) {
 
 // POST - Logout de usuario
 const logout = function(req, res){
+	return res.status(200).send({result: true})
+	/*
 	req.user.authToken = req.user.authToken.filter(function(token) {
-		return token.token !== req. token
+		return token.token !== req.token
 	})
 	req.user.save().then(function() {
 		return res.send()
 	}).catch(function(error) {
 		return res.status(500).send({ error: error })
 	})
+	*/
 }
 
 //CHECAR COMO SE HACE ESTO, QUE ENCUENTRE LOS RESULTADOS SIMILIARES, NO TAL CUALES
@@ -72,7 +78,13 @@ const findAuthor = function(req, res) {
 	console.log(req.params.id)
 	const _id = req.params.id
 	User.findById({ _id, status:'Enable' }).exec(function(error, user) {
-		return res.send(user.name)
+			info={
+				name:user.name,
+				typee: user.typee,
+				email: user.email,
+				about: user.about
+			}
+			return res.send(info)
 	})
 }
 

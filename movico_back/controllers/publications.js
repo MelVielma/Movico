@@ -87,6 +87,37 @@ const getAllPublications = function(req, res){
 	}
 }
 
+
+
+//GET - Consulta la publicación especificada
+const getSinglePublication = function(req, res){
+    //Los usuarios solo pueden ver las publicaciones habilitadas
+    console.log(req.user)
+    const _id = req.params.id
+
+    if(!(req.user === undefined) && req.user.typee=='adim'){
+        //Los admin pueden ver TODAS las poblicaciones
+        console.log("Entro como admin")
+
+        Publication.find({_id}).then(function(publications){
+            return res.send(publications)
+        }).catch(function(error){
+            return res.status(500).send(error)
+        })
+    }
+    else
+    {
+        Publication.find({ _id, status: 'Enable' }).then(function(publications){
+            return res.send(publications)
+        }).catch(function(error){
+            return res.status(500).send(error)
+        })
+    }
+}
+
+
+
+
 //UPDATE - Actualiza la informacion de una publicacion
 const updatePublication = function(req, res){
     console.log(req)
@@ -123,6 +154,24 @@ const deletePublication = function(req, res){
 	})
 }
 
+// POST - Habilita que la publicación pueda ser vista
+const enablePublication = function(req, res) {
+    if(req.user.typee=='userOnly'){
+        return res.status(401).send({ error: 'Admins Only'})
+    }
+    const _id = req.params.id
+    Publication.findOneAndUpdate({_id : _id}, {status: "Enable"}).then(function(publication){
+        if(!publication){
+            return res.status(404).send()
+        }
+        console.log(publication)
+        return res.send(publication._id)
+    }).catch(function(error){
+        res.status(500).send(error)
+    })
+}
+
+
 module.exports = {
 	createPublication: createPublication,
 	getAllPublications: getAllPublications,
@@ -130,6 +179,8 @@ module.exports = {
 	updatePublication: updatePublication,
     deletePublication: deletePublication,
     getByTag:getByTag,
-    getByTags:getByTags
+	getByTags:getByTags,
+	getSinglePublication: getSinglePublication,
+  enablePublication: enablePublication
 
 }
