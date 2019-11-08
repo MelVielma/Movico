@@ -18,6 +18,8 @@ var getInfoFromServer = {
 }
 
 var updateInfoFromServer = function (updates) {
+  
+  console.log("updates", updates)
   return {
     method: 'PATCH',
     headers: {
@@ -28,22 +30,25 @@ var updateInfoFromServer = function (updates) {
     },
     body: JSON.stringify(
       updates
-    )
+    ),
+     
   }
 }
 
 // EN EL BACK SE DEBE DE MOVER QUE SAQUE EL TYPEE DEL BODY, NO DE REQ.USER, QUE NO PUEDES HACERLE APPEND EL USER NOMAS PORQUE SI
-var delPubFromServer = {
-  method: 'DELETE',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Origin': '',
-    'Host': 'http://localhost:3001'
-  },
-  body: JSON.stringify({
-      'typee': "admin"
+var delPubFromServer = function(typee){
+  return {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Origin': '',
+      'Host': 'http://localhost:3001'
+    },
+    body: JSON.stringify({
+        'typee': typee
     })
+  }
 }
 
 class SinglePublicationView extends React.Component{
@@ -60,6 +65,7 @@ class SinglePublicationView extends React.Component{
     this.refPubAuthor = React.createRef();
     this.refPubText = React.createRef();
     this.refPubDate = React.createRef();
+    this.displayMessageModal = React.createRef();
 
     this.getPublicationInfo = this.getPublicationInfo.bind(this);
     this.afterGet = this.afterGet.bind(this);
@@ -84,10 +90,11 @@ class SinglePublicationView extends React.Component{
     ReactDOM.render(err_html, this.refs.displayMessageModal)
   }
 
+  //Falta checar lo de habilitar y deshabilitar, así como eliminar una publicación
   handleDeshabilitarPub(event) {
-    let fetch_url = "/publications";
+    let fetch_url = "/publications/"+ this.state.pubId;
     let jsonContent = {
-      'typee': "admin",
+      'typee': this.state.userTypee,
       'status': "Disable"
     }
     fetch(fetch_url, updateInfoFromServer(jsonContent))
@@ -96,9 +103,9 @@ class SinglePublicationView extends React.Component{
   }
 
   handleHabilitarPub(event){
-    let fetch_url = "/publications";
+    let fetch_url = "/publications/"+ this.state.pubId;
     let jsonContent = {
-      'typee': "admin",
+      'typee': this.state.userTypee,
       'status': "Enable"
     }
     fetch(fetch_url, updateInfoFromServer(jsonContent))
@@ -108,18 +115,17 @@ class SinglePublicationView extends React.Component{
 
   handleEliminarPub(event){
     let fetch_url = "/publications/" + this.state.pubId;
-    fetch(fetch_url, delPubFromServer)
+    fetch(fetch_url, delPubFromServer(this.state.userTypee))
       .then(() => this.displayMessage("Se eliminó la Publicación"))
       .catch(err => this.displayMessage(err))
   }
 
 
   handleCambiosPub(event) {
-    //p_title, p_business_name, p_author, p_text, p_media, p_tags, p_date, p_status
-    
-    //FALTA PROBAR QUE ESTO JALA
-    let fetch_url = "/publications";
+    let fetch_url = "/publications/"+ this.state.pubId;
+    console.log(fetch_url)
     let jsonContent = {
+      'typee': this.state.userTypee,
       'title': this.refPubTitle.current.textContent,
       'business_name': this.refPubBusiness.current.textContent,
       'author': this.refPubAuthor.current.textContent,
@@ -127,7 +133,7 @@ class SinglePublicationView extends React.Component{
       'date': this.refPubDate.current.textContent
     }
     fetch(fetch_url, updateInfoFromServer(jsonContent))
-      .then(() => this.displayMessage("Se modificó la Publicación de manera exitosa"))
+      .then(id => console.log(id), () => this.displayMessage("Se modificó la Publicación de manera exitosa"))
       .catch(err => this.displayMessage(err))
     
     this.updateIsEditable();
@@ -137,7 +143,6 @@ class SinglePublicationView extends React.Component{
   updateIsEditable(event){
     console.log("*******updateIsEditable:", this.state.isEditable)
     this.state.isEditable = !this.state.isEditable
-    //this.setState({isEditable: !this.state.isEditable});
     console.log("El valor actualizado de updateIsEditable es:", this.state.isEditable)
     this.afterGet();
   }
@@ -153,9 +158,7 @@ class SinglePublicationView extends React.Component{
   }
 
   afterGet(event){
-    this.state.userTypee = "admin"
-    
-    console.log(this.state.userTypee);
+    console.log("userTypee",this.state.userTypee);
     var container = this.refs.putSinglePubHere;
     var myPublication = this.state.publication[0];
     console.log("Estado after get single publ: ",myPublication);
@@ -177,11 +180,11 @@ class SinglePublicationView extends React.Component{
         <>
         <h1 ref={this.refPubTitle} contentEditable={this.state.isEditable}>{myPublication.title} </h1>
         <>
-        <h2><i ref={this.refPubAuthor} contentEditable={this.state.isEditable}> Autor: {myPublication.author} </i></h2>
+        <h2><i> Autor: <span ref={this.refPubAuthor} contentEditable={this.state.isEditable}>{myPublication.author}</span> </i></h2>
         </>
-        <h3 ref={this.refPubBusiness} contentEditable={this.state.isEditable}>Empresa: {myPublication.business_name}</h3>
+        <h3>Empresa: <span ref={this.refPubBusiness} contentEditable={this.state.isEditable}>{myPublication.business_name}</span></h3>
         <img src={myPublication.media} alt={myPublication.title} height="350" />
-        <h5 ref={this.refPubDate} contentEditable={this.state.isEditable}><b>Fecha: </b>{myPublication.date} </h5>
+        <h5><b>Fecha: </b><span ref={this.refPubDate} contentEditable={this.state.isEditable}>{myPublication.date}</span> </h5>
         <h6 ref={this.refPubText} contentEditable={this.state.isEditable}> {myPublication.text[0]} </h6>
         </>
         <div>

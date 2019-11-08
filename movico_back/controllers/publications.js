@@ -128,26 +128,31 @@ const getSinglePublication = function(req, res){
 
 //UPDATE - Actualiza la informacion de una publicacion
 const updatePublication = function(req, res){
-    console.log(req)
-    if(req.user.typee=='userOnly'){
+    console.log("req.body",req.body)
+    if(req.body.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
-	const _id = req.body._id
 
-	const update = Object.keys(req.body)
+    console.log("Es admin")
+	const _id = req.params.id
+	console.log("_id",_id)
+	console.log("updates a aplicar",req.body)
 	Publication.findOneAndUpdate(_id, req.body).then(function(publication){
+		console.log("Se encontro una publicacion")
 		if(!publication){
+			console.log("no se encontro una pub")
 			return res.status(404).send()
 		}
 		return res.send(publication._id)
 	}).catch(function(error){
+		console.log(error)
 		res.status(500).send(error)
 	})
 }
 
 //DELETE - Borra 
 const deletePublication = function(req, res){
-    if(req.user.typee=='userOnly'){
+    if(req.body.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
 
@@ -164,7 +169,7 @@ const deletePublication = function(req, res){
 
 // POST - Habilita que la publicación pueda ser vista
 const enablePublication = function(req, res) {
-	if(req.user.typee=='userOnly'){
+	if(req.body.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
 	const _id = req.params.id
@@ -189,5 +194,4 @@ module.exports = {
     getByTags: getByTags,
     getSinglePublication: getSinglePublication,
     enablePublication: enablePublication
-
 }

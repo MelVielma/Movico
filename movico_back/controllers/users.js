@@ -71,7 +71,13 @@ const findUsers = function(req, res) {
 const findAuthor = function(req, res) {
 	const _id = req.params.id
 	User.findById({ _id, status:'Enable' }).exec(function(error, user) {
-		return res.send(user.name)
+			info={
+				name:user.name,
+				typee: user.typee,
+				email: user.email,
+				about: user.about
+			}
+			return res.send(info)
 	})
 }
 
