@@ -70,7 +70,9 @@ const findUsers = function(req, res) {
 // GET - Consulta de usuario por id del mismo
 const findAuthor = function(req, res) {
 	const _id = req.params.id
+	console.log("_id", _id)
 	User.findById({ _id, status:'Enable' }).exec(function(error, user) {
+			console.log("user", user)
 			info={
 				name:user.name,
 				typee: user.typee,

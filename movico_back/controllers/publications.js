@@ -137,7 +137,7 @@ const updatePublication = function(req, res){
 	const _id = req.params.id
 	console.log("_id",_id)
 	console.log("updates a aplicar",req.body)
-	Publication.findOneAndUpdate(_id, req.body).then(function(publication){
+	Publication.findByIdAndUpdate(_id, req.body).then(function(publication){
 		console.log("Se encontro una publicacion")
 		if(!publication){
 			console.log("no se encontro una pub")

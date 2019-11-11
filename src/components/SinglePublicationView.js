@@ -59,6 +59,9 @@ class SinglePublicationView extends React.Component{
       publication: '',
       userTypee: '',
       isEditable: false,
+      showMessageModal : false,
+      message: '',
+      publicationStatus: ''
     };
     this.refPubTitle = React.createRef();
     this.refPubBusiness = React.createRef();
@@ -66,6 +69,8 @@ class SinglePublicationView extends React.Component{
     this.refPubText = React.createRef();
     this.refPubDate = React.createRef();
     this.displayMessageModal = React.createRef();
+
+
 
     this.getPublicationInfo = this.getPublicationInfo.bind(this);
     this.afterGet = this.afterGet.bind(this);
@@ -76,40 +81,46 @@ class SinglePublicationView extends React.Component{
     this.displayMessage = this.displayMessage.bind(this);
     this.handleCambiosPub = this.handleCambiosPub.bind(this);
     this.updateIsEditable = this.updateIsEditable.bind(this);
+    this.hideMessageModalHandler = this.hideMessageModalHandler.bind(this);
   }
 
-  displayMessage(message){
-    ReactDOM.render(<div />, this.refs.displayMessageModal)
-    var err_html = (
-        <Modal id="adminPubMod">
-          <SuccessAlert
-            title={message}
-          />
-        </Modal>
-      )
-    ReactDOM.render(err_html, this.refs.displayMessageModal)
+  hideMessageModalHandler = (event) =>{
+    this.state.showMessageModal = false;
+    this.forceUpdate();
   }
 
-  //Falta checar lo de habilitar y deshabilitar, así como eliminar una publicación
+  displayMessage(message){ 
+    console.log("Se despliega el mensaje:", message)
+    this.state.message = message;
+    this.state.showMessageModal = true;
+    this.forceUpdate();
+  }
+
   handleDeshabilitarPub(event) {
+    this.state.publicationStatus = 'Disable'
     let fetch_url = "/publications/"+ this.state.pubId;
     let jsonContent = {
       'typee': this.state.userTypee,
-      'status': "Disable"
+      'status': this.state.publicationStatus
     }
     fetch(fetch_url, updateInfoFromServer(jsonContent))
       .then(() => this.displayMessage("Se deshabilitó la Publicación"))
+      .then(() => this.state.publicationStatus = "Disable")
+      .then(() => this.afterGet())
       .catch(err => this.displayMessage(err))
   }
 
   handleHabilitarPub(event){
+    this.state.publicationStatus = 'Enable'
     let fetch_url = "/publications/"+ this.state.pubId;
     let jsonContent = {
       'typee': this.state.userTypee,
-      'status': "Enable"
+      'status': this.state.publicationStatus
     }
     fetch(fetch_url, updateInfoFromServer(jsonContent))
       .then(() => this.displayMessage("Se habilitó la Publicación"))
+      .then(() => this.state.publicationStatus = "Enable")
+      .then(() => this.afterGet())
       .catch(err => this.displayMessage(err))
   }
 
@@ -133,11 +144,10 @@ class SinglePublicationView extends React.Component{
       'date': this.refPubDate.current.textContent
     }
     fetch(fetch_url, updateInfoFromServer(jsonContent))
-      .then(id => console.log(id), () => this.displayMessage("Se modificó la Publicación de manera exitosa"))
+      .then(id => this.displayMessage("Se modificó la Publicación de manera exitosa"))
+      .then(this.updateIsEditable())
+      .then(this.afterGet())
       .catch(err => this.displayMessage(err))
-    
-    this.updateIsEditable();
-    this.afterGet();
   }
 
   updateIsEditable(event){
@@ -153,8 +163,9 @@ class SinglePublicationView extends React.Component{
     let fetch_url = "/publications/" + this.state.pubId;
     fetch(fetch_url, getInfoFromServer)
       .then(response => response.json())
-      .then(state => this.setState({publication: state}, () =>
-        this.getUserTypee()));
+      .then(state => this.setState({publication: state}))
+      .then(() => this.getUserTypee())
+      .then(() => this.state.publicationStatus = this.state.publication[0].status)
   }
 
   afterGet(event){
@@ -165,7 +176,7 @@ class SinglePublicationView extends React.Component{
     let isUserLogged = undefined;
     console.log(localStorage.getItem('user_id')!= null);
     let isAdmin = this.state.userTypee === 'admin';
-    let isPublicationEnable = this.state.publication[0].status === "Enable";
+    let isPublicationEnable = this.state.publicationStatus === "Enable";
     let isEditable = this.state.isEditable
     if (localStorage.getItem('user_id') != null) {
       isUserLogged = true;
@@ -239,7 +250,13 @@ class SinglePublicationView extends React.Component{
       
       return (
         <>
-        <div ref="displayMessageModal" />
+        <div>
+          <Modal ref="displayMessageModal" show={this.state.showMessageModal} onHide={this.hideMessageModalHandler}>
+            <Modal.Header closeButton>
+              <Modal.Title>{this.state.message}</Modal.Title>
+            </Modal.Header>
+          </Modal>
+        </div>
         <div id="SinglePublicationView" ref="putSinglePubHere">
             <h1> {this.state.pubId} </h1>
         
