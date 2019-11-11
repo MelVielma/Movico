@@ -28,18 +28,15 @@ const createUser = function(req, res) {
 const login = function(req, res) {
 	User.findByCredentials(req.body.email, req.body.password).then(function(user){
 		//Checamos que no haya "Eliminado" su cuenta.
-		console.log(user)
+		
 		if (user.status == 'Disable') {
 			return res.status(401).send({error: 'Email not found.'})
 		} else {
 			//return res.status(200).send(user.generateToken())
-			
-			user.generateToken().then(function(token){
-			  req.user = user
-			  return res.send({user, token})
-			}).catch(function(error){
-			  return res.status(401).send({ error: error })
-			})
+			console.log(user)
+			token=user.generateToken()
+			console.log(token)
+			return res.send({user, token})
 			
 		}
 	  }).catch(function(error) {

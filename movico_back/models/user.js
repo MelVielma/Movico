@@ -76,7 +76,7 @@ userSchema.methods.toJSON = function() {
 	const userObject = user.toObject()
 
 	delete userObject.password
-	delete userObject.authToken
+	//delete userObject.authToken
 
 	return userObject
 }
@@ -101,44 +101,14 @@ userSchema.statics.findByCredentials = function(email, password) {
 }
 
 userSchema.methods.generateToken = function() {
-	const user = this
-	const token = jwt.sign({ _id: user._id.toString() }, sec, { expiresIn: '7 days'})
-	info = {
-		user : user._id,
-		token : token
-	}
-	return res.send(newToken.token)
-	/*
-	return new Promise(function( resolve, reject) {
-		const newToken = new Token(info)
-		newToken.save().then(function() {
-			return resolve(newToken.token)
-		}).catch(function(error) {
-			return reject(error)
-		})
-	})
-	*/
-	/*
-	const newToken = new Token(info)
-	newToken.save().then(function() {
-		return res.send(newToken.token)
-	}).catch(function(error) {
-		return res.status(408).send(error)
-	})
-	*/
-
-
-	/*
-	user.authToken = user.authToken.concat({ token })
-	console.log(token)
-	return new Promise(function( resolve, reject) {
-		user.save().then(function(user){
-		return resolve(token)
-		}).catch(function(error) {
-		return reject(error)
-		})
-	})
-	*/
+	
+	
+	
+		const user = this
+		const token = jwt.sign({ _id: user._id.toString() }, sec, { expiresIn: '7 days'})
+		console.log(token)
+		return  (token)
+	
 }
 
 // Esto debería de ser para poder hacer el update a las passwords.
