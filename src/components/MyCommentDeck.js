@@ -106,7 +106,7 @@ class CommentsView extends React.Component {
 		let jsonContent = {
 			'user': localStorage.getItem('user_id'),
 			'text': this.state.commentText,
-			'date': '09/09/2019'
+			'date': new Date()
 	    }
 	    this.getAuthor(jsonContent.user);
 	    if (this.state.commentText !== undefined) {
