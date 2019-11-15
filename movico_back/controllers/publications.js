@@ -67,6 +67,7 @@ const getByTags = function(req, res){
 //GET - Consulta TODAS las publicaciones
 const getAllPublications = function(req, res){
 	//Los usuarios solo pueden ver las publicaciones habilitadas
+	console.log('req.user',req.user)
 	let isUserUndefined = false
 	isUserUndefined = !(req.user === undefined)
 	let isTypeeAdmin = false
@@ -110,7 +111,7 @@ const getSinglePublication = function(req, res){
 		//Los admin pueden ver TODAS las poblicaciones
 		console.log("Entro como admin")
 	
-		Publication.find({_id}).then(function(publications){
+		Publication.find({_id}).populate('comments').then(function(publications){
 			return res.send(publications)
 		}).catch(function(error){
 			return res.status(500).send(error)
@@ -118,7 +119,7 @@ const getSinglePublication = function(req, res){
 	}
 	else
 	{
-		Publication.find({ _id, status: 'Enable' }).then(function(publications){
+		Publication.find({ _id, status: 'Enable' }).populate('comments').then(function(publications){
 			return res.send(publications)
 		}).catch(function(error){
 			return res.status(500).send(error)
@@ -129,7 +130,7 @@ const getSinglePublication = function(req, res){
 //UPDATE - Actualiza la informacion de una publicacion
 const updatePublication = function(req, res){
     console.log("req.body",req.body)
-    if(req.body.typee=='userOnly'){
+    if(req.user.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
 
@@ -152,12 +153,12 @@ const updatePublication = function(req, res){
 
 //DELETE - Borra 
 const deletePublication = function(req, res){
-    if(req.body.typee=='userOnly'){
+    if(req.user.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
 
-	const _id = req.params._id
-	Publication.findOneAndDelete(_id).then(function(publication){
+	const _id = req.params.id
+	Publication.findByIdAndDelete(_id).then(function(publication){
 		if(!publication){
 			return res.status(404).send()
 		}
@@ -169,7 +170,7 @@ const deletePublication = function(req, res){
 
 // POST - Habilita que la publicación pueda ser vista
 const enablePublication = function(req, res) {
-	if(req.body.typee=='userOnly'){
+	if(req.user.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
 	const _id = req.params.id

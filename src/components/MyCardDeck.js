@@ -15,7 +15,8 @@ var publications2 = {
 		'Accept': 'application/json',
 		'Content-Type': 'application/json',
 		'Origin': '',
-		'Host': 'http://localhost:3001'
+		'Host': 'http://localhost:3001',
+		'Authorization': `Bearer ${localStorage.getItem('user_token')}`
 	}
 }
 
@@ -25,7 +26,8 @@ var nameAuthor = {
 		'Accept': 'application/json',
 		'Contenct-Type': 'application/json',
 		'Origin': '',
-		'Host': 'http://localhost:3001'
+		'Host': 'http://localhost:3001',
+		'Authorization': `Bearer ${localStorage.getItem('user_token')}`
 	}
 }
 
@@ -65,9 +67,10 @@ class PublicationDeck extends React.Component {
 		for(let i = 0 ; i < pubs.length ; i++) {
 			//TODO: Modificar aqui el for y agregar un if para crear
 			//mas de un solo card deck y que se vayan desplegando de tres en tres
-			cards.push(this.createCard(pubs[i]))
-
+			let tempHtml = this.createCard(pubs[i])
+			cards.push(tempHtml)
 		}
+		console.log("**type of cards", typeof(cards))
 		ReactDOM.render(cards, container);
 	}
 

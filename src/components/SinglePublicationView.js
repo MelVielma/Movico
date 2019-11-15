@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
-import {Jumbotron, Card, Button} from 'react-bootstrap';
+import {Jumbotron, Button} from 'react-bootstrap';
 import SuccessAlert from './SuccessAlert';
+import CommentsView from './MyCommentDeck';
 import Modal from 'react-bootstrap/Modal';
 
 
@@ -13,7 +14,8 @@ var getInfoFromServer = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     'Origin': '',
-    'Host': 'http://localhost:3001'
+    'Host': 'http://localhost:3001',
+    'Authorization': `Bearer ${localStorage.getItem('user_token')}`
   }
 }
 
@@ -26,7 +28,8 @@ var updateInfoFromServer = function (updates) {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Origin': '',
-      'Host': 'http://localhost:3001'
+      'Host': 'http://localhost:3001',
+      'Authorization': `Bearer ${localStorage.getItem('user_token')}`
     },
     body: JSON.stringify(
       updates
@@ -35,7 +38,6 @@ var updateInfoFromServer = function (updates) {
   }
 }
 
-// EN EL BACK SE DEBE DE MOVER QUE SAQUE EL TYPEE DEL BODY, NO DE REQ.USER, QUE NO PUEDES HACERLE APPEND EL USER NOMAS PORQUE SI
 var delPubFromServer = function(typee){
   return {
     method: 'DELETE',
@@ -43,7 +45,8 @@ var delPubFromServer = function(typee){
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Origin': '',
-      'Host': 'http://localhost:3001'
+      'Host': 'http://localhost:3001',
+      'Authorization': `Bearer ${localStorage.getItem('user_token')}`
     },
     body: JSON.stringify({
         'typee': typee
@@ -61,7 +64,8 @@ class SinglePublicationView extends React.Component{
       isEditable: false,
       showMessageModal : false,
       message: '',
-      publicationStatus: ''
+      publicationStatus: '',
+      listCommentsBool: false,
     };
     this.refPubTitle = React.createRef();
     this.refPubBusiness = React.createRef();
@@ -92,12 +96,25 @@ class SinglePublicationView extends React.Component{
   displayMessage(message){ 
     console.log("Se despliega el mensaje:", message)
     this.state.message = message;
-    this.state.showMessageModal = true;
-    this.forceUpdate();
+    this.state.showMessageModal = true;    
+    try {
+      this.afterGet();
+    }
+    catch(err) {
+      console.log("Publicación no accesible");
+      /*
+      let err_html = (
+          <h1>
+            err
+          </h1>
+        )
+      ReactDOM.render(err_html , this.refs.displayMessageModal);
+      */
+    }
   }
 
   handleDeshabilitarPub(event) {
-    this.state.publicationStatus = 'Disable'
+    this.state.publicationStatus = 'Disable';
     let fetch_url = "/publications/"+ this.state.pubId;
     let jsonContent = {
       'typee': this.state.userTypee,
@@ -105,13 +122,13 @@ class SinglePublicationView extends React.Component{
     }
     fetch(fetch_url, updateInfoFromServer(jsonContent))
       .then(() => this.displayMessage("Se deshabilitó la Publicación"))
-      .then(() => this.state.publicationStatus = "Disable")
-      .then(() => this.afterGet())
+      .then(() => this.setState({publicationStatus: "Disable"}))
+      .then(() => this.afterGet(), err => this.displayMessage(err))
       .catch(err => this.displayMessage(err))
   }
 
   handleHabilitarPub(event){
-    this.state.publicationStatus = 'Enable'
+    this.state.publicationStatus = 'Enable';
     let fetch_url = "/publications/"+ this.state.pubId;
     let jsonContent = {
       'typee': this.state.userTypee,
@@ -119,18 +136,18 @@ class SinglePublicationView extends React.Component{
     }
     fetch(fetch_url, updateInfoFromServer(jsonContent))
       .then(() => this.displayMessage("Se habilitó la Publicación"))
-      .then(() => this.state.publicationStatus = "Enable")
-      .then(() => this.afterGet())
+      .then(() => this.setState({publicationStatus: "Enable"}))
+      .then(() => this.afterGet(), err => this.displayMessage(err))
       .catch(err => this.displayMessage(err))
   }
 
   handleEliminarPub(event){
+    console.log("handleEliminarPub", "prueba de que esto no siempre se imprime")
     let fetch_url = "/publications/" + this.state.pubId;
     fetch(fetch_url, delPubFromServer(this.state.userTypee))
       .then(() => this.displayMessage("Se eliminó la Publicación"))
       .catch(err => this.displayMessage(err))
   }
-
 
   handleCambiosPub(event) {
     let fetch_url = "/publications/"+ this.state.pubId;
@@ -146,35 +163,32 @@ class SinglePublicationView extends React.Component{
     fetch(fetch_url, updateInfoFromServer(jsonContent))
       .then(id => this.displayMessage("Se modificó la Publicación de manera exitosa"))
       .then(this.updateIsEditable())
-      .then(this.afterGet())
       .catch(err => this.displayMessage(err))
   }
 
   updateIsEditable(event){
     console.log("*******updateIsEditable:", this.state.isEditable)
-    this.state.isEditable = !this.state.isEditable
+    this.state.isEditable = !this.state.isEditable;
     console.log("El valor actualizado de updateIsEditable es:", this.state.isEditable)
     this.afterGet();
   }
-
-
 
   getPublicationInfo(event){
     let fetch_url = "/publications/" + this.state.pubId;
     fetch(fetch_url, getInfoFromServer)
       .then(response => response.json())
       .then(state => this.setState({publication: state}))
-      .then(() => this.getUserTypee())
-      .then(() => this.state.publicationStatus = this.state.publication[0].status)
+      .then(() => this.setState({publicationStatus: this.state.publication[0].status}))
+      .then(() => this.afterGet())
+      .catch(err => this.displayMessage(err))
   }
 
   afterGet(event){
-    console.log("userTypee",this.state.userTypee);
     var container = this.refs.putSinglePubHere;
     var myPublication = this.state.publication[0];
     console.log("Estado after get single publ: ",myPublication);
     let isUserLogged = undefined;
-    console.log(localStorage.getItem('user_id')!= null);
+    console.log("this.state.userTypee", this.state.userTypee)
     let isAdmin = this.state.userTypee === 'admin';
     let isPublicationEnable = this.state.publicationStatus === "Enable";
     let isEditable = this.state.isEditable
@@ -185,6 +199,7 @@ class SinglePublicationView extends React.Component{
     console.log("isUserLogged: ", isUserLogged)
     console.log("isAdmin: ", isAdmin)
     console.log("isPublicationEnable: ", isPublicationEnable)
+    console.log("isEditable", isEditable)
 
     let singlePublicationHtml = (
       <Jumbotron>
@@ -225,6 +240,7 @@ class SinglePublicationView extends React.Component{
       </Jumbotron>
       );
     ReactDOM.render(singlePublicationHtml, container);
+    this.forceUpdate()
   }
 
   getUserTypee(event){
@@ -233,21 +249,25 @@ class SinglePublicationView extends React.Component{
     if (userId != null) {
       let fetch_url = "/users/" + userId;
       fetch(fetch_url, getInfoFromServer)
-        .then(response => response.json())
-        .then(state => this.setState({userTypee: state.typee}, () =>
-          this.afterGet()));
+        .then(response => response.json(), err => this.displayMessage(err))
+        .then(state => this.setState({userTypee: state.typee}), err => this.displayMessage(err))
+        .catch(err => this.displayMessage(err))
     }
+    return this.state.userTypee
   }
-
-
 
   componentDidMount() {
 		this.getPublicationInfo();
+    this.getUserTypee();
 	}
 
   render() {
-      //Checar si esto jala 
-      
+      //Checar si esto jala
+      let comments = this.state.publication[0];
+      let isUserLogged = (localStorage.getItem('user_id') != null);
+      let userTypee = this.state.userTypee;
+      console.log("render userTypee", userTypee);
+      //console.log("isEditable",this.state.isEditable)
       return (
         <>
         <div>
@@ -259,8 +279,8 @@ class SinglePublicationView extends React.Component{
         </div>
         <div id="SinglePublicationView" ref="putSinglePubHere">
             <h1> {this.state.pubId} </h1>
-        
         </div>
+          <CommentsView listComments={comments} isUserLogged={isUserLogged} userTypee={this.state.userTypee}/> 
         </>
       )
     }

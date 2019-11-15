@@ -10,7 +10,7 @@ const publicationSchema = new mongoose.Schema({
 	business_name: {
 		type: String,
 		required: true
-
+ 
 	},
 	publishedBy: {
 		type: mongoose.Schema.Types.ObjectId,
