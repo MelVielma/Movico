@@ -66,6 +66,7 @@ class SinglePublicationView extends React.Component{
       message: '',
       publicationStatus: '',
       listCommentsBool: false,
+      isDeletingPub: false
     };
     this.refPubTitle = React.createRef();
     this.refPubBusiness = React.createRef();
@@ -86,11 +87,17 @@ class SinglePublicationView extends React.Component{
     this.handleCambiosPub = this.handleCambiosPub.bind(this);
     this.updateIsEditable = this.updateIsEditable.bind(this);
     this.hideMessageModalHandler = this.hideMessageModalHandler.bind(this);
+    this.confirmEliminacionPub = this.confirmEliminacionPub.bind(this);
   }
 
   hideMessageModalHandler = (event) =>{
     this.state.showMessageModal = false;
     this.forceUpdate();
+  }
+
+  confirmEliminacionPub() {
+    this.state.isDeletingPub = true;
+    this.displayMessage("Se perderá toda la información de la publicación")
   }
 
   displayMessage(message){ 
@@ -144,7 +151,9 @@ class SinglePublicationView extends React.Component{
   handleEliminarPub(event){
     console.log("handleEliminarPub", "prueba de que esto no siempre se imprime")
     let fetch_url = "/publications/" + this.state.pubId;
+    
     fetch(fetch_url, delPubFromServer(this.state.userTypee))
+      .then(() => this.setState({isDeletingPub: false}))
       .then(() => this.displayMessage("Se eliminó la Publicación"))
       .catch(err => this.displayMessage(err))
   }
@@ -230,7 +239,7 @@ class SinglePublicationView extends React.Component{
               )
 
             }
-            <Button id="btnEliminar" variant="danger" onClick={this.handleEliminarPub}>Eliminar Publicación</Button>
+            <Button id="btnEliminar" variant="danger" onClick={() => this.confirmEliminacionPub()}>Eliminar Publicación</Button>
             </>
             ):(
             <>
@@ -266,6 +275,7 @@ class SinglePublicationView extends React.Component{
       let comments = this.state.publication[0];
       let isUserLogged = (localStorage.getItem('user_id') != null);
       let userTypee = this.state.userTypee;
+      let eliminarPub = this.state.isDeletingPub;
       console.log("render userTypee", userTypee);
       //console.log("isEditable",this.state.isEditable)
       return (
@@ -275,6 +285,13 @@ class SinglePublicationView extends React.Component{
             <Modal.Header closeButton>
               <Modal.Title>{this.state.message}</Modal.Title>
             </Modal.Header>
+            { eliminarPub? (
+            <Button id="btnEliminar" variant="danger" onClick={this.handleEliminarPub}>Eliminar Publicación</Button>
+            ) : (
+            <>
+            </>
+            )
+            }
           </Modal>
         </div>
         <div id="SinglePublicationView" ref="putSinglePubHere">
