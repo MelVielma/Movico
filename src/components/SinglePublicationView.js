@@ -20,7 +20,11 @@ var getInfoFromServer = {
 }
 
 var updateInfoFromServer = function (updates) {
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> merging-front-back
   console.log("updates", updates)
   return {
     method: 'PATCH',
@@ -34,7 +38,11 @@ var updateInfoFromServer = function (updates) {
     body: JSON.stringify(
       updates
     ),
+<<<<<<< HEAD
      
+=======
+
+>>>>>>> merging-front-back
   }
 }
 
@@ -100,10 +108,17 @@ class SinglePublicationView extends React.Component{
     this.displayMessage("Se perderá toda la información de la publicación")
   }
 
+<<<<<<< HEAD
   displayMessage(message){ 
     console.log("Se despliega el mensaje:", message)
     this.state.message = message;
     this.state.showMessageModal = true;    
+=======
+  displayMessage(message){
+    console.log("Se despliega el mensaje:", message)
+    this.state.message = message;
+    this.state.showMessageModal = true;
+>>>>>>> merging-front-back
     try {
       this.afterGet();
     }
@@ -151,7 +166,11 @@ class SinglePublicationView extends React.Component{
   handleEliminarPub(event){
     console.log("handleEliminarPub", "prueba de que esto no siempre se imprime")
     let fetch_url = "/publications/" + this.state.pubId;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> merging-front-back
     fetch(fetch_url, delPubFromServer(this.state.userTypee))
       .then(() => this.setState({isDeletingPub: false}))
       .then(() => this.displayMessage("Se eliminó la Publicación"))
@@ -204,7 +223,11 @@ class SinglePublicationView extends React.Component{
     if (localStorage.getItem('user_id') != null) {
       isUserLogged = true;
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> merging-front-back
     console.log("isUserLogged: ", isUserLogged)
     console.log("isAdmin: ", isAdmin)
     console.log("isPublicationEnable: ", isPublicationEnable)
@@ -225,9 +248,15 @@ class SinglePublicationView extends React.Component{
         <div>
           { (isUserLogged && isAdmin) ? (
              <>
+<<<<<<< HEAD
             {isPublicationEnable ? 
               (
                 <Button id="btnDeshabilitar" variant="warning" onClick={this.handleDeshabilitarPub}>Deshabilitar Publicación</Button>    
+=======
+            {isPublicationEnable ?
+              (
+                <Button id="btnDeshabilitar" variant="warning" onClick={this.handleDeshabilitarPub}>Deshabilitar Publicación</Button>
+>>>>>>> merging-front-back
               ):(
                 <Button id="btnHabilitar" variant="success" onClick={this.handleHabilitarPub}>Habilitar Publicación</Button>
               )
@@ -297,7 +326,11 @@ class SinglePublicationView extends React.Component{
         <div id="SinglePublicationView" ref="putSinglePubHere">
             <h1> {this.state.pubId} </h1>
         </div>
+<<<<<<< HEAD
           <CommentsView listComments={comments} isUserLogged={isUserLogged} userTypee={this.state.userTypee}/> 
+=======
+          <CommentsView listComments={comments} isUserLogged={isUserLogged} userTypee={this.state.userTypee}/>
+>>>>>>> merging-front-back
         </>
       )
     }

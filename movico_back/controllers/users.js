@@ -28,16 +28,16 @@ const createUser = function(req, res) {
 const login = function(req, res) {
 	User.findByCredentials(req.body.email, req.body.password).then(function(user){
 		//Checamos que no haya "Eliminado" su cuenta.
-		console.log(user)
+		
 		if (user.status == 'Disable') {
 			return res.status(401).send({error: 'Email not found.'})
 		} else {
-			user.generateToken().then(function(token){
-			  req.user = user
-			  return res.send({user, token})
-			}).catch(function(error){
-			  return res.status(401).send({ error: error })
-			})
+			//return res.status(200).send(user.generateToken())
+			console.log(user)
+			token=user.generateToken()
+			console.log(token)
+			return res.send({user, token})
+			
 		}
 	  }).catch(function(error) {
 		return res.status(401).send({ error: error })
@@ -46,14 +46,17 @@ const login = function(req, res) {
 
 // POST - Logout de usuario
 const logout = function(req, res){
+	return res.status(200).send({result: true})
+	/*
 	req.user.authToken = req.user.authToken.filter(function(token) {
-		return token.token !== req. token
+		return token.token !== req.token
 	})
 	req.user.save().then(function() {
 		return res.send()
 	}).catch(function(error) {
 		return res.status(500).send({ error: error })
 	})
+	*/
 }
 
 //CHECAR COMO SE HACE ESTO, QUE ENCUENTRE LOS RESULTADOS SIMILIARES, NO TAL CUALES
@@ -71,9 +74,13 @@ const findUsers = function(req, res) {
 const findAuthor = function(req, res) {
 	console.log("findAuthor")
 	const _id = req.params.id
+<<<<<<< HEAD
 	console.log("_id", _id)
 	User.findById(_id).exec(function(error, user) {
 			console.log("user", user)
+=======
+	User.findById({ _id, status:'Enable' }).exec(function(error, user) {
+>>>>>>> merging-front-back
 			info={
 				name:user.name,
 				typee: user.typee,

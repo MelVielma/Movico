@@ -37,12 +37,14 @@ const userSchema = new mongoose.Schema({
 	status: {
 		type: String
 	},
+	/*
 	authToken: [{
 		token: {
 			type: String,
 			required: true
 		}
 	}],
+	*/
 	typee:{
 		type:String,
 		required: true,
@@ -74,7 +76,7 @@ userSchema.methods.toJSON = function() {
 	const userObject = user.toObject()
 
 	delete userObject.password
-	delete userObject.authToken
+	//delete userObject.authToken
 
 	return userObject
 }
@@ -99,17 +101,14 @@ userSchema.statics.findByCredentials = function(email, password) {
 }
 
 userSchema.methods.generateToken = function() {
-	const user = this
-	const token = jwt.sign({ _id: user._id.toString() }, sec, { expiresIn: '7 days'})
-	user.authToken = user.authToken.concat({ token })
-	console.log(token)
-	return new Promise(function( resolve, reject) {
-		user.save().then(function(user){
-		return resolve(token)
-		}).catch(function(error) {
-		return reject(error)
-		})
-	})
+	
+	
+	
+		const user = this
+		const token = jwt.sign({ _id: user._id.toString() }, sec, { expiresIn: '7 days'})
+		console.log(token)
+		return  (token)
+	
 }
 
 // Esto debería de ser para poder hacer el update a las passwords.
