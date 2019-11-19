@@ -80,7 +80,6 @@ const getByTags = function(req, res){
 //GET - Consulta TODAS las publicaciones
 const getAllPublications = function(req, res){
 	//Los usuarios solo pueden ver las publicaciones habilitadas
-<<<<<<< HEAD
 	console.log('req.user',req.user)
 	let isUserUndefined = false
 	isUserUndefined = !(req.user === undefined)
@@ -88,13 +87,8 @@ const getAllPublications = function(req, res){
 	if (isUserUndefined) {
 		isTypeeAdmin = req.user.typee==="admin"
 	}
-	
-	if(isUserUndefined && isTypeeAdmin){
-=======
-	console.log(req.user)
 
-	if(!(req.user === undefined) && req.user.typee=='admin'){
->>>>>>> merging-front-back
+	if(isUserUndefined && isTypeeAdmin){
 		//Los admin pueden ver TODAS las poblicaciones
 		Publication.find({}).then(function(publications){
 			return res.send(publications)
@@ -120,11 +114,10 @@ const getSinglePublication = function(req, res){
     console.log(req.user)
     const _id = req.params.id
 
-<<<<<<< HEAD
 	if(isUserUndefined && isTypeeAdmin){
 		//Los admin pueden ver TODAS las poblicaciones
 		console.log("Entro como admin")
-	
+
 		Publication.find({_id}).populate('comments').then(function(publications){
 			return res.send(publications)
 		}).catch(function(error){
@@ -137,28 +130,8 @@ const getSinglePublication = function(req, res){
 			return res.send(publications)
 		}).catch(function(error){
 			return res.status(500).send(error)
-		})	
+		})
 	}
-=======
-    if(!(req.user === undefined) && req.user.typee=='admin'){
-        //Los admin pueden ver TODAS las poblicaciones
-        console.log("Entro como admin")
-
-        Publication.find({_id}).then(function(publications){
-            return res.send(publications)
-        }).catch(function(error){
-            return res.status(500).send(error)
-        })
-    }
-    else
-    {
-        Publication.find({ _id, status: 'Enable' }).then(function(publications){
-            return res.send(publications)
-        }).catch(function(error){
-            return res.status(500).send(error)
-        })
-    }
->>>>>>> merging-front-back
 }
 
 
@@ -170,7 +143,6 @@ const updatePublication = function(req, res){
     if(req.user.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
-<<<<<<< HEAD
 
     console.log("Es admin")
 	const _id = req.params.id
@@ -178,12 +150,6 @@ const updatePublication = function(req, res){
 	console.log("updates a aplicar",req.body)
 	Publication.findByIdAndUpdate(_id, req.body).then(function(publication){
 		console.log("Se encontro una publicacion")
-=======
-	const _id = req.params._id
-	//delete req.body._id
-	const update = Object.keys(req.body)
-	Publication.findOneAndUpdate(_id, req.body).then(function(publication){
->>>>>>> merging-front-back
 		if(!publication){
 			console.log("no se encontro una pub")
 			return res.status(404).send()
@@ -237,16 +203,8 @@ module.exports = {
 	getByUserId: getByUserId,
 	updatePublication: updatePublication,
     deletePublication: deletePublication,
-<<<<<<< HEAD
     getByTag: getByTag,
     getByTags: getByTags,
     getSinglePublication: getSinglePublication,
     enablePublication: enablePublication
 }
-=======
-    getByTag:getByTag,
-	getByTags:getByTags,
-	getSinglePublication: getSinglePublication,
-  enablePublication: enablePublication
-}
->>>>>>> merging-front-back
