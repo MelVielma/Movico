@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Modal from 'react-bootstrap/Modal';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import LoginForm from './LoginForm';
 import CreatePostForm from './CreatePostForm';
 import CreateUserForm from './CreateUserForm'
@@ -38,6 +39,9 @@ class MyNavbar extends React.Component{
       this.setState({showCreateUserModal: true});
     }
     hideCreateUserModalHandler = (event) =>{
+      if(this.checkIfLogged()){
+        this.forceUpdate();
+      }
       this.setState({showCreateUserModal: false});
     }
 
@@ -89,7 +93,7 @@ class MyNavbar extends React.Component{
               <CreateUserForm/>
             </Modal>
 
-            <Navbar bg="secondary" expand="lg" fixed="top" className="text-uppercase" id="mainNav" >
+            <Navbar bg="light" expand="lg" fixed="top" className="text-uppercase" id="mainNav" >
               <Navbar.Brand href="/">
                 <img src={process.env.PUBLIC_URL + '/img/logo_movico.png'} className="d-inline-block align-top" height="30" alt="MOVICO"/>
               </Navbar.Brand>
@@ -104,7 +108,10 @@ class MyNavbar extends React.Component{
                     <Nav.Link className="mx-3 px-3" onClick={this.showCreateUserModalHandler} href="#3">Crear Cuenta</Nav.Link>
                     </>
                   ) : (
-                    <Nav.Link className="mx-3 px-3" onClick={this.handleLogout} href="#logout">Log Out</Nav.Link>
+                    <NavDropdown alignRight title="Configuración">
+                      <NavDropdown.Item href="/perfil">Perfil</NavDropdown.Item>
+                      <NavDropdown.Item onClick={this.handleLogout} href="#logout">Cerrar sesión</NavDropdown.Item>
+                    </NavDropdown>
                   )}
                 </Nav>
               </Navbar.Collapse>
@@ -114,5 +121,6 @@ class MyNavbar extends React.Component{
         );
     }
 }
-
+//<Nav.Link className="mx-3 px-3" onClick={this.handleLogout} href="#logout">Log Out</Nav.Link>
+//<img src={process.env.PUBLIC_URL + '/img/user.png'} className="d-inline-block align-top" height="30" alt="Settings"/>
 export default MyNavbar;

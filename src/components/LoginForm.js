@@ -113,11 +113,11 @@ class LoginForm extends React.Component{
             <Form ref="loginFormForm" id="loginForm" onSubmit={this.handleSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" value={this.state.email} onChange={this.handleChange} placeholder="Ingresar correo" />
+                <Form.Control required type="email" value={this.state.email} onChange={this.handleChange} placeholder="Ingresar correo" />
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" value={this.state.password} onChange={this.handleChange} placeholder="Contraseña" />
+                <Form.Control required type="password" value={this.state.password} onChange={this.handleChange} placeholder="Contraseña" />
               </Form.Group>
               <Button variant="primary" type="submit">
                 Submit

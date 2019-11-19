@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
-import {Jumbotron, Card} from 'react-bootstrap';
+import {Jumbotron} from 'react-bootstrap';
 
 var getSinglePubFromServer = {
   method: 'GET',
