@@ -63,10 +63,7 @@ class PublicationDeck extends React.Component {
 		const pubs = this.state.publications;
 
 		for(let i = 0 ; i < pubs.length ; i++) {
-			//TODO: Modificar aqui el for y agregar un if para crear
-			//mas de un solo card deck y que se vayan desplegando de tres en tres
 			cards.push(this.createCard(pubs[i]))
-
 		}
 		ReactDOM.render(cards, container);
 	}
@@ -97,7 +94,7 @@ class PublicationDeck extends React.Component {
 
 	render(){
 		return (
-			<div ref='container' className="indexCardDeck row mt-5 justify-content-center">
+			<div ref='container' className="indexCardDeck row justify-content-center">
 				{/* <CardDeck  className="indexCardDeck">
 				</CardDeck> */}
 

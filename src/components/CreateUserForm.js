@@ -6,15 +6,6 @@ import {Form, Button} from 'react-bootstrap';
 import WarningAlert from './WarningAlert';
 import SuccessAlert from './SuccessAlert';
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
-
 class CreateUserForm extends React.Component{
   constructor(props){
     super(props);
@@ -173,17 +164,17 @@ class CreateUserForm extends React.Component{
                 <Form.Label>Name</Form.Label>
                 <Form.Control id="nameUser" type="text" value={this.state.name} onChange={this.handleChange} minLength={4} required placeholder="Ingresar nombre" />
               </Form.Group>
-              
+
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" value={this.state.email} onChange={this.handleChange} required placeholder="Ingresar correo" />
               </Form.Group>
-              
+
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" value={this.state.password} onChange={this.handleChange} minLength={8} required placeholder="Contraseña" />
               </Form.Group>
-              
+
               <Form.Group controlId="formBasicAbout">
                 <Form.Label>About</Form.Label>
                 <Form.Control id="aboutUser" type="text" value={this.state.about} onChange={this.handleChange} required placeholder="Acerca de ti" />

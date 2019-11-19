@@ -7,9 +7,6 @@ import MyCardDeck from '../components/MyCardDeck';
 const Home = () => {
   return(
     <>
-      <div id="NavigationBar">
-        <MyNavbar />
-      </div>
       <div className="App">
         <MyCardDeck />
       </div>

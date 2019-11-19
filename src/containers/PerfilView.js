@@ -1,20 +1,20 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyNavbar from '../components/MyNavbar';
-import SinglePublicationView from '../components/SinglePublicationView'
+import Perfil from '../components/Perfil';
 import '../index.css';
 import '../App.css';
 
-class PublicationView extends React.Component{
+class PerfilView extends React.Component{
   render(){
     return(
       <>
         <div className="App">
-           <SinglePublicationView pubId = {this.props.match.params.pubId} />
+          <Perfil />
         </div>
       </>
     );
   }
 }
 
-export default PublicationView;
+export default PerfilView;

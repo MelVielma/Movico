@@ -14,7 +14,7 @@ const publicationSchema = new mongoose.Schema({
 	},
 	publishedBy: {
 		type: mongoose.Schema.Types.ObjectId,
-		required: true, 
+		required: true,
 		ref: 'User'
 	},
 	author: {

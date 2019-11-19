@@ -27,8 +27,20 @@ const createPublication = function(req, res){
 
 //GET - Consulta de publicaciones autor
 const getByAuthor = function(req, res){
-	const _author = req.publication.author 
+	const _author = req.publication.author
 	Publication.findById(_author).then(function(publication){
+		if(!publication){
+			return res.status(404).send(publication)
+		}
+		return res.send(publication)
+	}).catch(function(error){
+		return res.status(500).send(error)
+	})
+}
+
+const getByUserId = function(req, res){
+	const _userId = req.params.userId;
+	Publication.findById(_userId).then(function(publication){
 		if(!publication){
 			return res.status(404).send(publication)
 		}
@@ -84,7 +96,7 @@ const getAllPublications = function(req, res){
 			return res.send(publications)
 		}).catch(function(error){
 			return res.status(500).send(error)
-		})	
+		})
 	}
 }
 
@@ -96,7 +108,7 @@ const getSinglePublication = function(req, res){
     console.log(req.user)
     const _id = req.params.id
 
-    if(!(req.user === undefined) && req.user.typee=='adim'){
+    if(!(req.user === undefined) && req.user.typee=='admin'){
         //Los admin pueden ver TODAS las poblicaciones
         console.log("Entro como admin")
 
@@ -138,7 +150,7 @@ const updatePublication = function(req, res){
 	})
 }
 
-//DELETE - Borra 
+//DELETE - Borra
 const deletePublication = function(req, res){
     if(req.user.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
@@ -177,6 +189,7 @@ module.exports = {
 	createPublication: createPublication,
 	getAllPublications: getAllPublications,
 	getByAuthor: getByAuthor,
+	getByUserId: getByUserId,
 	updatePublication: updatePublication,
     deletePublication: deletePublication,
     getByTag:getByTag,
