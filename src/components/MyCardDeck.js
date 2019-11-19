@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CardDeck from 'react-bootstrap/CardDeck';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import '../index.css';
 
 /* para importar publication desde el archivo principal : import Publication from './path/to/component'; */
@@ -65,8 +63,6 @@ class PublicationDeck extends React.Component {
 		const pubs = this.state.publications;
 
 		for(let i = 0 ; i < pubs.length ; i++) {
-			//TODO: Modificar aqui el for y agregar un if para crear
-			//mas de un solo card deck y que se vayan desplegando de tres en tres
 			let tempHtml = this.createCard(pubs[i])
 			cards.push(tempHtml)
 		}

@@ -110,7 +110,7 @@ class MyNavbar extends React.Component{
                   ) : (
                     <NavDropdown alignRight title="Configuración">
                       <NavDropdown.Item href="/perfil">Perfil</NavDropdown.Item>
-                      <NavDropdown.Item onClick={this.handleLogout} href="#logout">Cerrar sesión</NavDropdown.Item>
+                      <NavDropdown.Item onClick={this.handleLogout} href="/">Cerrar sesión</NavDropdown.Item>
                     </NavDropdown>
                   )}
                 </Nav>

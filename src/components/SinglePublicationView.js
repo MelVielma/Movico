@@ -74,9 +74,6 @@ class SinglePublicationView extends React.Component{
     this.refPubText = React.createRef();
     this.refPubDate = React.createRef();
     this.displayMessageModal = React.createRef();
-
-
-
     this.getPublicationInfo = this.getPublicationInfo.bind(this);
     this.afterGet = this.afterGet.bind(this);
     this.getUserTypee = this.getUserTypee.bind(this);
