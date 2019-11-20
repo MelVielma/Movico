@@ -157,7 +157,7 @@ class Perfil extends React.Component{
 
   createPubCard(card){
     let new_html = '';
-		let new_href = "/publication/" + card.id;
+		let new_href = "/publicacion/" + card.id;
     //console.log(new_href);
 		new_html = (
 			  <Card className="indexMiniCard col-md-5 mx-2 justify-content-center">

@@ -32,6 +32,8 @@ router.patch('/users/disable', auth.auth2, users.disableUser)
 router.get('/publications', auth.auth2,publications.getAllPublications)
 router.get('/publications/:id', auth.auth,publications.getSinglePublication)
 router.get('/publicationsByUser/:userId', auth.auth, publications.getByUserId)
+router.get('/publicationsByTag/:tag', auth.auth, publications.getByTag)
+router.get('/publicationsByMultiTags/:tags', auth.auth, publications.getByTags)
 router.post('/publications', auth.auth, publications.createPublication)
 router.post('/publications/:id', auth.auth, publications.enablePublication)
 

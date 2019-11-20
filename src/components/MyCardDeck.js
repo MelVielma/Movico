@@ -33,6 +33,7 @@ class PublicationDeck extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			tagsToSearch: this.props.tags,
 			publications: '',
 			nameAuthor: ''
 		}
@@ -47,6 +48,12 @@ class PublicationDeck extends React.Component {
 			.then(response => response.json())
 			.then(state => this.setState({publications: state}, () =>
 				this.afterGet()));
+	}
+
+	getTagPublications(event) {
+		let searchingTag = this.state.tagsToSearch;
+		this.setState({tagsToSearch : ''});
+		//window.location.reload();
 	}
 
 	getAuthor(user_id) {
@@ -66,14 +73,14 @@ class PublicationDeck extends React.Component {
 			let tempHtml = this.createCard(pubs[i])
 			cards.push(tempHtml)
 		}
-		console.log("**type of cards", typeof(cards))
+		//console.log("**type of cards", typeof(cards))
 		ReactDOM.render(cards, container);
 	}
 
 	createCard(card) {
 		//console.log(card)
 		let new_html = '';
-		let new_href = "/publication/" + card.id;
+		let new_href = "/publicacion/" + card.id;
 		//console.log(new_href);
 		new_html = (
 			  <Card className="indexMiniCard col-md-3 m-3 justify-content-center">
@@ -95,6 +102,7 @@ class PublicationDeck extends React.Component {
 	}
 
 	render(){
+		//console.log("tagsToSearch: ",this.state.tagsToSearch)
 		return (
 			<div ref='container' className="indexCardDeck row justify-content-center">
 				{/* <CardDeck  className="indexCardDeck">
@@ -105,7 +113,12 @@ class PublicationDeck extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getPublications()
+		//HACER LA BUSQUEDA POR TAGS CUANDO SE AGREGAN
+		if(this.state.tagsToSearch !== ''){
+			this.getTagPublications()
+		} else {
+			this.getPublications()
+		}
 	}
 }
 

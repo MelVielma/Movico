@@ -1,11 +1,9 @@
 import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Modal from 'react-bootstrap/Modal';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import LoginForm from './LoginForm';
 import CreatePostForm from './CreatePostForm';
-import CreateUserForm from './CreateUserForm'
+import CreateUserForm from './CreateUserForm';
+import {Redirect} from 'react-router';
+import {Form, FormControl, Button, Navbar, Nav, Modal, NavDropdown} from 'react-bootstrap';
 
 class MyNavbar extends React.Component{
     constructor(props){
@@ -14,7 +12,9 @@ class MyNavbar extends React.Component{
         showLoginModal : false,
         showCreateModal : false,
         showCreateUserModal : false,
-        isUserLogged: false
+        isUserLogged: false,
+        tagsToSearch: '',
+        setToSearch: false
       };
 
       this.checkIfLogged = this.checkIfLogged.bind(this);
@@ -25,7 +25,8 @@ class MyNavbar extends React.Component{
     }
     hideLoginModalHandler = (event) =>{
       if(this.checkIfLogged()){
-        this.forceUpdate();
+        //this.forceUpdate();
+        window.location.reload();
       }
       this.setState({showLoginModal:false});
     }
@@ -40,7 +41,8 @@ class MyNavbar extends React.Component{
     }
     hideCreateUserModalHandler = (event) =>{
       if(this.checkIfLogged()){
-        this.forceUpdate();
+        //this.forceUpdate();
+        window.location.reload();
       }
       this.setState({showCreateUserModal: false});
     }
@@ -48,8 +50,19 @@ class MyNavbar extends React.Component{
     handleLogout = (event) =>{
       localStorage.clear(); //Limpiar la sesión del usuario
       this.setState({isUserLogged : false });
-      this.forceUpdate(); //Re renderizar la barra
+      //this.forceUpdate(); //Re renderizar la barra
+      window.location.reload();
     };
+
+    //Actualizar el valor de las etiquetas a ser buscadas
+    handleTagChange = (event) =>{
+      this.setState({tagsToSearch : event.target.value});
+    }
+    handleTagSearch = (event) =>{
+      if(this.state.tagsToSearch !== ''){
+        this.setState({setToSearch : true});
+      }
+    }
 
     //Revisar si el usuario ya inicio sesion
     checkIfLogged(){
@@ -66,7 +79,13 @@ class MyNavbar extends React.Component{
     }
 
     render() {
+        if(this.state.setToSearch === true){
+          let toUrl = "/etiquetas/" + this.state.tagsToSearch;
+          return <Redirect push to={toUrl} />
+        }
+
         let isUserLogged = this.state.isUserLogged;
+
         return (
           <>
             {/* Modal para login de usuario */}
@@ -100,6 +119,10 @@ class MyNavbar extends React.Component{
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 <Nav variant="pills" defaultActiveKey="#home">
+                  <Form inline className="flex-left">
+                    <FormControl value={this.state.tagsToSearch} onChange={this.handleTagChange} type="text" placeholder="Etiqueta a buscar" size="sm" className="mr-sm-2" />
+                    <Button variant="outline-primary" size="sm" onClick={this.handleTagSearch}>Buscar</Button>
+                  </Form>
                   <Nav.Link className="mx-3 px-3" onClick={this.showCreateModalHandler} href="#1">Crear Publicacion</Nav.Link>
                   <Nav.Link className="mx-3 px-3" href="#about">Acerca</Nav.Link>
                   {!isUserLogged ? (
