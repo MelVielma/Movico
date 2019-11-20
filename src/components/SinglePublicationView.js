@@ -146,7 +146,6 @@ class SinglePublicationView extends React.Component{
   }
 
   handleEliminarPub(event){
-    console.log("handleEliminarPub", "prueba de que esto no siempre se imprime")
     let fetch_url = "/publications/" + this.state.pubId;
 
     fetch(fetch_url, delPubFromServer(this.state.userTypee))

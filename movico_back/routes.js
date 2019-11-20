@@ -27,7 +27,7 @@ router.get('/users/:id', auth.auth, users.findAuthor)
 router.post('/users/login', users.login)
 router.post('/users/logout', auth.auth, users.logout)
 router.post('/users', users.createUser)
-router.patch('/users/disable', auth.auth, users.disableUser)
+router.patch('/users/disable', auth.auth2, users.disableUser)
 
 router.get('/publications', auth.auth2,publications.getAllPublications)
 router.get('/publications/:id', auth.auth,publications.getSinglePublication)
