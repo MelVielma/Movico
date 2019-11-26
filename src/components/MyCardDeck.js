@@ -15,6 +15,7 @@ var publications2 = {
 		'Accept': 'application/json',
 		'Content-Type': 'application/json',
 		'Origin': '',
+		'Host': 'https://movico.herokuapp.com',
 		'Authorization': `Bearer ${localStorage.getItem('user_token')}`
 	}
 }
