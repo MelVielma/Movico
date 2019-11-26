@@ -118,8 +118,8 @@ const updateUser = function(req, res) {
 
 // PATCH - Eliminar una cuenta de usuario
 const disableUser = function(req, res) {
-	_id=req.user._id
-	console.log(req.user._id)
+	console.log('disableUser', req.user)
+	const _id=req.user._id
 	User.findByIdAndUpdate(_id, { status: 'Disable' }).then( function(user) {
 		if(!user) {
 			return res.status(404).send()

@@ -200,7 +200,7 @@ class CommentsView extends React.Component {
 			enableStatus = "disabled";
 		}
 		let inputCommentHtml = (
-			<Card className="indexMiniCard col-md-3 m-3 justify-content-center">
+			<Card className="indexMiniCard col-md-8 m-3 justify-content-center">
 			    <Card.Body>
 			      <Card.Title>Comentario</Card.Title>
 			      	<Form onSubmit={this.handleSubmit}>
@@ -230,7 +230,7 @@ class CommentsView extends React.Component {
 		}
 		let new_html = '';
 		new_html = (
-			  <Card className="indexMiniCard col-md-3 m-3 justify-content-center">
+			  <Card className="indexMiniCard col-md-8 m-3 justify-content-center">
 			    <Card.Body>
 			      <Card.Title>{nameUser.name}</Card.Title>
 			      <Card.Subtitle className="mb-2 text-muted">{card.date}</Card.Subtitle>
@@ -289,7 +289,7 @@ class CommentsView extends React.Component {
 	            </Modal.Header>
 	          </Modal>
 	        </div>
-			<div ref='container' className="indexCardDeck row mt-5 justify-content-center">
+			<div ref='container' className="indexCardDeck row col-md-12 justify-content-center">
 				{/* <CardDeck  className="indexCardDeck">
 				</CardDeck> */}
 			</div>

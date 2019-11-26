@@ -46,7 +46,8 @@ class PublicationDeck extends React.Component {
 		fetch('/publications', publications2)
 			.then(response => response.json())
 			.then(state => this.setState({publications: state}, () =>
-				this.afterGet()));
+				this.afterGet()))
+			.catch(err => console.log(err));
 	}
 
 	getAuthor(user_id) {

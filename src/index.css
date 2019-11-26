@@ -25,3 +25,7 @@ code {
   height: 150px;
   overflow: hidden;
 }
+
+.responsive-image {
+  max-width: 100%;
+}

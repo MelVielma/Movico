@@ -215,7 +215,7 @@ class SinglePublicationView extends React.Component{
         <h2><i> Autor: <span ref={this.refPubAuthor} contentEditable={this.state.isEditable}>{myPublication.author}</span> </i></h2>
         </>
         <h3>Empresa: <span ref={this.refPubBusiness} contentEditable={this.state.isEditable}>{myPublication.business_name}</span></h3>
-        <img src={myPublication.media} alt={myPublication.title} height="350" />
+        <img src={myPublication.media} alt={myPublication.title} className="responsive-image" />
         <h5><b>Fecha: </b><span ref={this.refPubDate} contentEditable={this.state.isEditable}>{myPublication.date}</span> </h5>
         <h6 ref={this.refPubText} contentEditable={this.state.isEditable}> {myPublication.text[0]} </h6>
         </>
