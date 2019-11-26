@@ -5,7 +5,7 @@ import CreateUserForm from './CreateUserForm';
 import {Redirect} from 'react-router';
 import {Form, FormControl, Button, Navbar, Nav, Modal, NavDropdown} from 'react-bootstrap';
 
-class MyNavbar extends React.Component{
+class MyNavbarWithoutTags extends React.Component{
     constructor(props){
       super(props);
       this.state = {
@@ -13,8 +13,6 @@ class MyNavbar extends React.Component{
         showCreateModal : false,
         showCreateUserModal : false,
         isUserLogged: false,
-        tagsToSearch: '',
-        setToSearch: false
       };
 
       this.checkIfLogged = this.checkIfLogged.bind(this);
@@ -54,17 +52,6 @@ class MyNavbar extends React.Component{
       window.location.reload();
     };
 
-    //Actualizar el valor de las etiquetas a ser buscadas
-    handleTagChange = (event) =>{
-      this.setState({tagsToSearch : event.target.value});
-    }
-    handleTagSearch = (event) =>{
-      event.preventDefault();
-      if(this.state.tagsToSearch !== ''){
-        this.setState({setToSearch : true});
-      }
-    }
-
     //Revisar si el usuario ya inicio sesion
     checkIfLogged(){
       let usrToken = localStorage.getItem('user_token');
@@ -80,11 +67,6 @@ class MyNavbar extends React.Component{
     }
 
     render() {
-        if(this.state.setToSearch === true){
-          let toUrl = "/etiquetas/" + this.state.tagsToSearch;
-          return <Redirect push to={toUrl} />
-        }
-
         let isUserLogged = this.state.isUserLogged;
 
         return (
@@ -120,10 +102,6 @@ class MyNavbar extends React.Component{
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 <Nav variant="pills" defaultActiveKey="#home">
-                  <Form inline className="flex-left" onSubmit={this.handleTagSearch}>
-                    <FormControl value={this.state.tagsToSearch} onChange={this.handleTagChange} type="text" placeholder="Etiqueta a buscar" size="sm" className="mr-sm-2" />
-                    <Button variant="outline-primary" size="sm" onClick={this.handleTagSearch}>Buscar</Button>
-                  </Form>
                   <Nav.Link className="mx-3 px-3" onClick={this.showCreateModalHandler} href="#1">Crear Publicacion</Nav.Link>
                   <Nav.Link className="mx-3 px-3" href="#about">Acerca</Nav.Link>
                   {!isUserLogged ? (
@@ -147,4 +125,4 @@ class MyNavbar extends React.Component{
 }
 //<Nav.Link className="mx-3 px-3" onClick={this.handleLogout} href="#logout">Log Out</Nav.Link>
 //<img src={process.env.PUBLIC_URL + '/img/user.png'} className="d-inline-block align-top" height="30" alt="Settings"/>
-export default MyNavbar;
+export default MyNavbarWithoutTags;

@@ -5,17 +5,24 @@ const bcrypt = require('bcryptjs')
 const createPublication = function(req, res){
 	console.log(req)
 	data = req.body
+
+	//Pasar los tags de un string a un arreglo
+	var tagsSeparated = data.tags.split(',').map(function(item) {
+		return item.trim();
+	});
+
 	info = {
 		title : data.title,
 		business_name : data.business_name,
 		author : data.author,
 		text : data.text,
 		media : data.media,
-		tags : data.tags,
+		tags : tagsSeparated,
 		date : data.date,
 		publishedBy: data.idpub,
 		status : 'Disable'
 	}
+	console.log("Creacion de publicacion: ", info)
 	const publication = new Publication(info)
 	publication.save().then(function(){
 		return res.send(publication._id)
@@ -52,7 +59,7 @@ const getByUserId = function(req, res){
 //GET- Consulta de publicaciones por etiqueta
 
 const getByTag = function(req, res){
-    const _tag=req.publication.tag
+    const _tag=req.params.tag
     Publication.find({tags: { $elemMatch: { $eq: _tag } }}).then(function(publication){
 		if(!publication){
 			return res.status(404).send(publication)
@@ -65,15 +72,20 @@ const getByTag = function(req, res){
 
 //GET - Consulta de publicaciones por etiquetas
 const getByTags = function(req, res){
-    const _tags=req.publication.tags
+    const tags=req.params.tags
+		//Recibir un string separado por comas y separarlo en un array
+		var _tags = tags.split(',').map(function(item) {
+			return item.trim();
+		});
+		console.log(_tags)
     Publication.find({ tags: { $all: _tags } }).then(function(publication){
-		if(!publication){
-			return res.status(404).send(publication)
-		}
-		return res.send(publication)
-	}).catch(function(error){
-		return res.status(500).send(error)
-	})
+			if(!publication){
+				return res.status(404).send(publication)
+			}
+			return res.send(publication)
+		}).catch(function(error){
+			return res.status(500).send(error)
+		})
 }
 
 //GET - Consulta TODAS las publicaciones
