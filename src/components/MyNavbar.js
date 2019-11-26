@@ -2,6 +2,7 @@ import React from 'react';
 import LoginForm from './LoginForm';
 import CreatePostForm from './CreatePostForm';
 import CreateUserForm from './CreateUserForm';
+import About from './About';
 import {Redirect} from 'react-router';
 import {Form, FormControl, Button, Navbar, Nav, Modal, NavDropdown} from 'react-bootstrap';
 
@@ -12,6 +13,7 @@ class MyNavbar extends React.Component{
         showLoginModal : false,
         showCreateModal : false,
         showCreateUserModal : false,
+        showAbout: false,
         isUserLogged: false,
         tagsToSearch: '',
         setToSearch: false
@@ -30,6 +32,12 @@ class MyNavbar extends React.Component{
       }
       this.setState({showLoginModal:false});
     }
+    showAboutModalHandler = (event) =>{
+      this.setState({showAbout: true});
+    }
+    hideAboutModalHandler = (event) =>{
+      this.setState({showAbout: false});
+    }    
     showCreateModalHandler = (event) =>{
       this.setState({showCreateModal: true});
     }
@@ -113,6 +121,14 @@ class MyNavbar extends React.Component{
               <CreateUserForm/>
             </Modal>
 
+            {/* Modal para mostrar el About */}
+            <Modal id="aboutModal" show={this.state.showAbout} onHide={this.hideAboutModalHandler}>
+              <Modal.Header closeButton>
+                <Modal.Title>About</Modal.Title>
+              </Modal.Header>
+              <About/>
+            </Modal>
+
             <Navbar bg="light" expand="lg" fixed="top" className="text-uppercase" id="mainNav" >
               <Navbar.Brand href="/">
                 <img src={process.env.PUBLIC_URL + '/img/logo_movico.png'} className="d-inline-block align-top" height="30" alt="MOVICO"/>
@@ -125,7 +141,7 @@ class MyNavbar extends React.Component{
                     <Button variant="outline-primary" size="sm" onClick={this.handleTagSearch}>Buscar</Button>
                   </Form>
                   <Nav.Link className="mx-3 px-3" onClick={this.showCreateModalHandler} href="#1">Crear Publicacion</Nav.Link>
-                  <Nav.Link className="mx-3 px-3" href="#about">Acerca</Nav.Link>
+                  <Nav.Link className="mx-3 px-3" onClick={this.showAboutModalHandler} href='#4'>Acerca</Nav.Link>
                   {!isUserLogged ? (
                     <>
                     <Nav.Link className="mx-3 px-3" onClick={this.showLoginModalHandler} href="#2" >Ingresar</Nav.Link>
