@@ -18,7 +18,7 @@ var nameAuthor = {
 		'Accept': 'application/json',
 		'Contenct-Type': 'application/json',
 		'Origin': '',
-		'Host': 'http://localhost:3001',
+		'Host': 'https://movico.herokuapp.com',
 		'Authorization': `Bearer ${localStorage.getItem('user_token')}`
 	}
 }
@@ -29,7 +29,7 @@ var delComment = {
 		'Accept': 'application/json',
 		'Contenct-Type': 'application/json',
 		'Origin': '',
-		'Host': 'http://localhost:3001',
+		'Host': 'https://movico.herokuapp.com',
 		'Authorization': `Bearer ${localStorage.getItem('user_token')}`
 	}	
 }
@@ -42,7 +42,7 @@ var postInfoToServer = function (info) {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Origin': '',
-      'Host': 'http://localhost:3001',
+      'Host': 'https://movico.herokuapp.com',
 	  'Authorization': `Bearer ${localStorage.getItem('user_token')}`
     },
     body: JSON.stringify(

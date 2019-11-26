@@ -42,7 +42,7 @@ class CreateUserForm extends React.Component{
         'Accept': 'application/json',
     		'Content-Type': 'application/json',
     		'Origin': '',
-    		'Host': 'http://localhost:3001'
+    		'Host': 'https://movico.herokuapp.com'
       },
       body: JSON.stringify({
         name: u_name,
@@ -61,7 +61,7 @@ class CreateUserForm extends React.Component{
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Origin': '',
-        'Host': 'http://localhost:3001'
+        'Host': 'https://movico.herokuapp.com'
       },
       body: JSON.stringify({
         email: u_email,
