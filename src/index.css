@@ -17,6 +17,13 @@ code {
   margin-left: 0px !important;
 }
 
+.indexCardComment{
+  margin-right: 16px !important;
+  margin-left: 16px !important;
+  margin-top: 0px !important;
+  margin-bottom: 16px !important;
+}
+
 .indexCardContainer{
   margin-top:7vh;
 }

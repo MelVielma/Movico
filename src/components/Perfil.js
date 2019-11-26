@@ -159,6 +159,8 @@ class Perfil extends React.Component{
     let new_html = '';
 		let new_href = "/publicacion/" + card.id;
     //console.log(new_href);
+    let estatus = card.status;
+    let bStatus = estatus === 'Enable';
 		new_html = (
 			  <Card className="indexMiniCard col-md-5 mx-2 justify-content-center">
 			    <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} />
@@ -172,8 +174,15 @@ class Perfil extends React.Component{
               <span className="text-muted"> Estatus: </span>
               {card.status}
             </Card.Text>
-			      <a className="linkToPublication" href={new_href}>Ver mas</a>
-			    </Card.Body>
+            {bStatus ? (
+			       <a className="linkToPublication" href={new_href}>Ver mas</a>
+             )
+             :
+             (
+              <> </>
+             )
+            }
+          </Card.Body>
 			    <Card.Footer>
 			      <small className="text-muted">Fecha de publicación: {card.date}</small>
 			    </Card.Footer>

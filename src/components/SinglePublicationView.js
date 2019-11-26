@@ -207,7 +207,7 @@ class SinglePublicationView extends React.Component{
     console.log("isEditable", isEditable)
 
     let singlePublicationHtml = (
-      <Jumbotron>
+      <Jumbotron className="indexCardDeck col-md-10 mb-4">
         <>
         <h1 ref={this.refPubTitle} contentEditable={this.state.isEditable}>{myPublication.title} </h1>
         <>
@@ -290,7 +290,7 @@ class SinglePublicationView extends React.Component{
             }
           </Modal>
         </div>
-        <div id="SinglePublicationView" ref="putSinglePubHere">
+        <div className="row col-md-12 mt-4 ml-3 mr-3 justify-content-center" id="SinglePublicationView" ref="putSinglePubHere">
             <h1> {this.state.pubId} </h1>
         </div>
           <CommentsView listComments={comments} isUserLogged={isUserLogged} userTypee={this.state.userTypee}/>

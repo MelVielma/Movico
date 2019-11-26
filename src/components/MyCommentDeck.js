@@ -200,7 +200,7 @@ class CommentsView extends React.Component {
 			enableStatus = "disabled";
 		}
 		let inputCommentHtml = (
-			<Card className="indexMiniCard col-md-8 m-3 justify-content-center">
+			<Card className="indexCardComment col-md-8 justify-content-center">
 			    <Card.Body>
 			      <Card.Title>Comentario</Card.Title>
 			      	<Form onSubmit={this.handleSubmit}>
