@@ -80,9 +80,16 @@ const getByTags = function(req, res){
 //GET - Consulta TODAS las publicaciones
 const getAllPublications = function(req, res){
 	//Los usuarios solo pueden ver las publicaciones habilitadas
-	console.log(req.user)
 
-	if(!(req.user === undefined) && req.user.typee=='admin'){
+	console.log('req.user',req.user)
+	let isUserUndefined = false
+	isUserUndefined = !(req.user === undefined)
+	let isTypeeAdmin = false
+	if (isUserUndefined) {
+		isTypeeAdmin = req.user.typee==="admin"
+	}
+	
+	if(isUserUndefined && isTypeeAdmin){
 		//Los admin pueden ver TODAS las poblicaciones
 		Publication.find({}).then(function(publications){
 			return res.send(publications)
@@ -107,25 +114,33 @@ const getSinglePublication = function(req, res){
     //Los usuarios solo pueden ver las publicaciones habilitadas
     console.log(req.user)
     const _id = req.params.id
-
-    if(!(req.user === undefined) && req.user.typee=='admin'){
-        //Los admin pueden ver TODAS las poblicaciones
-        console.log("Entro como admin")
-
-        Publication.find({_id}).then(function(publications){
-            return res.send(publications)
-        }).catch(function(error){
-            return res.status(500).send(error)
-        })
+    
+    let isUserUndefined = false
+    isUserUndefined = !(req.user === undefined)
+    let isTypeeAdmin = false
+    if (isUserUndefined) {
+      isTypeeAdmin = req.user.typee==="admin"
     }
-    else
-    {
-        Publication.find({ _id, status: 'Enable' }).then(function(publications){
-            return res.send(publications)
-        }).catch(function(error){
-            return res.status(500).send(error)
-        })
-    }
+
+
+	if(isUserUndefined && isTypeeAdmin){
+		//Los admin pueden ver TODAS las poblicaciones
+		console.log("Entro como admin")
+	
+		Publication.find({_id}).populate('comments').then(function(publications){
+			return res.send(publications)
+		}).catch(function(error){
+			return res.status(500).send(error)
+		})
+	}
+	else
+	{
+		Publication.find({ _id, status: 'Enable' }).populate('comments').then(function(publications){
+			return res.send(publications)
+		}).catch(function(error){
+			return res.status(500).send(error)
+		})	
+	}
 }
 
 
@@ -133,19 +148,23 @@ const getSinglePublication = function(req, res){
 
 //UPDATE - Actualiza la informacion de una publicacion
 const updatePublication = function(req, res){
-    console.log(req)
+    console.log("req.body",req.body)
     if(req.user.typee=='userOnly'){
         return res.status(401).send({ error: 'Admins Only'})
     }
-	const _id = req.params._id
-	//delete req.body._id
-	const update = Object.keys(req.body)
-	Publication.findOneAndUpdate(_id, req.body).then(function(publication){
+    console.log("Es admin")
+	const _id = req.params.id
+	console.log("_id",_id)
+	console.log("updates a aplicar",req.body)
+	Publication.findByIdAndUpdate(_id, req.body).then(function(publication){
+		console.log("Se encontro una publicacion")
 		if(!publication){
+			console.log("no se encontro una pub")
 			return res.status(404).send()
 		}
 		return res.send(publication._id)
 	}).catch(function(error){
+		console.log(error)
 		res.status(500).send(error)
 	})
 }
@@ -156,8 +175,8 @@ const deletePublication = function(req, res){
         return res.status(401).send({ error: 'Admins Only'})
     }
 
-	const _id = req.params._id
-	Publication.findOneAndDelete(_id).then(function(publication){
+	const _id = req.params.id
+	Publication.findByIdAndDelete(_id).then(function(publication){
 		if(!publication){
 			return res.status(404).send()
 		}
@@ -192,8 +211,8 @@ module.exports = {
 	getByUserId: getByUserId,
 	updatePublication: updatePublication,
     deletePublication: deletePublication,
-    getByTag:getByTag,
-	getByTags:getByTags,
-	getSinglePublication: getSinglePublication,
-  enablePublication: enablePublication
+    getByTag: getByTag,
+    getByTags: getByTags,
+    getSinglePublication: getSinglePublication,
+    enablePublication: enablePublication
 }

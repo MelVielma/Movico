@@ -31,7 +31,7 @@ var delComment = {
 		'Origin': '',
 		'Host': 'http://localhost:3001',
 		'Authorization': `Bearer ${localStorage.getItem('user_token')}`
-	}
+	}	
 }
 
 var postInfoToServer = function (info) {
@@ -82,7 +82,7 @@ class CommentsView extends React.Component {
 
 	updateCommentSection(event) {
 		var container = this.refs.container;
-
+		
 		let cards = this.state.htmlComments;
 		ReactDOM.render(cards, container);
 	}
@@ -128,7 +128,7 @@ class CommentsView extends React.Component {
 				this.setState({showMessageModal: true});
 		    }
 		}
-		else
+		else 
 		{
 			this.setState({message: 'El comentario está vacío.'})
 			this.setState({showMessageModal: true});
@@ -149,9 +149,9 @@ class CommentsView extends React.Component {
 		return this.state.userInfo
 	}
 
-	displayMessage(message){
+	displayMessage(message){ 
 	    console.log("Se despliega el mensaje:", this.state.message)
-	    this.state.showMessageModal = true;
+	    this.state.showMessageModal = true;    
 	    try {
 	      this.afterGet();
 	    }
@@ -164,7 +164,7 @@ class CommentsView extends React.Component {
 		if (this.state.comments !== undefined) {
 			console.log("comments no es undefined?", this.state.comments !== undefined)
 			let listaDeComments = comentariosPosteados
-			console.log("listaDeComments.length", listaDeComments)
+			console.log("listaDeComments.length", listaDeComments)			
 			if (listaDeComments.length == 0) {
 				this.appendCommentBox(this.state.htmlComments)
 			}
@@ -216,9 +216,9 @@ class CommentsView extends React.Component {
 			    </Card.Body>
 			 </Card>
 			)
-		let cards = [inputCommentHtml].concat(htmlComentarios);
+		let cards = [inputCommentHtml].concat(htmlComentarios);	
 		ReactDOM.render(cards, container);
-	}
+	} 
 
 	createComment(card, nameUser) {
 		//console.log('createComment',card)

@@ -33,14 +33,12 @@ router.get('/publications', auth.auth2,publications.getAllPublications)
 router.get('/publications/:id', auth.auth,publications.getSinglePublication)
 router.get('/publicationsByUser/:userId', auth.auth, publications.getByUserId)
 router.post('/publications', auth.auth, publications.createPublication)
-router.post('/publications/:id', auth.auth, publications.enablePublication)
-
-
 
 router.patch('/publications/:id',  auth.auth, publications.updatePublication)
 router.delete('/publications/:id', auth.auth, publications.deletePublication)
 
 router.post('/comments/:id', auth.auth, comments.createComment)
+router.delete('/comments/:id', auth.auth, comments.deleteComment)
 
 router.get('*', function(req, res) {
   res.send({
