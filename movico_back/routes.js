@@ -30,7 +30,7 @@ router.post('/users', users.createUser)
 router.patch('/users/disable', auth.auth2, users.disableUser)
 
 router.get('/publications', auth.auth2,publications.getAllPublications)
-router.get('/publications/:id', auth.auth,publications.getSinglePublication)
+router.get('/publications/:id', auth.auth2,publications.getSinglePublication)
 router.get('/publicationsByUser/:userId', auth.auth, publications.getByUserId)
 router.get('/publicationsByTag/:tag', auth.auth, publications.getByTag)
 router.get('/publicationsByMultiTags/:tags', auth.auth, publications.getByTags)
@@ -39,7 +39,7 @@ router.post('/publications/:id', auth.auth, publications.enablePublication)
 
 
 
-router.patch('/publications/:id',  auth.auth, publications.updatePublication)
+router.patch('/publications/:id',  auth.auth2, publications.updatePublication)
 router.delete('/publications/:id', auth.auth, publications.deletePublication)
 
 router.post('/comments/:id', auth.auth, comments.createComment)
