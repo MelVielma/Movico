@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
-import {Jumbotron, Button} from 'react-bootstrap';
+import {Jumbotron, Button, Spinner} from 'react-bootstrap';
 import SuccessAlert from './SuccessAlert';
 import CommentsView from './MyCommentDeck';
 import Modal from 'react-bootstrap/Modal';
+import { Redirect}  from 'react-router';
+import {Animated} from "react-animated-css";
 
 
 var getInfoFromServer = {
@@ -66,7 +68,9 @@ class SinglePublicationView extends React.Component{
       message: '',
       publicationStatus: '',
       listCommentsBool: false,
-      isDeletingPub: false
+      isDeletingPub: false,
+      afterElimPub: false,
+      displayAnimation: false
     };
     this.refPubTitle = React.createRef();
     this.refPubBusiness = React.createRef();
@@ -151,6 +155,9 @@ class SinglePublicationView extends React.Component{
     fetch(fetch_url, delPubFromServer(this.state.userTypee))
       .then(() => this.setState({isDeletingPub: false}))
       .then(() => this.displayMessage("Se eliminó la Publicación"))
+      .then(() => this.setState({displayAnimation: false}))
+      .then(() => this.setState({afterElimPub: true}))
+      //.then(() => window.location.reload())
       .catch(err => this.displayMessage(err))
   }
 
@@ -163,7 +170,8 @@ class SinglePublicationView extends React.Component{
       'business_name': this.refPubBusiness.current.textContent,
       'author': this.refPubAuthor.current.textContent,
       'text': this.refPubText.current.textContent,
-      'date': this.refPubDate.current.textContent
+      'date': this.refPubDate.current.textContent,
+      'lastModified': new Date()
     }
     fetch(fetch_url, updateInfoFromServer(jsonContent))
       .then(id => this.displayMessage("Se modificó la Publicación de manera exitosa"))
@@ -185,6 +193,7 @@ class SinglePublicationView extends React.Component{
       .then(state => this.setState({publication: state}))
       .then(() => this.setState({publicationStatus: this.state.publication[0].status}))
       .then(() => this.afterGet())
+      .then(() => this.setState({displayAnimation: true}))
       .catch(err => this.displayMessage(err))
   }
 
@@ -268,6 +277,11 @@ class SinglePublicationView extends React.Component{
 	}
 
   render() {
+      console.log("afterElimPub", this.state.afterElimPub);
+      if(this.state.afterElimPub === true) {
+        return <Redirect to="/" />
+      }
+
       //Checar si esto jala
       let comments = this.state.publication[0];
       let isUserLogged = (localStorage.getItem('user_id') != null);
@@ -291,11 +305,14 @@ class SinglePublicationView extends React.Component{
             }
           </Modal>
         </div>
-        <div className="row col-md-12 mt-4 ml-3 mr-3 justify-content-center" id="SinglePublicationView" ref="putSinglePubHere">
-            <h1> {this.state.pubId} </h1>
-        </div>
-          <CommentsView listComments={comments} isUserLogged={isUserLogged} userTypee={this.state.userTypee}/>
-        </>
+            <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
+              <div className="row col-md-12 mt-4 ml-3 mr-3 justify-content-center" id="SinglePublicationView" ref="putSinglePubHere">
+                  <Spinner animation="grow" variant="light" />
+              </div>
+            </Animated> 
+            <CommentsView listComments={comments} isUserLogged={isUserLogged} userTypee={this.state.userTypee}/>
+           
+          </>
       )
     }
 }

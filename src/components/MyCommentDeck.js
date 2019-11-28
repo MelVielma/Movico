@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Card from 'react-bootstrap/Card';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Spinner } from 'react-bootstrap';
+import {Animated} from "react-animated-css";
 import Modal from 'react-bootstrap/Modal';
 import '../index.css';
 
@@ -56,7 +57,7 @@ class CommentsView extends React.Component {
 		super(props);
 		this.state = {
 			userInfo: '',
-			textComment: '',
+			commentText: undefined,
 			message: 'El comentario está vacío.',
 			showMessageModal : false,
 			comments: undefined,
@@ -80,11 +81,12 @@ class CommentsView extends React.Component {
 		this.handleEliminateComment = this.handleEliminateComment.bind(this);
 	}
 
-	updateCommentSection(event) {
+	updateCommentSection(htmlCommentarios) {
 		var container = this.refs.container;
-
-		let cards = this.state.htmlComments;
-		ReactDOM.render(cards, container);
+		let cards = htmlCommentarios;
+		if (cards.length === comentariosPosteados.length) {
+			ReactDOM.render(cards, container);
+		}
 	}
 
 	hideMessageModalHandler = (event) =>{
@@ -108,6 +110,8 @@ class CommentsView extends React.Component {
 			'text': this.state.commentText,
 			'date': new Date()
 	    }
+	    this.setState({commentText: ''})
+	    //this.refs.formCommentText.value = "";
 	    this.getAuthor(jsonContent.user);
 	    if (this.state.commentText !== undefined) {
 		    if(this.state.commentText.length > 0) {
@@ -115,11 +119,10 @@ class CommentsView extends React.Component {
 		    	.then(response => response.json())
 		    	.then(response => this.addComentarioPosteado(response))
 		    	.then(response => this.setState({htmlComments: this.state.htmlComments.concat(this.createComment(response, this.state.userInfo))}))
-		    	//.then(() => this.appendCommentBox(this.state.htmlComments))
 		    	.then(() => this.setState({message: 'Se añadió el comentario.'}))
-		    	.then(() => this.setState({showMessageModal: true}))
-		    	.then(() => this.setState({commentText: undefined}))
-		    	.then(() => this.appendCommentBox(this.state.htmlComments))
+		    	.then(state => this.setState({showMessageModal: true}))
+		    	//.then(state => this.appendCommentBox())
+		    	//.then(() => this.updateCommentSection(this.state.htmlComments))
 		    	.catch(err => console.log(err))
 		    }
 		    else
@@ -137,6 +140,7 @@ class CommentsView extends React.Component {
 
 	handleChange(event) {
 		this.setState({commentText: event.target.value});
+		console.log('handleChange', this.state.commentText);
 	}
 
 	getAuthor(user_id) {
@@ -175,7 +179,8 @@ class CommentsView extends React.Component {
 					.then(response => response.json())
 					.then(state => this.setState({userInfo: state}))
 					.then(state => this.setState({htmlComments: this.state.htmlComments.concat(this.createComment(listaDeComments[i], this.state.userInfo))}))
-					.then(() => this.appendCommentBox(this.state.htmlComments))
+					.then(state => this.updateCommentSection(this.state.htmlComments))
+					.catch(err => console.log(err))
 			}
 			this.setState({commentsDone: true});
 
@@ -187,7 +192,8 @@ class CommentsView extends React.Component {
 	}
 
 	appendCommentBox(htmlComentarios) {
-		var container = this.refs.container;
+		console.log("appendCommentBox", this.state.commentText);
+		var container = this.refs.writeComment;
 		let isUserLogged = this.props.isUserLogged;
 		let placeholderText = ''
 		let enableStatus = ''
@@ -203,7 +209,7 @@ class CommentsView extends React.Component {
 			<Card className="indexCardComment col-md-8 justify-content-center">
 			    <Card.Body>
 			      <Card.Title>Comentario</Card.Title>
-			      	<Form onSubmit={this.handleSubmit}>
+			      	<Form>
 			      		<Form.Control value={this.state.commentText} onChange={this.handleChange} type="text" as="textarea" rows="3" placeholder={placeholderText} disabled={enableStatus} />
 			      	</Form>
 			      {isUserLogged ? (
@@ -216,8 +222,8 @@ class CommentsView extends React.Component {
 			    </Card.Body>
 			 </Card>
 			)
-		let cards = [inputCommentHtml].concat(htmlComentarios);
-		ReactDOM.render(cards, container);
+		ReactDOM.render(inputCommentHtml,container);
+		
 	}
 
 	createComment(card, nameUser) {
@@ -272,6 +278,7 @@ class CommentsView extends React.Component {
 	}
 
 	render(){
+		console.log('se hizo render de nuevo')
 		if(this.props.listComments !==undefined && !(this.state.commentsDone)) {
 			console.log('render_MyCommentDeck', this.props)
 			this.state.comments = this.props.listComments;
@@ -289,16 +296,22 @@ class CommentsView extends React.Component {
 	            </Modal.Header>
 	          </Modal>
 	        </div>
-			<div ref='container' className="indexCardDeck row col-md-12 justify-content-center">
-				{/* <CardDeck  className="indexCardDeck">
-				</CardDeck> */}
-			</div>
+	        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
+	        <div ref='writeComment' className="indexCardDeck row col-md-12 justify-content-center">
+	        </div>
+			    <div ref='container' className="indexCardDeck row col-md-12 justify-content-center">
+					<Spinner animation="grow" variant="light" />
+					{/* <CardDeck  className="indexCardDeck">
+					</CardDeck> */}
+				</div>
+			</Animated>
 			</>
 		)
 	}
 
 	componentDidMount() {
 		console.log("ya se hizo mount de myCommentDeck")
+		this.appendCommentBox();
 	}
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Form, FormControl, Button, Card} from 'react-bootstrap';
+import {Form, FormControl, Button, Card, Spinner} from 'react-bootstrap';
+import {Animated} from "react-animated-css";
 import '../index.css';
 
 /* para importar publication desde el archivo principal : import Publication from './path/to/component'; */
@@ -24,7 +25,8 @@ class PublicationDeck extends React.Component {
 		this.state = {
 			tagsToSearch: '',
 			publications: '',
-			nameAuthor: ''
+			nameAuthor: '',
+			displayAnimation: false
 		}
 		this.createCard = this.createCard.bind(this);
 		this.getPublications = this.getPublications.bind(this);
@@ -33,6 +35,7 @@ class PublicationDeck extends React.Component {
 
 		this.getByMultipleTags = this.getByMultipleTags.bind(this);
 		this.getByOneTag = this.getByOneTag.bind(this);
+		this.updateAnimationStatus = this.updateAnimationStatus.bind(this);
 	}
 
 	getPublications(event) {
@@ -40,6 +43,7 @@ class PublicationDeck extends React.Component {
 			.then(response => response.json())
 			.then(state => this.setState({publications: state}, () =>
 				this.afterGet()))
+			.then(() => this.setState({displayAnimation: true}))
 			.catch(err => console.log(err));
 	}
 
@@ -109,6 +113,10 @@ class PublicationDeck extends React.Component {
 		ReactDOM.render(cards, container);
 	}
 
+	updateAnimationStatus(event){
+		this.setState({displayAnimation: false});
+	}
+
 	createCard(card) {
 		//console.log(card)
 		let new_html = '';
@@ -123,7 +131,7 @@ class PublicationDeck extends React.Component {
 			      <Card.Text>
 			        {card.text}
 			      </Card.Text>
-			      <a className="linkToPublication" href={new_href}>Ver mas</a>
+			      <a className="linkToPublication" href={new_href} onClick={() => this.updateAnimationStatus()}>Ver mas</a>
 			    </Card.Body>
 			    <Card.Footer>
 			      <small className="text-muted">Fecha de publicación: {card.date}</small>
@@ -154,8 +162,11 @@ class PublicationDeck extends React.Component {
 						<Button variant="primary" onClick={this.handleTagSearch}>Buscar</Button>
 					</Form>
 				</div>
-				<div ref='container' className="indexCardDeck row justify-content-around">
-				</div>
+				<Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
+					<div ref='container' className="indexCardDeck row justify-content-around">
+						<Spinner animation="grow" variant="light" />
+					</div>
+				</Animated>
 			</div>
 		)
 	}

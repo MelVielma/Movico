@@ -160,11 +160,14 @@ const updatePublication = function(req, res){
         return res.status(401).send({ error: 'Admins Only'})
     }
 
-    console.log("Es admin")
-	const _id = req.params.id
-	console.log("_id",_id)
-	console.log("updates a aplicar",req.body)
-	Publication.findByIdAndUpdate(_id, req.body).then(function(publication){
+    console.log("Es admin");
+	const _id = req.params.id;
+	console.log("_id",_id);
+	const updates = req.body;
+	updates['lastModifiedBy'] = req.user._id;
+	console.log("updates a aplicar", updates);
+	
+	Publication.findByIdAndUpdate(_id, updates).then(function(publication){
 		console.log("Se encontro una publicacion")
 		if(!publication){
 			console.log("no se encontro una pub")
