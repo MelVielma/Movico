@@ -77,6 +77,7 @@ class SinglePublicationView extends React.Component{
     this.refPubAuthor = React.createRef();
     this.refPubText = React.createRef();
     this.refPubDate = React.createRef();
+    this.refImgSrc = React.createRef();
     this.displayMessageModal = React.createRef();
     this.getPublicationInfo = this.getPublicationInfo.bind(this);
     this.afterGet = this.afterGet.bind(this);
@@ -151,25 +152,23 @@ class SinglePublicationView extends React.Component{
 
   handleEliminarPub(event){
     let fetch_url = "/publications/" + this.state.pubId;
-
     fetch(fetch_url, delPubFromServer(this.state.userTypee))
       .then(() => this.setState({isDeletingPub: false}))
       .then(() => this.displayMessage("Se eliminó la Publicación"))
       .then(() => this.setState({displayAnimation: false}))
       .then(() => this.setState({afterElimPub: true}))
-      //.then(() => window.location.reload())
       .catch(err => this.displayMessage(err))
   }
 
   handleCambiosPub(event) {
     let fetch_url = "/publications/"+ this.state.pubId;
-    console.log(fetch_url)
     let jsonContent = {
       'typee': this.state.userTypee,
       'title': this.refPubTitle.current.textContent,
       'business_name': this.refPubBusiness.current.textContent,
       'author': this.refPubAuthor.current.textContent,
       'text': this.refPubText.current.textContent,
+      'media': this.refImgSrc.current.textContent,
       'date': this.refPubDate.current.textContent,
       'lastModified': new Date()
     }
@@ -180,9 +179,7 @@ class SinglePublicationView extends React.Component{
   }
 
   updateIsEditable(event){
-    console.log("*******updateIsEditable:", this.state.isEditable)
     this.state.isEditable = !this.state.isEditable;
-    console.log("El valor actualizado de updateIsEditable es:", this.state.isEditable)
     this.afterGet();
   }
 
@@ -200,20 +197,13 @@ class SinglePublicationView extends React.Component{
   afterGet(event){
     var container = this.refs.putSinglePubHere;
     var myPublication = this.state.publication[0];
-    console.log("Estado after get single publ: ",myPublication);
     let isUserLogged = undefined;
-    console.log("this.state.userTypee", this.state.userTypee)
     let isAdmin = this.state.userTypee === 'admin';
     let isPublicationEnable = this.state.publicationStatus === "Enable";
     let isEditable = this.state.isEditable
     if (localStorage.getItem('user_id') != null) {
       isUserLogged = true;
     }
-
-    console.log("isUserLogged: ", isUserLogged)
-    console.log("isAdmin: ", isAdmin)
-    console.log("isPublicationEnable: ", isPublicationEnable)
-    console.log("isEditable", isEditable)
 
     let singlePublicationHtml = (
       <Jumbotron className="indexCardDeck col-md-10 mb-4">
@@ -225,7 +215,14 @@ class SinglePublicationView extends React.Component{
         <h3> Empresa: <span ref={this.refPubBusiness} contentEditable={this.state.isEditable}>{myPublication.business_name}</span> </h3>
         <h3 className="text-muted"> Etiquetas: {myPublication.tags.join(", ")}</h3>
         <img src={myPublication.media} alt={myPublication.title} className="responsive-image" />
-        <h5><b>Fecha: </b><span ref={this.refPubDate} contentEditable={this.state.isEditable}>{myPublication.date}</span> </h5>
+        {isEditable ?
+          ( <p>Link: <span ref={this.refImgSrc} contentEditable={this.state.isEditable}>{myPublication.media}</span></p>
+            ):
+          <>
+          </>
+
+        }
+        <h5><b>Fecha: </b><span ref={this.refPubDate} contentEditable={this.state.isEditable}>{new Date(myPublication.date).toLocaleDateString()}</span> </h5>
         <h6 ref={this.refPubText} contentEditable={this.state.isEditable}> {myPublication.text[0]} </h6>
         </>
         <div>
@@ -260,7 +257,6 @@ class SinglePublicationView extends React.Component{
 
   getUserTypee(event){
     let userId = localStorage.getItem('user_id');
-    console.log(userId)
     if (userId != null) {
       let fetch_url = "/users/" + userId;
       fetch(fetch_url, getInfoFromServer)
@@ -277,7 +273,6 @@ class SinglePublicationView extends React.Component{
 	}
 
   render() {
-      console.log("afterElimPub", this.state.afterElimPub);
       if(this.state.afterElimPub === true) {
         return <Redirect to="/" />
       }
@@ -287,8 +282,6 @@ class SinglePublicationView extends React.Component{
       let isUserLogged = (localStorage.getItem('user_id') != null);
       let userTypee = this.state.userTypee;
       let eliminarPub = this.state.isDeletingPub;
-      console.log("render userTypee", userTypee);
-      //console.log("isEditable",this.state.isEditable)
       return (
         <>
         <div>

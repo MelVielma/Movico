@@ -134,7 +134,7 @@ class PublicationDeck extends React.Component {
 			      <a className="linkToPublication" href={new_href} onClick={() => this.updateAnimationStatus()}>Ver mas</a>
 			    </Card.Body>
 			    <Card.Footer>
-			      <small className="text-muted">Fecha de publicación: {card.date}</small>
+			      <small className="text-muted">Fecha de publicación: {new Date(card.date).toLocaleDateString()}</small>
 			    </Card.Footer>
 			  </Card>
 		)

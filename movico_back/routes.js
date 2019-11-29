@@ -40,7 +40,7 @@ router.post('/publications/:id', auth.auth, publications.enablePublication)
 
 
 router.patch('/publications/:id',  auth.auth2, publications.updatePublication)
-router.delete('/publications/:id', auth.auth, publications.deletePublication)
+router.delete('/publications/:id', auth.auth2, publications.deletePublication)
 
 router.post('/comments/:id', auth.auth, comments.createComment)
 router.delete('/comments/:id', auth.auth, comments.deleteComment)

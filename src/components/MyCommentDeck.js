@@ -63,7 +63,8 @@ class CommentsView extends React.Component {
 			comments: undefined,
 			commentsDone: false,
 			nombreUsuario: '',
-			htmlComments: []
+			htmlComments: [],
+			wantsToComment: false
 		};
 		this.displayMessageModal = React.createRef();
 		this.formCommentText = React.createRef();
@@ -74,17 +75,21 @@ class CommentsView extends React.Component {
 		this.createComment = this.createComment.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		this.appendCommentBox = this.appendCommentBox.bind(this);
 		this.hideMessageModalHandler = this.hideMessageModalHandler.bind(this);
 		this.addComentarioPosteado = this.addComentarioPosteado.bind(this);
 		this.updateCommentSection = this.updateCommentSection.bind(this);
 		this.handleEliminateComment = this.handleEliminateComment.bind(this);
+		this.enableComment = this.enableComment.bind(this);
+	}
+
+	enableComment(event) {
+		this.setState({wantsToComment: true});
 	}
 
 	updateCommentSection(htmlCommentarios) {
 		var container = this.refs.container;
 		let cards = htmlCommentarios;
-		if (cards.length === comentariosPosteados.length) {
+		if (cards.length >= comentariosPosteados.length) {
 			ReactDOM.render(cards, container);
 		}
 	}
@@ -95,13 +100,11 @@ class CommentsView extends React.Component {
 	  }
 
 	addComentarioPosteado(comment) {
-		console.log('addComentarioPosteado',comment)
 		comentariosPosteados.concat(comment)
 		return comment
 	}
 
 	handleSubmit(event) {
-		console.log("handleSubmit", event)
 		let fetch_url = "/comments/"+ this.props.listComments.id;
 		event.preventDefault();
 		let comentarioTemp = '';
@@ -121,8 +124,7 @@ class CommentsView extends React.Component {
 		    	.then(response => this.setState({htmlComments: this.state.htmlComments.concat(this.createComment(response, this.state.userInfo))}))
 		    	.then(() => this.setState({message: 'Se añadió el comentario.'}))
 		    	.then(state => this.setState({showMessageModal: true}))
-		    	//.then(state => this.appendCommentBox())
-		    	//.then(() => this.updateCommentSection(this.state.htmlComments))
+		    	.then(() => this.updateCommentSection(this.state.htmlComments))
 		    	.catch(err => console.log(err))
 		    }
 		    else
@@ -140,7 +142,6 @@ class CommentsView extends React.Component {
 
 	handleChange(event) {
 		this.setState({commentText: event.target.value});
-		console.log('handleChange', this.state.commentText);
 	}
 
 	getAuthor(user_id) {
@@ -149,12 +150,10 @@ class CommentsView extends React.Component {
 			.then(state => this.state.userInfo= state)
 			.then(state => this.setState({userInfo: state}))
 			.then(() => console.log('myCommentDeck',this.state.userInfo))
-		console.log('getAuthor', this.state.userInfo)
 		return this.state.userInfo
 	}
 
 	displayMessage(message){
-	    console.log("Se despliega el mensaje:", this.state.message)
 	    this.state.showMessageModal = true;
 	    try {
 	      this.afterGet();
@@ -166,13 +165,10 @@ class CommentsView extends React.Component {
 
 	afterGet(event) {
 		if (this.state.comments !== undefined) {
-			console.log("comments no es undefined?", this.state.comments !== undefined)
 			let listaDeComments = comentariosPosteados
-			console.log("listaDeComments.length", listaDeComments)
-			if (listaDeComments.length == 0) {
-				this.appendCommentBox(this.state.htmlComments)
+			if (listaDeComments.length === 0) {
+				this.updateCommentSection(this.state.htmlComments)
 			}
-
 			for(let i = 0 ; i < listaDeComments.length ; i++) {
 				let user_id = listaDeComments[i].user
 				fetch('/users/' + user_id, nameAuthor)
@@ -183,51 +179,10 @@ class CommentsView extends React.Component {
 					.catch(err => console.log(err))
 			}
 			this.setState({commentsDone: true});
-
 		}
-		else
-		{
-			this.appendCommentBox(this.state.htmlComments)
-		}
-	}
-
-	appendCommentBox(htmlComentarios) {
-		console.log("appendCommentBox", this.state.commentText);
-		var container = this.refs.writeComment;
-		let isUserLogged = this.props.isUserLogged;
-		let placeholderText = ''
-		let enableStatus = ''
-		if (isUserLogged) {
-			placeholderText = "Escribe aquí tu comentario...";
-		}
-		else
-		{
-			placeholderText = "Ingresa a tu cuenta para escribir un comentario";
-			enableStatus = "disabled";
-		}
-		let inputCommentHtml = (
-			<Card className="indexCardComment col-md-8 justify-content-center">
-			    <Card.Body>
-			      <Card.Title>Comentario</Card.Title>
-			      	<Form>
-			      		<Form.Control value={this.state.commentText} onChange={this.handleChange} type="text" as="textarea" rows="3" placeholder={placeholderText} disabled={enableStatus} />
-			      	</Form>
-			      {isUserLogged ? (
-			      	<Button variant="primary" type="submit" onClick={this.handleSubmit}>Añadir Comentario</Button>
-			      	):(
-			      	<>
-			      	</>
-			      	)
-			      }
-			    </Card.Body>
-			 </Card>
-			)
-		ReactDOM.render(inputCommentHtml,container);
-		
 	}
 
 	createComment(card, nameUser) {
-		//console.log('createComment',card)
 		let isAdmin = false;
 		if(this.props.isUserLogged) {
 			if(this.props.userTypee === 'admin') {
@@ -239,7 +194,7 @@ class CommentsView extends React.Component {
 			  <Card className="indexMiniCard col-md-8 m-3 justify-content-center">
 			    <Card.Body>
 			      <Card.Title>{nameUser.name}</Card.Title>
-			      <Card.Subtitle className="mb-2 text-muted">{card.date}</Card.Subtitle>
+			      <Card.Subtitle className="mb-2 text-muted">{new Date(card.date).toLocaleDateString()}</Card.Subtitle>
 			      <Card.Text>
 			        {card.text}
 			      </Card.Text>
@@ -259,14 +214,9 @@ class CommentsView extends React.Component {
 	}
 
 	handleEliminateComment(comment_id) {
-		console.log(comment_id);
-		console.log(comentariosPosteados);
 		let tempComentarios = comentariosPosteados.filter(function(value, index, arr) {
 			return value._id != comment_id
 		})
-
-		console.log("tempComentarios", tempComentarios)
-
 		comentariosPosteados = tempComentarios;
 		let fetch_url = "/comments/"+ comment_id;
 		fetch(fetch_url, delComment)
@@ -278,14 +228,23 @@ class CommentsView extends React.Component {
 	}
 
 	render(){
-		console.log('se hizo render de nuevo')
 		if(this.props.listComments !==undefined && !(this.state.commentsDone)) {
-			console.log('render_MyCommentDeck', this.props)
 			this.state.comments = this.props.listComments;
 			comentariosPosteados = this.state.comments.comments
-			console.log("render", "llame a afterGet y setState commentsDone")
 			this.afterGet()
 			this.setState({commentsDone: true})
+		}
+		let isUserLogged = this.props.isUserLogged;
+		let placeholderText = '';
+		let enableStatus = '';
+		let showButtonMessage = this.state.wantsToComment;
+		if (isUserLogged) {
+			placeholderText = "Escribe aquí tu comentario...";
+		}
+		else
+		{
+			placeholderText = "Ingresa a tu cuenta para escribir un comentario";
+			enableStatus = "disabled";
 		}
 		return (
 			<>
@@ -296,9 +255,37 @@ class CommentsView extends React.Component {
 	            </Modal.Header>
 	          </Modal>
 	        </div>
-	        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
-	        <div ref='writeComment' className="indexCardDeck row col-md-12 justify-content-center">
-	        </div>
+	        { !showButtonMessage ? (
+	        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={!(this.state.wantsToComment)}>
+	        	<div className="indexCardDeck row col-md-12 justify-content-center">
+		        	<Button variant="primary" type="submit" onClick={this.enableComment}>Añadir Comentario</Button>
+		        </div>
+	        </Animated>
+	        )
+	        :
+	        (
+	        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.wantsToComment}>
+	        	<div className="indexCardDeck row col-md-12 justify-content-center">
+		        	<Card className="indexCardComment col-md-8 justify-content-center">
+					    <Card.Body>
+					      <Card.Title>Comentario</Card.Title>
+					      	<Form>
+					      		<Form.Control ref='formCommentText' value={this.state.commentText} onChange={this.handleChange} type="text" as="textarea" rows="3" placeholder={placeholderText} disabled={enableStatus} />
+					      	</Form>
+
+					      	{isUserLogged ? (
+					      		<Button variant="primary" type="submit" onClick={this.handleSubmit}>Añadir Comentario</Button>
+					      		):(
+					      		<>
+					      		</>
+					      		)
+					      	}
+					    </Card.Body>
+					 </Card>
+				</div>
+			</Animated>
+			)}
+			<Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
 			    <div ref='container' className="indexCardDeck row col-md-12 justify-content-center">
 					<Spinner animation="grow" variant="light" />
 					{/* <CardDeck  className="indexCardDeck">
@@ -307,11 +294,6 @@ class CommentsView extends React.Component {
 			</Animated>
 			</>
 		)
-	}
-
-	componentDidMount() {
-		console.log("ya se hizo mount de myCommentDeck")
-		this.appendCommentBox();
 	}
 }
 
