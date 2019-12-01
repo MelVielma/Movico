@@ -121,14 +121,15 @@ class PublicationDeck extends React.Component {
 		//console.log(card)
 		let new_html = '';
 		let new_href = "/publicacion/" + card.id;
-		//console.log(new_href);
 		new_html = (
-			  <Card className="indexMiniCard col-md-3 justify-content-center">
-			    <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} />
+			  <Card className="indexMiniCard col-12 col-md-4 col-lg-3 justify-content-center">
+			    <a href={new_href}>
+			    	<Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} onClick={() => this.updateAnimationStatus()} />
+			    </a>
 			    <Card.Body>
 			      <Card.Title>{card.title}</Card.Title>
 			      <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
-			      <Card.Text>
+			      <Card.Text className="cardTextLimit">
 			        {card.text}
 			      </Card.Text>
 			      <a className="linkToPublication" href={new_href} onClick={() => this.updateAnimationStatus()}>Ver mas</a>
@@ -156,10 +157,10 @@ class PublicationDeck extends React.Component {
 		//console.log("tagsToSearch: ",this.state.tagsToSearch)
 		return (
 			<div className="col-10 mx-auto mt-4">
-				<div className="my-4 d-flex">
-					<Form inline className="ml-auto justify-self-right" onSubmit={this.handleTagSearch}>
+				<div className="my-4 flex-column d-md-flex flex-md-row-reverse">
+					<Form inline className="justify-content-center" onSubmit={this.handleTagSearch}>
 						<FormControl value={this.state.tagsToSearch} onChange={this.handleTagChange} type="text" placeholder="Etiqueta a buscar" className="mr-sm-2" />
-						<Button variant="primary" onClick={this.handleTagSearch}>Buscar</Button>
+						<Button className="mt-3 mt-md-0" variant="primary" onClick={this.handleTagSearch}>Buscar</Button>
 					</Form>
 				</div>
 				<Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>

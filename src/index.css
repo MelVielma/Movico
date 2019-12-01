@@ -15,6 +15,7 @@ code {
 .indexCardDeck{
   margin-right: 0px !important;
   margin-left: 0px !important;
+
 }
 
 .indexCardComment{
@@ -28,6 +29,13 @@ code {
   margin-top:7vh;
 }
 
+.cardTextLimit {
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
 .reframe {
   height: 150px;
   overflow: hidden;
@@ -35,4 +43,73 @@ code {
 
 .responsive-image {
   max-width: 100%;
+}
+
+.primaryColorBackground {
+  background: #115571 !important;
+}
+
+.secondaryColorBackground {
+  background-color: #E9E3B4 !important;
+}
+
+.tertiaryColorBackground {
+  background-color: #CE8147 !important;
+}
+
+.table-row.col-12,
+.centerText {
+  text-align: center;
+}
+
+.navbar-custom {
+  background-color: #E9E3B4;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #CE8147;
+}
+
+.nav-link:hover {
+  background-color: #CE8147 !important;
+}
+
+.nav-pills .show .dropdown-toggle.nav-link {
+  background-color: #CE8147 !important;
+}
+
+.nav-link.active {
+  background-color: #CE8147 !important;
+}
+
+.dropdown-menu,
+.dropdown-item { 
+  background-color: #E9E3B4 !important; 
+}
+
+.dropdown-item:hover {
+  background-color: #CE8147 !important; 
+}
+
+.table-row {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #CE8147;
+}
+
+.last-row {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #CE8147;
+}
+
+.searchTagContainer {
+  flex: 1;
+  flexDirection: row;
+  justifyContent: flex-end;
+  alignItems: center;
+}
+
+.textJumbo {
+  word-wrap: break-word;
+  word-break: break-all;
 }

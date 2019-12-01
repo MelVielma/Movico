@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
-import {Jumbotron, Card, Button, Modal} from 'react-bootstrap';
+import {Jumbotron, Card, Button, Modal, Spinner} from 'react-bootstrap';
+import {Animated} from "react-animated-css";
 import { Redirect}  from 'react-router';
 
 
@@ -15,7 +16,8 @@ class Perfil extends React.Component{
       usrId: localStorage.getItem('user_id'), //Obtener id del usuario logueado
       userToken: localStorage.getItem('user_token'),
       showElimModal : false,
-      afterElimCuenta : false
+      afterElimCuenta : false,
+      displayAnimation: false
     };
     this.getUserInfo = this.getUserInfo.bind(this);
     this.getUserPubs = this.getUserPubs.bind(this);
@@ -77,6 +79,7 @@ class Perfil extends React.Component{
       .then(state => this.setState({userPubs: state}, () =>
         this.afterPubsGet()
       ))
+      .then(this.setState({displayAnimation: true}))
       .catch(err => console.log(err))
   }
 
@@ -85,19 +88,28 @@ class Perfil extends React.Component{
     var userToView = this.state.userInfo;
 
     let singlePublicationHtml = (
-      <Jumbotron className="py-4 clearfix">
-        <h1> Perfil de: {userToView.name}  </h1>
-        <h3> <b> Tipo: </b> { userToView.typee === "userOnly" ? (
-          "Usuario regular"
+      <>
+      <div className="row pl-2 pr-2 pt-4 m-3 table-row col-12">
+        <h4 className="col-12 col-md-3 "><b>Nombre</b></h4>
+        <h4 className="col-12 col-md-9">{userToView.name}</h4>
+      </div> 
+      <div className="row table-row pl-2 pr-2 pt-4 mb-3 col-12">
+        <h4 className="col-12 col-md-3"> <b>Tipo</b> </h4>{ userToView.typee === "userOnly" ? (
+          <h4 className="col-12 col-md-9">Usuario regular</h4>
         ) : (
-          "Usuario Administrador"
-        )} </h3>
-        <h3> <b> Correo: </b> {userToView.email} </h3>
-        <h4> <b> Acerca de: </b> {userToView.about} </h4>
-        <br/>
-        <Button variant="danger" size="sm" className="ml-2 float-right" onClick={() => this.confirmElim()}>Eliminar cuenta</Button>
-
-      </Jumbotron>
+          <h4 className="col-12 col-md-9">Usuario Administrador</h4>
+        )}
+      </div> 
+      <div className="row table-row pl-2 pr-2 pt-4 mb-3 col-12">
+        <h4 className="col-12 col-md-3"> <b> Correo </b></h4>
+        <h4 className="col-12 col-md-9"> {userToView.email} </h4>
+      </div> 
+      <div className="row table-row last-row pl-2 pr-2 pt-4 pb-3 mb-3 col-12">
+        <h4 className="col-12 col-md-3"> <b> Acerca de </b></h4>
+        <h4 className="col-12 col-md-9"> {userToView.about} </h4>
+      </div> 
+        <Button variant="danger" size="sm" className="p-3 float-right" onClick={() => this.confirmElim()}><p className="m-0"><b>Eliminar cuenta</b></p></Button>
+      </>
     )
     //Maybe agregar el editar el perfil, no estaba dentro de lo planeado al parecer
     //<Button variant="primary" size="sm" className="float-right">Editar información </Button>
@@ -119,7 +131,7 @@ class Perfil extends React.Component{
       let tempHtml = '';
       tempHtml = (
         <div>
-          <h3 className="text-primary"> No se ha creado ninguna publicación! </h3>
+          <h3 className="text-primary centerText"> ¡No se ha creado ninguna publicación! </h3>
         </div>
       )
       ReactDOM.render(tempHtml, container);
@@ -162,10 +174,23 @@ class Perfil extends React.Component{
     let estatus = card.status;
     let bStatus = estatus === 'Enable';
 		new_html = (
-			  <Card className="indexMiniCard col-md-5 mx-2 justify-content-center">
-			    <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} />
-			    <Card.Body>
-			      <Card.Title>{card.title}</Card.Title>
+			  <>
+        <Card className="indexMiniCard col-md-5 mx-2 justify-content-center">
+          <>
+          {bStatus ? (
+            
+            <a href={new_href}>
+             <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} onClick={() => this.updateAnimationStatus()} />
+            </a>
+          ):
+          (
+			     <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} />
+			    )
+        }
+          </>
+          <>
+          <Card.Body>  
+            <Card.Title>{card.title}</Card.Title>
 			      <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
 			      <Card.Text>
 			        {card.text}
@@ -183,10 +208,12 @@ class Perfil extends React.Component{
              )
             }
           </Card.Body>
-			    <Card.Footer>
+			    </>
+          <Card.Footer>
 			      <small className="text-muted">Fecha de publicación: {card.date}</small>
 			    </Card.Footer>
 			  </Card>
+        </>
 		)
 		return new_html
   }
@@ -197,6 +224,8 @@ class Perfil extends React.Component{
 	}
 
   render() {
+      let isLoaded = this.state.displayAnimation;
+
       if(this.state.afterElimCuenta === true){
         return <Redirect to="/" />
       }
@@ -204,25 +233,40 @@ class Perfil extends React.Component{
       return (
         <>
           <Modal id="confirmEliminacionModal" show={this.state.showElimModal} onHide={this.hideElimModal}>
-            <Modal.Header closeButton> Deshabilitar cuenta </Modal.Header>
-            Seguro de deshabilitar la cuenta? las publicaciones seguirán siendo
-            accesibles, sin embargo ya no se podrá acceder a la cuenta.
-            <div className="clearfix">
-              <Button variant="danger" size="sm" className="ml-2 float-right" onClick={this.elimCuenta}>Confirmar eliminación</Button>
-              <Button variant="primary" size="sm" onClick={this.hideElimModal} className="float-right">Cancelar</Button>
+            <Modal.Header closeButton> 
+              <Modal.Title>Deshabilitar cuenta </Modal.Title> 
+            </Modal.Header>
+            <Modal.Body>
+              <p>
+              Seguro de deshabilitar la cuenta? las publicaciones seguirán siendo
+              accesibles, sin embargo ya no se podrá acceder a la cuenta.
+              </p>
+            <div className="row justify-content-around">
+              <Button variant="primary" size="sm" onClick={this.hideElimModal} className="col-md-5 m-3 p-3"><b>Cancelar</b></Button>
+              <Button variant="danger" size="sm" className="col-md-5 m-3 p-3" onClick={this.elimCuenta}><b>Confirmar eliminación</b></Button>
             </div>
+            </Modal.Body>
           </Modal>
-
-          <div className="row mx-auto mt-5 justify-content-around">
-            <div className="col-6 mx-auto" id="PerfilView" ref="putPerfilHere">
+          <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
+            <div className="row mx-auto mt-5">
+               <div className="col-11 col-md-10 col-lg-6 col-xl-5 mx-auto" id="PerfilView">
+                <Jumbotron className="py-4 clearfix ">
+                  <h2 className="centerText">Información de Perfil</h2>
+                  <div className="row justify-content-around" id="PerfilView" ref="putPerfilHere">
+                    <Spinner animation="grow" variant="dark" />
+                  </div>
+                </Jumbotron>
+              </div>
+              <div className="col-11 col-md-10 col-lg-6 col-xl-5 mx-auto" id="PerfilPubs">
+                <Jumbotron className="py-4">
+                  <h2 className="centerText">Publicaciones del perfil</h2>
+                  <div className="row justify-content-around m-0" ref="putPubsHere">
+                    <Spinner animation="grow" variant="dark" />
+                  </div>
+                </Jumbotron>
+              </div>
             </div>
-            <div className="col-6 mx-auto" id="PerfilPubs">
-              <Jumbotron className="py-4">
-                <h2> Publicaciones del perfil: </h2>
-                <div className="row justify-content-around" ref="putPubsHere"> </div>
-              </Jumbotron>
-            </div>
-          </div>
+          </Animated>
         </>
       );
     }

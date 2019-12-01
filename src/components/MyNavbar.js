@@ -16,10 +16,15 @@ class MyNavbar extends React.Component{
         showAbout: false,
         isUserLogged: false,
         tagsToSearch: '',
-        setToSearch: false
+        setToSearch: false,
+        updateNavBar: false
       };
 
       this.checkIfLogged = this.checkIfLogged.bind(this);
+      this.refAbout = React.createRef();
+      this.refCreate = React.createRef();
+      this.refCreateUser = React.createRef();
+      this.refLogin = React.createRef();
     }
 
     showLoginModalHandler = (event) =>{
@@ -30,18 +35,21 @@ class MyNavbar extends React.Component{
         //this.forceUpdate();
         window.location.reload();
       }
+      this.refLogin.current.classList.remove('active');
       this.setState({showLoginModal:false});
     }
     showAboutModalHandler = (event) =>{
       this.setState({showAbout: true});
     }
     hideAboutModalHandler = (event) =>{
+      this.refAbout.current.classList.remove('active');
       this.setState({showAbout: false});
     }    
     showCreateModalHandler = (event) =>{
       this.setState({showCreateModal: true});
     }
     hideCreateModalHandler = (event) =>{
+      this.refCreate.current.classList.remove('active');
       this.setState({showCreateModal: false});
     }
     showCreateUserModalHandler = (event) =>{
@@ -52,6 +60,7 @@ class MyNavbar extends React.Component{
         //this.forceUpdate();
         window.location.reload();
       }
+      this.refCreateUser.current.classList.remove('active');
       this.setState({showCreateUserModal: false});
     }
 
@@ -129,7 +138,7 @@ class MyNavbar extends React.Component{
               <About/>
             </Modal>
 
-            <Navbar bg="light" expand="lg" fixed="top" className="text-uppercase" id="mainNav" >
+            <Navbar expand="lg" fixed="top" className="text-uppercase navbar-custom" id="mainNav" >
               <Navbar.Brand href="/">
                 <img src={process.env.PUBLIC_URL + '/img/logo_movico.png'} className="d-inline-block align-top" height="30" alt="MOVICO"/>
               </Navbar.Brand>
@@ -140,12 +149,12 @@ class MyNavbar extends React.Component{
                     <FormControl value={this.state.tagsToSearch} onChange={this.handleTagChange} type="text" placeholder="Etiqueta a buscar" size="sm" className="mr-sm-2" />
                     <Button variant="outline-primary" size="sm" onClick={this.handleTagSearch}>Buscar</Button>
                   </Form>
-                  <Nav.Link className="mx-3 px-3" onClick={this.showCreateModalHandler} href="#1">Crear Publicacion</Nav.Link>
-                  <Nav.Link className="mx-3 px-3" onClick={this.showAboutModalHandler} href='#4'>Acerca</Nav.Link>
+                  <Nav.Link ref={this.refCreate} className="mx-3 px-3" onClick={this.showCreateModalHandler} href="#1">Crear Publicacion</Nav.Link>
+                  <Nav.Link ref={this.refAbout} className="mx-3 px-3" onClick={this.showAboutModalHandler} href='#4'>Acerca</Nav.Link>
                   {!isUserLogged ? (
                     <>
-                    <Nav.Link className="mx-3 px-3" onClick={this.showLoginModalHandler} href="#2" >Ingresar</Nav.Link>
-                    <Nav.Link className="mx-3 px-3" onClick={this.showCreateUserModalHandler} href="#3">Crear Cuenta</Nav.Link>
+                    <Nav.Link ref={this.refLogin} className="mx-3 px-3" onClick={this.showLoginModalHandler} href="#2" >Ingresar</Nav.Link>
+                    <Nav.Link ref={this.refCreateUser} className="mx-3 px-3" onClick={this.showCreateUserModalHandler} href="#3">Crear Cuenta</Nav.Link>
                     </>
                   ) : (
                     <NavDropdown alignRight title="Configuración">

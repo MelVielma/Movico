@@ -257,7 +257,7 @@ class CommentsView extends React.Component {
 	        </div>
 	        { !showButtonMessage ? (
 	        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={!(this.state.wantsToComment)}>
-	        	<div className="indexCardDeck row col-md-12 justify-content-center">
+	        	<div className="indexCardDeck mb-2 row col-md-12 justify-content-center">
 		        	<Button variant="primary" type="submit" onClick={this.enableComment}>Añadir Comentario</Button>
 		        </div>
 	        </Animated>
@@ -265,8 +265,8 @@ class CommentsView extends React.Component {
 	        :
 	        (
 	        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.wantsToComment}>
-	        	<div className="indexCardDeck row col-md-12 justify-content-center">
-		        	<Card className="indexCardComment col-md-8 justify-content-center">
+	        	<div className="indexCardDeck mb-2 row col-md-12 justify-content-center">
+		        	<Card className="indexCardComment mb-0 col-md-8 justify-content-center">
 					    <Card.Body>
 					      <Card.Title>Comentario</Card.Title>
 					      	<Form>

@@ -23,7 +23,6 @@ var getInfoFromServer = {
 
 var updateInfoFromServer = function (updates) {
 
-  console.log("updates", updates)
   return {
     method: 'PATCH',
     headers: {
@@ -103,7 +102,6 @@ class SinglePublicationView extends React.Component{
   }
 
   displayMessage(message){
-    console.log("Se despliega el mensaje:", message)
     this.state.message = message;
     this.state.showMessageModal = true;
     try {
@@ -162,6 +160,23 @@ class SinglePublicationView extends React.Component{
 
   handleCambiosPub(event) {
     let fetch_url = "/publications/"+ this.state.pubId;
+    let dateRegEx = /(\d+)\/(\d+)\/(\d+)/;
+    let dateTemp = dateRegEx.exec(this.refPubDate.current.textContent);
+    let dateDay = 0;
+    let dateMonth = 0;
+    let dateYear = 0;
+    let dateString = new Date();
+    
+    try {
+    dateDay = parseInt(dateTemp[1]);
+    dateMonth = parseInt(dateTemp[2])-1;
+    dateYear = parseInt(dateTemp[3]);
+    dateString = new Date(dateYear, dateMonth, dateDay);
+    }
+    catch(err) {
+      this.displayMessage("Fecha ingresada inválida.")
+      return;
+    }
     let jsonContent = {
       'typee': this.state.userTypee,
       'title': this.refPubTitle.current.textContent,
@@ -169,11 +184,11 @@ class SinglePublicationView extends React.Component{
       'author': this.refPubAuthor.current.textContent,
       'text': this.refPubText.current.textContent,
       'media': this.refImgSrc.current.textContent,
-      'date': this.refPubDate.current.textContent,
+      'date': dateString,
       'lastModified': new Date()
     }
     fetch(fetch_url, updateInfoFromServer(jsonContent))
-      .then(id => this.displayMessage("Se modificó la Publicación de manera exitosa"))
+      .then(id => (id.status === 200) ? this.displayMessage("Se editó la publicación de manera exitosa.") : this.displayMessage("Se produjo un error al tratar de hacer la edición."))
       .then(this.updateIsEditable())
       .catch(err => this.displayMessage(err))
   }
@@ -206,49 +221,60 @@ class SinglePublicationView extends React.Component{
     }
 
     let singlePublicationHtml = (
-      <Jumbotron className="indexCardDeck col-md-10 mb-4">
+      <Jumbotron className="indexCardDeck col-md-9 mb-4 justify-content-center">
         <>
-        <h1 ref={this.refPubTitle} contentEditable={this.state.isEditable}>{myPublication.title} </h1>
-        <>
-        <h2><i> Autor: <span ref={this.refPubAuthor} contentEditable={this.state.isEditable}>{myPublication.author}</span> </i></h2>
-        </>
-        <h3> Empresa: <span ref={this.refPubBusiness} contentEditable={this.state.isEditable}>{myPublication.business_name}</span> </h3>
-        <h3 className="text-muted"> Etiquetas: {myPublication.tags.join(", ")}</h3>
-        <img src={myPublication.media} alt={myPublication.title} className="responsive-image" />
-        {isEditable ?
-          ( <p>Link: <span ref={this.refImgSrc} contentEditable={this.state.isEditable}>{myPublication.media}</span></p>
-            ):
-          <>
-          </>
-
-        }
-        <h5><b>Fecha: </b><span ref={this.refPubDate} contentEditable={this.state.isEditable}>{new Date(myPublication.date).toLocaleDateString()}</span> </h5>
-        <h6 ref={this.refPubText} contentEditable={this.state.isEditable}> {myPublication.text[0]} </h6>
-        </>
-        <div>
-          { (isUserLogged && isAdmin) ? (
-             <>
-            {isPublicationEnable ?
-              (
-                <Button id="btnDeshabilitar" variant="warning" onClick={this.handleDeshabilitarPub}>Deshabilitar Publicación</Button>
-              ):(
-                <Button id="btnHabilitar" variant="success" onClick={this.handleHabilitarPub}>Habilitar Publicación</Button>
-              )
-            }
-            {isEditable? (
-                <Button id="btnGuardarCambios" variant="info" onClick={this.handleCambiosPub}>Guardar Cambios</Button>
-              ):(
-                <Button id="btnHacerCambios" variant="info" onClick={this.updateIsEditable}>Modificar Publicación</Button>
-              )
-
-            }
-            <Button id="btnEliminar" variant="danger" onClick={() => this.confirmEliminacionPub()}>Eliminar Publicación</Button>
-            </>
-            ):(
+        <div className="row col-11 m-0 textJumbo justify-content-center">
+          <h1 ref={this.refPubTitle} contentEditable={this.state.isEditable}>{myPublication.title} </h1>
+        </div>
+        <div className="row col-11 m-0 textJumbo justify-content-center">
+          <h5>
+            Realizado por <span ref={this.refPubAuthor} contentEditable={this.state.isEditable}>{myPublication.author} </span> 
+            el <span ref={this.refPubDate} contentEditable={this.state.isEditable}>{new Date(myPublication.date).toLocaleDateString()} </span>
+            para la empresa <span ref={this.refPubBusiness} contentEditable={this.state.isEditable}>{myPublication.business_name}</span>
+          </h5>
+        </div>
+        <div className="row col-11 m-0 textJumbo justify-content-center">
+          <h5 className="text-muted">
+            Etiquetas: {myPublication.tags.join(", ")}
+          </h5>
+        </div>
+        <div className="row col-11 m-0 textJumbo justify-content-center">
+          <img src={myPublication.media} alt={myPublication.title} className="responsive-image" />
+          {isEditable ?
+            ( <p className="textJumbo">Link: <span ref={this.refImgSrc} contentEditable={this.state.isEditable}>{myPublication.media}</span></p>
+              ):
             <>
             </>
-            )}
+          }
+          <div className="row col-11 m-0 textJumbo justify-content-center">
+            <h6 className="textJumbo centerText" ref={this.refPubText} contentEditable={this.state.isEditable}> {myPublication.text[0]} </h6>
+          </div>
         </div>
+        </>
+        { (isUserLogged && isAdmin) ? (
+           <>
+           <div className="row justify-content-center">
+          {isPublicationEnable ?
+            (
+              <Button className="m-1 p-3 col-11 col-lg-3" id="btnDeshabilitar" variant="warning" onClick={this.handleDeshabilitarPub}>Deshabilitar Publicación</Button>
+            ):(
+              <Button className="m-1 p-3 col-11 col-lg-3" id="btnHabilitar" variant="success" onClick={this.handleHabilitarPub}>Habilitar Publicación</Button>
+            )
+          }
+          {isEditable? (
+              <Button className="m-1 p-3 col-11 col-lg-3" id="btnGuardarCambios" variant="info" onClick={this.handleCambiosPub}>Guardar Cambios</Button>
+            ):(
+              <Button className="m-1 p-3 col-11 col-lg-3" id="btnHacerCambios" variant="info" onClick={this.updateIsEditable}>Modificar Publicación</Button>
+            )
+
+          }
+          <Button className="m-1 p-3 col-11 col-lg-3" id="btnEliminar" variant="danger" onClick={() => this.confirmEliminacionPub()}>Eliminar Publicación</Button>
+          </div>
+          </>
+          ):(
+          <>
+          </>
+          )}
       </Jumbotron>
       );
     ReactDOM.render(singlePublicationHtml, container);
@@ -290,7 +316,14 @@ class SinglePublicationView extends React.Component{
               <Modal.Title>{this.state.message}</Modal.Title>
             </Modal.Header>
             { eliminarPub? (
-            <Button id="btnEliminar" variant="danger" onClick={this.handleEliminarPub}>Eliminar Publicación</Button>
+            <>
+            <Modal.Body>
+            <div className="row justify-content-around">
+              <Button className="col-md-5 m-3 p-3" id="btnCancelar" variant="primary" onClick={this.hideMessageModalHandler}>Cancelar</Button>
+              <Button className="col-md-5 m-3 p-3" id="btnEliminar" variant="danger" onClick={this.handleEliminarPub}>Eliminar Publicación</Button>
+            </div>
+            </Modal.Body>
+            </>
             ) : (
             <>
             </>
@@ -299,7 +332,7 @@ class SinglePublicationView extends React.Component{
           </Modal>
         </div>
             <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
-              <div className="row col-md-12 mt-4 ml-3 mr-3 justify-content-center" id="SinglePublicationView" ref="putSinglePubHere">
+              <div className="row col-md-12 mt-4 ml-0 mr-0 justify-content-center" id="SinglePublicationView" ref="putSinglePubHere">
                   <Spinner animation="grow" variant="light" />
               </div>
             </Animated> 

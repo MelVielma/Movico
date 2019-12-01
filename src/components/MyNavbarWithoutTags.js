@@ -5,6 +5,8 @@ import CreateUserForm from './CreateUserForm';
 import About from './About';
 import {Redirect} from 'react-router';
 import {Form, FormControl, Button, Navbar, Nav, Modal, NavDropdown} from 'react-bootstrap';
+import '../index.css';
+
 
 class MyNavbarWithoutTags extends React.Component{
     constructor(props){
@@ -18,6 +20,10 @@ class MyNavbarWithoutTags extends React.Component{
       };
 
       this.checkIfLogged = this.checkIfLogged.bind(this);
+      this.refAbout = React.createRef();
+      this.refCreate = React.createRef();
+      this.refCreateUser = React.createRef();
+      this.refLogin = React.createRef();
     }
 
     showLoginModalHandler = (event) =>{
@@ -28,12 +34,14 @@ class MyNavbarWithoutTags extends React.Component{
         //this.forceUpdate();
         window.location.reload();
       }
+      this.refLogin.current.classList.remove('active');
       this.setState({showLoginModal:false});
     }
     showCreateModalHandler = (event) =>{
       this.setState({showCreateModal: true});
     }
     hideCreateModalHandler = (event) =>{
+      this.refCreate.current.classList.remove('active');
       this.setState({showCreateModal: false});
     }
     showCreateUserModalHandler = (event) =>{
@@ -44,16 +52,16 @@ class MyNavbarWithoutTags extends React.Component{
         //this.forceUpdate();
         window.location.reload();
       }
+      this.refCreateUser.current.classList.remove('active');
       this.setState({showCreateUserModal: false});
     }
 
     showAboutModalHandler = (event) =>{
-      console.log("Se muestra el about");
       this.setState({showAboutModal: true});
     }
     hideAboutModalHandler = (event) =>{
+      this.refAbout.current.classList.remove('active');
       this.setState({showAboutModal: false});
-      window.location.reload();
     }
 
     handleLogout = (event) =>{
@@ -115,19 +123,19 @@ class MyNavbarWithoutTags extends React.Component{
             </Modal>
 
 
-            <Navbar bg="light" expand="lg" fixed="top" className="text-uppercase" id="mainNav" >
+            <Navbar expand="lg" fixed="top" className="text-uppercase navbar-custom" id="mainNav" >
               <Navbar.Brand href="/">
                 <img src={process.env.PUBLIC_URL + '/img/logo_movico.png'} className="d-inline-block align-top" height="30" alt="MOVICO"/>
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 <Nav variant="pills" defaultActiveKey="#home">
-                  <Nav.Link className="mx-3 px-3" onClick={this.showCreateModalHandler} href="#1">Crear Publicacion</Nav.Link>
-                  <Nav.Link className="mx-3 px-3" onClick={this.showAboutModalHandler} href='#4'>Acerca</Nav.Link>
+                  <Nav.Link ref={this.refCreate} className="mx-3 px-3" onClick={this.showCreateModalHandler} href="#1">Crear Publicacion</Nav.Link>
+                  <Nav.Link ref={this.refAbout} className="mx-3 px-3" onClick={this.showAboutModalHandler} href='#4'>Acerca</Nav.Link>
                   {!isUserLogged ? (
                     <>
-                    <Nav.Link className="mx-3 px-3" onClick={this.showLoginModalHandler} href="#2" >Ingresar</Nav.Link>
-                    <Nav.Link className="mx-3 px-3" onClick={this.showCreateUserModalHandler} href="#3">Crear Cuenta</Nav.Link>
+                    <Nav.Link ref={this.refLogin} className="mx-3 px-3" onClick={this.showLoginModalHandler} href="#2" >Ingresar</Nav.Link>
+                    <Nav.Link ref={this.refCreateUser} className="mx-3 px-3" onClick={this.showCreateUserModalHandler} href="#3">Crear Cuenta</Nav.Link>
                     </>
                   ) : (
                     <NavDropdown alignRight title="Configuración">
