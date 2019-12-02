@@ -89,26 +89,54 @@ class Perfil extends React.Component{
 
     let singlePublicationHtml = (
       <>
-      <div className="row pl-2 pr-2 pt-4 m-3 table-row col-12">
-        <h4 className="col-12 col-md-3 "><b>Nombre</b></h4>
-        <h4 className="col-12 col-md-9">{userToView.name}</h4>
-      </div> 
-      <div className="row table-row pl-2 pr-2 pt-4 mb-3 col-12">
-        <h4 className="col-12 col-md-3"> <b>Tipo</b> </h4>{ userToView.typee === "userOnly" ? (
-          <h4 className="col-12 col-md-9">Usuario regular</h4>
-        ) : (
-          <h4 className="col-12 col-md-9">Usuario Administrador</h4>
-        )}
-      </div> 
-      <div className="row table-row pl-2 pr-2 pt-4 mb-3 col-12">
-        <h4 className="col-12 col-md-3"> <b> Correo </b></h4>
-        <h4 className="col-12 col-md-9"> {userToView.email} </h4>
-      </div> 
-      <div className="row table-row last-row pl-2 pr-2 pt-4 pb-3 mb-3 col-12">
-        <h4 className="col-12 col-md-3"> <b> Acerca de </b></h4>
-        <h4 className="col-12 col-md-9"> {userToView.about} </h4>
-      </div> 
-        <Button variant="danger" size="sm" className="p-3 float-right" onClick={() => this.confirmElim()}><p className="m-0"><b>Eliminar cuenta</b></p></Button>
+      <div className="col-12 p-2">
+        <h1 className="centerText">¡Hola {userToView.name}!</h1>
+      </div>
+      <div className="col-12 p-2">
+        <h3 className="centerText">Esta es la información que tenemos registrada de tu cuenta</h3>
+      </div>
+      <div className="row m-0 p-2 col-12">
+        <div className="col-12">
+          <h3 className="centerText"><span className="perfil-row">{userToView.name}</span></h3>
+        </div>
+        <div className="col-12 perfil-subtitle">
+          <h5 className="centerText tertiaryColorText"><b>Nombre</b></h5>
+        </div>
+      </div>
+      <div className="row m-0 p-2 col-12">
+        <div className="col-12">
+        { userToView.typee === "userOnly" ? 
+          (
+            <h3 className="centerText"><span className="perfil-row">Usuario Regular</span></h3>
+          ) :
+          (
+            <h3 className="centerText"><span className="perfil-row">Usuario Administrador</span></h3>
+          )
+        }
+        </div>
+        <div className="col-12 perfil-subtitle">
+          <h5 className="centerText tertiaryColorText"><b>Tipo</b></h5>
+        </div>
+      </div>
+      <div className="row m-0 p-2 col-12">
+        <div className="col-12">
+          <h3 className="centerText"><span className="perfil-row">{userToView.email}</span></h3>
+        </div>
+        <div className="col-12 perfil-subtitle">
+          <h5 className="centerText tertiaryColorText"><b>Correo</b></h5>
+        </div>
+      </div>
+      <div className="row m-0 p-2 col-12">
+        <div className="col-12">
+          <h3 className="centerText"><span className="perfil-row">{userToView.about}</span></h3>
+        </div>
+        <div className="col-12 perfil-subtitle">
+          <h5 className="centerText tertiaryColorText"><b>Acerca de</b></h5>
+        </div>
+      </div>
+      <div className="row col-12 justify-content-center p-4 p-lg-2">
+        <Button variant="danger" size="sm" className="col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.confirmElim()}><p className="m-0"><b>Eliminar cuenta</b></p></Button>
+      </div>
       </>
     )
     //Maybe agregar el editar el perfil, no estaba dentro de lo planeado al parecer
@@ -175,7 +203,7 @@ class Perfil extends React.Component{
     let bStatus = estatus === 'Enable';
 		new_html = (
 			  <>
-        <Card className="indexMiniCard col-md-5 mx-2 justify-content-center">
+        <Card className="indexMiniCard col-md-4 col-lg-3 justify-content-center">
           <>
           {bStatus ? (
             
@@ -210,7 +238,7 @@ class Perfil extends React.Component{
           </Card.Body>
 			    </>
           <Card.Footer>
-			      <small className="text-muted">Fecha de publicación: {card.date}</small>
+			      <small className="text-muted">Fecha de publicación: {new Date(card.date).toLocaleDateString()}</small>
 			    </Card.Footer>
 			  </Card>
         </>
@@ -248,22 +276,22 @@ class Perfil extends React.Component{
             </Modal.Body>
           </Modal>
           <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
-            <div className="row mx-auto mt-5">
-               <div className="col-11 col-md-10 col-lg-6 col-xl-5 mx-auto" id="PerfilView">
-                <Jumbotron className="py-4 clearfix ">
-                  <h2 className="centerText">Información de Perfil</h2>
+            <div className="row m-0 justify-content-center">
+               <div className="col-12 p-0" id="PerfilView">
+                <Jumbotron>
                   <div className="row justify-content-around" id="PerfilView" ref="putPerfilHere">
+                    <div className="row col-12 justify-content-center">
+                      <h2 className="centerText">Información de Perfil</h2>
+                    </div>
                     <Spinner animation="grow" variant="dark" />
                   </div>
                 </Jumbotron>
               </div>
-              <div className="col-11 col-md-10 col-lg-6 col-xl-5 mx-auto" id="PerfilPubs">
-                <Jumbotron className="py-4">
-                  <h2 className="centerText">Publicaciones del perfil</h2>
-                  <div className="row justify-content-around m-0" ref="putPubsHere">
-                    <Spinner animation="grow" variant="dark" />
-                  </div>
-                </Jumbotron>
+              <div className="col-12 col-lg-9" id="PerfilPubs">
+                <h2 className="centerText white-text pb-3">Publicaciones del perfil</h2>
+                <div className="row justify-content-around m-0" ref="putPubsHere">
+                  <Spinner animation="grow" variant="dark" />
+                </div>
               </div>
             </div>
           </Animated>

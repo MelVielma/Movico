@@ -54,6 +54,7 @@ class PublicationDeck extends React.Component {
 			.then(response => response.json())
 			.then(state => this.setState({publications: state}, () =>
 				this.afterGet()))
+			.then(() => this.setState({displayAnimation: true}))
 			.catch(err => console.log(err));
 	}
 
@@ -63,8 +64,8 @@ class PublicationDeck extends React.Component {
 		fetch(url, publications2)
 			.then(response => response.json())
 			.then(state => this.setState({publications: state}, () =>
-				this.afterGet()));
-
+				this.afterGet()))
+			.then(() => this.setState({displayAnimation: true}));
 	}
 
 	getTagPublications(event) {

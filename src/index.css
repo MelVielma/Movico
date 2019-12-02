@@ -57,6 +57,15 @@ code {
   background-color: #CE8147 !important;
 }
 
+.secondaryColorText {
+  color: #E9E3B4;
+}
+
+.tertiaryColorText {
+  color: #CE8147;
+}
+
+
 .table-row.col-12,
 .centerText {
   text-align: center;
@@ -96,10 +105,17 @@ code {
   border-top-color: #CE8147;
 }
 
+.editable-text,
 .last-row {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: #CE8147;
+}
+
+.perfil-row {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #CE8147;  
 }
 
 .searchTagContainer {
@@ -111,5 +127,18 @@ code {
 
 .textJumbo {
   word-wrap: break-word;
-  word-break: break-all;
+  word-break: break-word;
+}
+
+#SinglePublicationView .jumbotron > div {
+  margin: auto !important;
+  justify-content: center !important;
+}
+
+.perfil-subtitle{
+  margin-top: -5px;
+}
+
+.white-text {
+  color: white;
 }

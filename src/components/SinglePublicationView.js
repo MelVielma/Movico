@@ -194,7 +194,22 @@ class SinglePublicationView extends React.Component{
   }
 
   updateIsEditable(event){
+    if (!(this.state.isEditable === true)) {
+      this.refPubAuthor.current.classList.add('editable-text');
+      this.refPubTitle.current.classList.add('editable-text');
+      this.refPubText.current.classList.add('editable-text');
+      this.refPubBusiness.current.classList.add('editable-text');
+      this.refPubDate.current.classList.add('editable-text');
+    }
+    else {
+      this.refPubAuthor.current.classList.remove('editable-text');
+      this.refPubTitle.current.classList.remove('editable-text');
+      this.refPubText.current.classList.remove('editable-text');
+      this.refPubBusiness.current.classList.remove('editable-text');
+      this.refPubDate.current.classList.remove('editable-text');
+    }
     this.state.isEditable = !this.state.isEditable;
+    
     this.afterGet();
   }
 
@@ -224,24 +239,29 @@ class SinglePublicationView extends React.Component{
       <Jumbotron className="indexCardDeck col-md-9 mb-4 justify-content-center">
         <>
         <div className="row col-11 m-0 textJumbo justify-content-center">
-          <h1 ref={this.refPubTitle} contentEditable={this.state.isEditable}>{myPublication.title} </h1>
+          <h1 className="centerText" ref={this.refPubTitle} contentEditable={this.state.isEditable}>{myPublication.title} </h1>
         </div>
         <div className="row col-11 m-0 textJumbo justify-content-center">
-          <h5>
+          <h5 className="centerText">
             Realizado por <span ref={this.refPubAuthor} contentEditable={this.state.isEditable}>{myPublication.author} </span> 
             el <span ref={this.refPubDate} contentEditable={this.state.isEditable}>{new Date(myPublication.date).toLocaleDateString()} </span>
             para la empresa <span ref={this.refPubBusiness} contentEditable={this.state.isEditable}>{myPublication.business_name}</span>
           </h5>
         </div>
         <div className="row col-11 m-0 textJumbo justify-content-center">
-          <h5 className="text-muted">
+          <h5 className="centerText text-muted">
             Etiquetas: {myPublication.tags.join(", ")}
           </h5>
         </div>
-        <div className="row col-11 m-0 textJumbo justify-content-center">
-          <img src={myPublication.media} alt={myPublication.title} className="responsive-image" />
+        <div className="row col-11 m-0 justify-content-center">
+          <div className="row justify-content-center">
+            <img src={myPublication.media} alt={myPublication.title} className="responsive-image" />
+          </div>
           {isEditable ?
-            ( <p className="textJumbo">Link: <span ref={this.refImgSrc} contentEditable={this.state.isEditable}>{myPublication.media}</span></p>
+            ( 
+              <div className="row col-11 justify-content-center">
+                <p className="textJumbo editable-text">Link: <span ref={this.refImgSrc} contentEditable={this.state.isEditable}>{myPublication.media}</span></p>
+              </div>
               ):
             <>
             </>
