@@ -203,7 +203,7 @@ class Perfil extends React.Component{
     let bStatus = estatus === 'Enable';
 		new_html = (
 			  <>
-        <Card className="indexMiniCard col-md-4 col-lg-3 justify-content-center">
+        <Card className="indexMiniCard perfilPage col-md-4 col-lg-3 justify-content-center">
           <>
           {bStatus ? (
             

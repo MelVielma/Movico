@@ -199,7 +199,7 @@ class CommentsView extends React.Component {
 			        {card.text}
 			      </Card.Text>
 			      {isAdmin ? (
-			      		<Button value={card._id} variant="warning" type="submit" onClick={e => this.handleEliminateComment(e.target.value)}>Eliminar Comentario</Button>
+			      		<Button value={card._id} className="btnOpcionesAdmin" type="submit" onClick={e => this.handleEliminateComment(e.target.value)}>Eliminar Comentario</Button>
 			      	)
 			      	:
 			      	(

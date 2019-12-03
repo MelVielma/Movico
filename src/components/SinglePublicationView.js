@@ -276,19 +276,19 @@ class SinglePublicationView extends React.Component{
            <div className="row justify-content-center">
           {isPublicationEnable ?
             (
-              <Button className="m-1 p-3 col-11 col-lg-3" id="btnDeshabilitar" variant="warning" onClick={this.handleDeshabilitarPub}>Deshabilitar Publicación</Button>
+              <Button className="btnOpcionesAdmin m-1 p-3 col-11 col-lg-3" id="btnDeshabilitar" onClick={this.handleDeshabilitarPub}>Deshabilitar Publicación</Button>
             ):(
-              <Button className="m-1 p-3 col-11 col-lg-3" id="btnHabilitar" variant="success" onClick={this.handleHabilitarPub}>Habilitar Publicación</Button>
+              <Button className="btnOpcionesAdmin m-1 p-3 col-11 col-lg-3" id="btnHabilitar" onClick={this.handleHabilitarPub}>Habilitar Publicación</Button>
             )
           }
           {isEditable? (
-              <Button className="btnPublicaciones m-1 p-3 col-11 col-lg-3" id="btnGuardarCambios" variant="info" onClick={this.handleCambiosPub}>Guardar Cambios</Button>
+              <Button className="btnOpcionesAdmin m-1 p-3 col-11 col-lg-3" id="btnGuardarCambios" variant="info" onClick={this.handleCambiosPub}>Guardar Cambios</Button>
             ):(
-              <Button className="btnPublicaciones m-1 p-3 col-11 col-lg-3" id="btnHacerCambios" variant="info" onClick={this.updateIsEditable}>Modificar Publicación</Button>
+              <Button className="btnOpcionesAdmin m-1 p-3 col-11 col-lg-3" id="btnHacerCambios" variant="info" onClick={this.updateIsEditable}>Modificar Publicación</Button>
             )
 
           }
-          <Button className="m-1 p-3 col-11 col-lg-3" id="btnEliminar" variant="danger" onClick={() => this.confirmEliminacionPub()}>Eliminar Publicación</Button>
+          <Button className="btnOpcionesAdmin m-1 p-3 col-11 col-lg-3" id="btnEliminar" onClick={() => this.confirmEliminacionPub()}>Eliminar Publicación</Button>
           </div>
           </>
           ):(

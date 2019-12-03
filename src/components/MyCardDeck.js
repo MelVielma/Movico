@@ -123,7 +123,7 @@ class PublicationDeck extends React.Component {
 		let new_html = '';
 		let new_href = "/publicacion/" + card.id;
 		new_html = (
-			  <Card className="indexMiniCard col-12 col-md-4 col-lg-3 justify-content-center">
+			  <Card className="indexMiniCard homePage col-12 col-md-4 col-lg-3 justify-content-center">
 			    <a href={new_href}>
 			    	<Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} onClick={() => this.updateAnimationStatus()} />
 			    </a>
@@ -161,7 +161,7 @@ class PublicationDeck extends React.Component {
 				<div className="my-4 flex-column d-md-flex flex-md-row-reverse">
 					<Form inline className="justify-content-center" onSubmit={this.handleTagSearch}>
 						<FormControl value={this.state.tagsToSearch} onChange={this.handleTagChange} type="text" placeholder="Etiqueta a buscar" className="tertiaryColorText mr-sm-2" />
-						<Button className="mt-3 mt-md-0 btnSearchTag" onClick={this.handleTagSearch}>Buscar</Button>
+						<Button className="mt-3 mt-md-0 btnPublicaciones" onClick={this.handleTagSearch}>Buscar</Button>
 					</Form>
 				</div>
 				<Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>

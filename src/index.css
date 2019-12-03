@@ -36,6 +36,66 @@ code {
   text-overflow: ellipsis;
 }
 
+.indexMiniCard.perfilPage {
+  border: 1px solid #E9E3B4 !important;
+}
+
+.indexMiniCard.perfilPage:hover {
+  background-color: #E9E3B4 !important;
+}
+
+.indexMiniCard.perfilPage:hover .text-muted {
+  color: #CE8147 !important;
+}
+
+.indexMiniCard.homePage {
+  border: 1px solid #115571 !important;
+}
+
+.indexMiniCard.perfilPage:hover .card-title,
+.indexMiniCard.perfilPage:hover .card-text,
+.indexMiniCard.homePage .card-title, 
+.indexMiniCard.homePage .card-text {
+  color: black !important;
+}
+
+.indexMiniCard.perfilPage,
+.indexMiniCard.perfilPage:hover .card-footer,
+.indexMiniCard.homePage:hover {
+  background-color: #115571 !important;
+}
+
+.indexMiniCard.perfilPage .card-title,
+.indexMiniCard.perfilPage .card-text,
+.indexMiniCard.homePage:hover .card-title, 
+.indexMiniCard.homePage:hover .card-text {
+  color: white !important;
+}
+
+.indexMiniCard.perfilPage .text-muted,
+.indexMiniCard.homePage:hover .text-muted {
+  color: #E9E3B4 !important;
+}
+
+.indexMiniCard.perfilPage .card-footer,
+.indexMiniCard.homePage:hover .card-footer,
+.btnBlue {
+  background-color: #2F7C85 !important;
+  border-color: #2F7C85 !important;
+}
+
+
+.indexMiniCard.perfilPage:hover a {
+  color: #2F7C85 !important;
+}
+
+
+.indexMiniCard.perfilPage a,
+.indexMiniCard.homePage:hover a {
+  color: #CE8147 !important;
+}
+
+
 .reframe {
   height: 150px;
   overflow: hidden;
@@ -53,21 +113,16 @@ code {
   background: #2F7C85 !important;
 }
 
-.btnBlue {
-  background-color: #2F7C85 !important;
-  border-color: #2F7C85 !important;
-}
-
-.btnSearchTag {
-  background-color: #CE8147 !important;
-  border-color: #CE8147 !important;
-  color: white !important;
-}
-
 .btnPublicaciones {
   background-color: #CE8147 !important;
   border-color: #CE8147 !important;
   color: white !important;  
+}
+
+.btnPublicaciones:hover {
+  background-color: #E9E3B4 !important;
+  border-color: #CE8147 !important;
+  color: #CE8147 !important; 
 }
 
 .btnSearchNavbar {
@@ -81,6 +136,19 @@ code {
   border-color: #CE8147 !important;
   color: #E9E3B4 !important;
 }
+
+.btnOpcionesAdmin {
+  background-color: white !important;
+  border-color: #CE8147  !important;
+  color: #CE8147 !important;
+}
+
+.btnOpcionesAdmin:hover {
+  background-color: #2F7C85 !important;
+  border-color: #CE8147  !important;
+  color: white !important;
+}
+
 
 .secondaryColorBackground {
   background-color: #E9E3B4 !important;
