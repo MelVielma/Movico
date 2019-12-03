@@ -170,14 +170,14 @@ class Perfil extends React.Component{
       <div className="col-12 p-2">
         <h1 className="centerText">¡Hola {userToView.name}!</h1>
       </div>
-      <div className="col-12 p-2">
+      <div className="col-12 p-2 pb-4">
         <h3 className="centerText">Esta es la información que tenemos registrada de tu cuenta</h3>
       </div>
       <div className="row m-0 p-2 col-lg-4 col-12">
         <div className="col-12">
           <h3 className="centerText"><span className="perfil-row" ref={this.refName} contentEditable={this.state.isEditable}>{userToView.name}</span></h3>
         </div>
-        <div className="col-12 col-lg-4 perfil-subtitle">
+        <div className="col-12 perfil-subtitle">
           <h5 ref={this.refNameTag} className="centerText tertiaryColorText"><b>Nombre</b></h5>
         </div>
       </div>
@@ -200,13 +200,13 @@ class Perfil extends React.Component{
         <div className="col-12">
           <h3 className="centerText"><span className="perfil-row">{userToView.email}</span></h3>
         </div>
-        <div className="col-12 col-lg-4 perfil-subtitle">
+        <div className="col-12 perfil-subtitle">
           <h5 className="centerText tertiaryColorText"><b>Correo</b></h5>
         </div>
       </div>
-      <div className="row m-0 p-2 col-lg-8 col-12">
+      <div className="row m-0 p-2 pt-4 pb-4 col-lg-8 col-12">
         <div className="col-12">
-          <h3 className="centerText"><span ref={this.refAbout} className="perfil-row" contentEditable={this.state.isEditable}>{userToView.about}</span></h3>
+          <h4 className="text-center"><span ref={this.refAbout} className="perfil-row" contentEditable={this.state.isEditable}>{userToView.about}</span></h4>
         </div>
         <div className="col-12 perfil-subtitle">
           <h5 ref={this.refAboutTag} className="centerText tertiaryColorText"><b>Acerca de</b></h5>
@@ -216,17 +216,17 @@ class Perfil extends React.Component{
       { !(this.state.isEditable) ? 
         (
         <div className="row m-0 col-12 justify-content-center p-4 p-lg-2">
-          <Button size="sm" className="editPerfil col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.updateIsEditable()}><p className="m-0"><b>Editar</b></p></Button>
+          <Button size="sm" className="editPerfil col-11 col-md-6 col-lg-8 col-xl-6 p-3" onClick={() => this.updateIsEditable()}><p className="m-0"><b>Editar</b></p></Button>
         </div>
         ):
         (
         <div className="row m-0 col-12 justify-content-center p-4 p-lg-2">
-          <Button  size="sm" className="updatePerfil col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.editarPerfil()}><p className="m-0"><b>Guardar Cambios</b></p></Button>
+          <Button  size="sm" className="updatePerfil col-11 col-md-6 col-lg-8 col-xl-6 p-3" onClick={() => this.editarPerfil()}><p className="m-0"><b>Guardar Cambios</b></p></Button>
         </div>
         )
       }
         <div className="row m-0 col-12 justify-content-center p-4 p-lg-2">
-          <Button variant="danger" size="sm" className="col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.confirmElim()}><p className="m-0"><b>Eliminar cuenta</b></p></Button>
+          <Button variant="danger" size="sm" className="col-11 col-md-6 col-lg-8 col-xl-6 p-3" onClick={() => this.confirmElim()}><p className="m-0"><b>Eliminar cuenta</b></p></Button>
         </div>
       </div>
       </>
@@ -397,8 +397,8 @@ class Perfil extends React.Component{
             <div className="row m-0 justify-content-center primaryColorBackground">
                <div className="col-12 p-0" id="PerfilView">
                 <Jumbotron>
-                  <div className="row justify-content-around" id="PerfilView" ref="putPerfilHere">
-                    <div className="row col-12 justify-content-center">
+                  <div className="row col-lg-9 justify-content-around mx-auto" id="PerfilView" ref="putPerfilHere">
+                    <div className="row justify-content-center">
                       <h2 className="centerText">Información de Perfil</h2>
                     </div>
                     <Spinner animation="grow" variant="dark" />
