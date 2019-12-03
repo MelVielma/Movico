@@ -86,7 +86,7 @@ class Perfil extends React.Component{
   }
 
   getUserInfo(event){
-    let fetch_url = "/users/" + this.state.usrId;
+    let fetch_url = "https://movico.herokuapp.com/users/" + this.state.usrId;
     let petition = this.createPetition();
     console.log("url: ", fetch_url)
     console.log("petition: ", petition)
@@ -99,7 +99,7 @@ class Perfil extends React.Component{
   }
 
   getUserPubs(event){
-    let fetch_url = "/publicationsByUser/" + this.state.usrId;
+    let fetch_url = "https://movico.herokuapp.com/publicationsByUser/" + this.state.usrId;
     let petition = this.createPetition();
     console.log("url: ", fetch_url)
     console.log("petition: ", petition)
@@ -113,7 +113,7 @@ class Perfil extends React.Component{
   }
 
   editarPerfil(event) {
-    let fetch_url = "/users/update";
+    let fetch_url = "https://movico.herokuapp.com/users/update";
     let jsonContent = {
       'name': this.refName.current.textContent,
       'about': this.refAbout.current.textContent
@@ -173,15 +173,15 @@ class Perfil extends React.Component{
       <div className="col-12 p-2">
         <h3 className="centerText">Esta es la información que tenemos registrada de tu cuenta</h3>
       </div>
-      <div className="row m-0 p-2 col-lg-8 col-12">
+      <div className="row m-0 p-2 col-lg-4 col-12">
         <div className="col-12">
           <h3 className="centerText"><span className="perfil-row" ref={this.refName} contentEditable={this.state.isEditable}>{userToView.name}</span></h3>
         </div>
-        <div className="col-12 perfil-subtitle">
+        <div className="col-12 col-lg-4 perfil-subtitle">
           <h5 ref={this.refNameTag} className="centerText tertiaryColorText"><b>Nombre</b></h5>
         </div>
       </div>
-      <div className="row m-0 p-2 col-lg-8 col-12">
+      <div className="row m-0 p-2 col-lg-4 col-12">
         <div className="col-12">
         { userToView.typee === "userOnly" ? 
           (
@@ -196,11 +196,11 @@ class Perfil extends React.Component{
           <h5 className="centerText tertiaryColorText"><b>Tipo</b></h5>
         </div>
       </div>
-      <div className="row m-0 p-2 col-lg-8 col-12">
+      <div className="row m-0 p-2 col-lg-4 col-12">
         <div className="col-12">
           <h3 className="centerText"><span className="perfil-row">{userToView.email}</span></h3>
         </div>
-        <div className="col-12 perfil-subtitle">
+        <div className="col-12 col-lg-4 perfil-subtitle">
           <h5 className="centerText tertiaryColorText"><b>Correo</b></h5>
         </div>
       </div>
@@ -272,7 +272,7 @@ class Perfil extends React.Component{
   }
 
   elimCuenta(event){
-    let patch_url = '/users/disable';
+    let patch_url = 'https://movico.herokuapp.com/users/disable';
     let petition = this.createElimPetition();
     fetch(patch_url, petition)
       .then(response => this.afterElimCuenta())

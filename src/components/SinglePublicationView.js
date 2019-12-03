@@ -122,7 +122,7 @@ class SinglePublicationView extends React.Component{
 
   handleDeshabilitarPub(event) {
     this.state.publicationStatus = 'Disable';
-    let fetch_url = "/publications/"+ this.state.pubId;
+    let fetch_url = "https://movico.herokuapp.com/publications/"+ this.state.pubId;
     let jsonContent = {
       'typee': this.state.userTypee,
       'status': this.state.publicationStatus
@@ -136,7 +136,7 @@ class SinglePublicationView extends React.Component{
 
   handleHabilitarPub(event){
     this.state.publicationStatus = 'Enable';
-    let fetch_url = "/publications/"+ this.state.pubId;
+    let fetch_url = "https://movico.herokuapp.com/publications/"+ this.state.pubId;
     let jsonContent = {
       'typee': this.state.userTypee,
       'status': this.state.publicationStatus
@@ -149,7 +149,7 @@ class SinglePublicationView extends React.Component{
   }
 
   handleEliminarPub(event){
-    let fetch_url = "/publications/" + this.state.pubId;
+    let fetch_url = "https://movico.herokuapp.com/publications/" + this.state.pubId;
     fetch(fetch_url, delPubFromServer(this.state.userTypee))
       .then(() => this.setState({isDeletingPub: false}))
       .then(() => this.displayMessage("Se eliminó la Publicación"))
@@ -159,7 +159,7 @@ class SinglePublicationView extends React.Component{
   }
 
   handleCambiosPub(event) {
-    let fetch_url = "/publications/"+ this.state.pubId;
+    let fetch_url = "https://movico.herokuapp.com/publications/"+ this.state.pubId;
     let dateRegEx = /(\d+)\/(\d+)\/(\d+)/;
     let dateTemp = dateRegEx.exec(this.refPubDate.current.textContent);
     let dateDay = 0;
@@ -214,7 +214,7 @@ class SinglePublicationView extends React.Component{
   }
 
   getPublicationInfo(event){
-    let fetch_url = "/publications/" + this.state.pubId;
+    let fetch_url = "https://movico.herokuapp.com/publications/" + this.state.pubId;
     fetch(fetch_url, getInfoFromServer)
       .then(response => response.json())
       .then(state => this.setState({publication: state}))
@@ -304,7 +304,7 @@ class SinglePublicationView extends React.Component{
   getUserTypee(event){
     let userId = localStorage.getItem('user_id');
     if (userId != null) {
-      let fetch_url = "/users/" + userId;
+      let fetch_url = "https://movico.herokuapp.com/users/" + userId;
       fetch(fetch_url, getInfoFromServer)
         .then(response => response.json(), err => this.displayMessage(err))
         .then(state => this.setState({userTypee: state.typee}), err => this.displayMessage(err))

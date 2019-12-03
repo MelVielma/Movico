@@ -104,7 +104,7 @@ class CreatePostForm extends React.Component{
     //Crear headers y body para la peticion al server
     var petition = this.createPetition();
     console.log("Peticion de creacion: ", petition);
-    fetch('/publications', petition)
+    fetch('https://movico.herokuapp.com/publications', petition)
       .then(function(response){
         if(!response.ok){
           throw Error(response.statusText);

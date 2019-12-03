@@ -39,7 +39,7 @@ class PublicationDeck extends React.Component {
 	}
 
 	getPublications(event) {
-		fetch('/publications', publications2)
+		fetch('https://movico.herokuapp.com/publications', publications2)
 			.then(response => response.json())
 			.then(state => this.setState({publications: state}, () =>
 				this.afterGet()))
@@ -48,8 +48,7 @@ class PublicationDeck extends React.Component {
 	}
 
 	getByMultipleTags(event){
-		let url = '/publicationsByMultiTags/' + this.state.tagsToSearch;
-		console.log('/publicationsByMultiTags/', url);
+		let url = 'https://movico.herokuapp.com/publicationsByMultiTags/' + this.state.tagsToSearch;
 		fetch(url, publications2)
 			.then(response => response.json())
 			.then(state => this.setState({publications: state}, () =>
@@ -59,7 +58,7 @@ class PublicationDeck extends React.Component {
 	}
 
 	getByOneTag(event){
-		let url = '/publicationsByTag/' + this.state.tagsToSearch;
+		let url = 'https://movico.herokuapp.com/publicationsByTag/' + this.state.tagsToSearch;
 		console.log('/publicationsByTag/', url);
 		fetch(url, publications2)
 			.then(response => response.json())
@@ -83,7 +82,7 @@ class PublicationDeck extends React.Component {
 	}
 
 	getAuthor(user_id) {
-		fetch('/publications/' + user_id, publications2)
+		fetch('https://movico.herokuapp.com/publications/' + user_id, publications2)
 			.then(response => response.json())
 			.then(state => this.setState({nameAuthor: state}, () =>
 				this.afterGet()));
@@ -168,7 +167,7 @@ class PublicationDeck extends React.Component {
 					</Form>
 				</div>
 				<Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
-					<div ref='container' className="whiteColorBackground indexCardDeck row justify-content-around">
+					<div ref='container' className="whiteColorBackground indexCardDeck row justify-content-around mx-auto container">
 						<Spinner animation="grow" variant="light" />
 					</div>
 				</Animated>

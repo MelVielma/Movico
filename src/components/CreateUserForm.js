@@ -99,7 +99,7 @@ class CreateUserForm extends React.Component{
   handleSubmit(event){
     event.preventDefault();
     var petition = this.createUserPetition(this.state.name, this.state.email, this.state.password, this.state.about);
-    fetch('/users', petition)
+    fetch('https://movico.herokuapp.com/users', petition)
       .then(function(response){
         if(!response.ok){
           throw Error(response.statusText);
@@ -112,7 +112,7 @@ class CreateUserForm extends React.Component{
 
   executeLogin(){
     var petition = this.createPetition(this.state.email, this.state.password);
-    fetch('/users/login', petition)
+    fetch('https://movico.herokuapp.com/users/login', petition)
       .then(function(response){
         if(!response.ok){
           throw Error(response.statusText);

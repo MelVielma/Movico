@@ -105,7 +105,7 @@ class CommentsView extends React.Component {
 	}
 
 	handleSubmit(event) {
-		let fetch_url = "/comments/"+ this.props.listComments.id;
+		let fetch_url = "https://movico.herokuapp.com/comments/"+ this.props.listComments.id;
 		event.preventDefault();
 		let comentarioTemp = '';
 		let jsonContent = {
@@ -145,7 +145,7 @@ class CommentsView extends React.Component {
 	}
 
 	getAuthor(user_id) {
-		fetch('/users/' + user_id, nameAuthor)
+		fetch('https://movico.herokuapp.com/users/' + user_id, nameAuthor)
 			.then(response => response.json())
 			.then(state => this.state.userInfo= state)
 			.then(state => this.setState({userInfo: state}))
@@ -171,7 +171,7 @@ class CommentsView extends React.Component {
 			}
 			for(let i = 0 ; i < listaDeComments.length ; i++) {
 				let user_id = listaDeComments[i].user
-				fetch('/users/' + user_id, nameAuthor)
+				fetch('https://movico.herokuapp.com/users/' + user_id, nameAuthor)
 					.then(response => response.json())
 					.then(state => this.setState({userInfo: state}))
 					.then(state => this.setState({htmlComments: this.state.htmlComments.concat(this.createComment(listaDeComments[i], this.state.userInfo))}))
@@ -218,7 +218,7 @@ class CommentsView extends React.Component {
 			return value._id != comment_id
 		})
 		comentariosPosteados = tempComentarios;
-		let fetch_url = "/comments/"+ comment_id;
+		let fetch_url = "https://movico.herokuapp.com/comments/"+ comment_id;
 		fetch(fetch_url, delComment)
 			.then(() => this.setState({message: 'Se eliminó el comentario.'}))
 			.then(() => this.setState({showMessageModal: true}))
