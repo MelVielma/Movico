@@ -84,18 +84,17 @@ code {
   border-color: #2F7C85 !important;
 }
 
-
 .indexMiniCard.perfilPage:hover a {
   color: #2F7C85 !important;
   text-decoration: none !important;
 }
-
 
 .indexMiniCard.perfilPage a,
 .indexMiniCard.homePage:hover a {
   color: #CE8147 !important;
   text-decoration: none !important;
 }
+
 
 
 .reframe {
@@ -139,18 +138,27 @@ code {
   color: #E9E3B4 !important;
 }
 
+.updatePerfil:hover,
+.editPerfil,
 .btnOpcionesAdmin {
   background-color: white !important;
   border-color: #CE8147  !important;
   color: #CE8147 !important;
 }
 
+.editPerfil:hover,
+.updatePerfil,
 .btnOpcionesAdmin:hover {
   background-color: #2F7C85 !important;
   border-color: #CE8147  !important;
   color: white !important;
 }
 
+.editable-perfil {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #115571;
+}
 
 .secondaryColorBackground {
   background-color: #E9E3B4 !important;

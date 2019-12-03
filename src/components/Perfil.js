@@ -7,6 +7,24 @@ import {Animated} from "react-animated-css";
 import { Redirect}  from 'react-router';
 
 
+var updateInfoFromServer = function (updates) {
+
+  return {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Origin': '',
+      'Host': 'http://localhost:3001',
+      'Authorization': `Bearer ${localStorage.getItem('user_token')}`
+    },
+    body: JSON.stringify(
+      updates
+    ),
+
+  }
+}
+
 class Perfil extends React.Component{
   constructor(props){
     super(props);
@@ -17,8 +35,16 @@ class Perfil extends React.Component{
       userToken: localStorage.getItem('user_token'),
       showElimModal : false,
       afterElimCuenta : false,
-      displayAnimation: false
+      displayAnimation: false,
+      isEditable: false,
+      message: '',
+      showMessageModal: false
     };
+    this.refName = React.createRef();
+    this.refAbout = React.createRef();
+    this.refNameTag = React.createRef();
+    this.refAboutTag = React.createRef();
+
     this.getUserInfo = this.getUserInfo.bind(this);
     this.getUserPubs = this.getUserPubs.bind(this);
     this.afterGet = this.afterGet.bind(this);
@@ -30,6 +56,9 @@ class Perfil extends React.Component{
     this.confirmElim = this.confirmElim.bind(this);
     this.elimCuenta = this.elimCuenta.bind(this);
     this.afterElimCuenta = this.afterElimCuenta.bind(this);
+    this.editarPerfil = this.editarPerfil.bind(this);
+    this.updateIsEditable = this.updateIsEditable.bind(this);
+    this.displayMessage = this.displayMessage.bind(this);
   }
 
   hideElimModal = (event) =>{
@@ -83,6 +112,55 @@ class Perfil extends React.Component{
       .catch(err => console.log(err))
   }
 
+  editarPerfil(event) {
+    let fetch_url = "/users/update";
+    let jsonContent = {
+      'name': this.refName.current.textContent,
+      'about': this.refAbout.current.textContent
+    }
+    fetch(fetch_url, updateInfoFromServer(jsonContent))
+      .then(id => (id.status === 200) ? this.displayMessage("Se editó la información de manera exitosa.") : this.displayMessage("Se produjo un error al tratar de hacer la edición."))
+      .then(this.updateIsEditable())
+      .catch(err => this.displayMessage(err))
+  }
+
+  updateIsEditable(event) {
+    let nameClass = 'editable-perfil'
+    if (!(this.state.isEditable === true)) {
+      this.refName.current.classList.remove('perfil-row');
+      this.refAbout.current.classList.remove('perfil-row');
+      this.refName.current.classList.add(nameClass);
+      this.refAbout.current.classList.add(nameClass);
+      this.refNameTag.current.classList.remove('tertiaryColorText');
+      this.refAboutTag.current.classList.remove('tertiaryColorText');
+      this.refNameTag.current.classList.add('primaryColorText')
+      this.refAboutTag.current.classList.add('primaryColorText')
+    }
+    else {
+      this.refName.current.classList.add('perfil-row');
+      this.refAbout.current.classList.add('perfil-row');
+      this.refName.current.classList.remove(nameClass);
+      this.refAbout.current.classList.remove(nameClass);
+      this.refNameTag.current.classList.add('tertiaryColorText');
+      this.refAboutTag.current.classList.add('tertiaryColorText');
+      this.refNameTag.current.classList.remove('primaryColorText')
+      this.refAboutTag.current.classList.remove('primaryColorText')
+    }
+    this.state.isEditable = !this.state.isEditable;
+
+    this.afterGet();
+  }
+
+  displayMessage(mensaje) {
+    this.setState({message: mensaje});
+    this.setState({showMessageModal: true});
+  }
+
+  hideMessageModalHandler = (event) =>{
+    this.state.showMessageModal = false;
+    this.forceUpdate();
+  }
+
   afterGet(event){
     var container = this.refs.putPerfilHere;
     var userToView = this.state.userInfo;
@@ -95,15 +173,15 @@ class Perfil extends React.Component{
       <div className="col-12 p-2">
         <h3 className="centerText">Esta es la información que tenemos registrada de tu cuenta</h3>
       </div>
-      <div className="row m-0 p-2 col-12">
+      <div className="row m-0 p-2 col-lg-8 col-12">
         <div className="col-12">
-          <h3 className="centerText"><span className="perfil-row">{userToView.name}</span></h3>
+          <h3 className="centerText"><span className="perfil-row" ref={this.refName} contentEditable={this.state.isEditable}>{userToView.name}</span></h3>
         </div>
         <div className="col-12 perfil-subtitle">
-          <h5 className="centerText tertiaryColorText"><b>Nombre</b></h5>
+          <h5 ref={this.refNameTag} className="centerText tertiaryColorText"><b>Nombre</b></h5>
         </div>
       </div>
-      <div className="row m-0 p-2 col-12">
+      <div className="row m-0 p-2 col-lg-8 col-12">
         <div className="col-12">
         { userToView.typee === "userOnly" ? 
           (
@@ -118,7 +196,7 @@ class Perfil extends React.Component{
           <h5 className="centerText tertiaryColorText"><b>Tipo</b></h5>
         </div>
       </div>
-      <div className="row m-0 p-2 col-12">
+      <div className="row m-0 p-2 col-lg-8 col-12">
         <div className="col-12">
           <h3 className="centerText"><span className="perfil-row">{userToView.email}</span></h3>
         </div>
@@ -126,21 +204,34 @@ class Perfil extends React.Component{
           <h5 className="centerText tertiaryColorText"><b>Correo</b></h5>
         </div>
       </div>
-      <div className="row m-0 p-2 col-12">
+      <div className="row m-0 p-2 col-lg-8 col-12">
         <div className="col-12">
-          <h3 className="centerText"><span className="perfil-row">{userToView.about}</span></h3>
+          <h3 className="centerText"><span ref={this.refAbout} className="perfil-row" contentEditable={this.state.isEditable}>{userToView.about}</span></h3>
         </div>
         <div className="col-12 perfil-subtitle">
-          <h5 className="centerText tertiaryColorText"><b>Acerca de</b></h5>
+          <h5 ref={this.refAboutTag} className="centerText tertiaryColorText"><b>Acerca de</b></h5>
         </div>
       </div>
-      <div className="row col-12 justify-content-center p-4 p-lg-2">
-        <Button variant="danger" size="sm" className="col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.confirmElim()}><p className="m-0"><b>Eliminar cuenta</b></p></Button>
+      <div className="row m-0 col-12">
+      { !(this.state.isEditable) ? 
+        (
+        <div className="row m-0 col-12 justify-content-center p-4 p-lg-2">
+          <Button size="sm" className="editPerfil col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.updateIsEditable()}><p className="m-0"><b>Editar</b></p></Button>
+        </div>
+        ):
+        (
+        <div className="row m-0 col-12 justify-content-center p-4 p-lg-2">
+          <Button  size="sm" className="updatePerfil col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.editarPerfil()}><p className="m-0"><b>Guardar Cambios</b></p></Button>
+        </div>
+        )
+      }
+        <div className="row m-0 col-12 justify-content-center p-4 p-lg-2">
+          <Button variant="danger" size="sm" className="col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.confirmElim()}><p className="m-0"><b>Eliminar cuenta</b></p></Button>
+        </div>
       </div>
       </>
     )
     //Maybe agregar el editar el perfil, no estaba dentro de lo planeado al parecer
-    //<Button variant="primary" size="sm" className="float-right">Editar información </Button>
     ReactDOM.render(singlePublicationHtml, container);
   }
 
@@ -282,20 +373,25 @@ class Perfil extends React.Component{
 
       return (
         <>
-          <Modal id="confirmEliminacionModal" show={this.state.showElimModal} onHide={this.hideElimModal}>
-            <Modal.Header closeButton> 
+          <Modal id="confirmEliminacionModal" show={this.state.showElimModal} onHide={this.hideElimModal}>  
+              <Modal.Header closeButton> 
               <Modal.Title>Deshabilitar cuenta </Modal.Title> 
-            </Modal.Header>
+              </Modal.Header>
             <Modal.Body>
-              <p>
-              ¿Seguro de deshabilitar la cuenta? las publicaciones seguirán siendo
-              accesibles, sin embargo ya no se podrá acceder a la cuenta.
-              </p>
-            <div className="row justify-content-around">
-              <Button variant="primary" size="sm" onClick={this.hideElimModal} className="col-md-5 m-3 p-3"><b>Cancelar</b></Button>
-              <Button variant="danger" size="sm" className="col-md-5 m-3 p-3" onClick={this.elimCuenta}><b>Confirmar eliminación</b></Button>
-            </div>
+                <p>
+                ¿Seguro de deshabilitar la cuenta? las publicaciones seguirán siendo
+                accesibles, sin embargo ya no se podrá acceder a la cuenta.
+                </p>
+              <div className="row justify-content-around">
+                <Button variant="primary" size="sm" onClick={this.hideElimModal} className="col-md-5 m-3 p-3"><b>Cancelar</b></Button>
+                <Button variant="danger" size="sm" className="col-md-5 m-3 p-3" onClick={this.elimCuenta}><b>Confirmar eliminación</b></Button>
+              </div>
             </Modal.Body>
+          </Modal>
+          <Modal ref="displayMessageModal" show={this.state.showMessageModal} onHide={this.hideMessageModalHandler}>
+            <Modal.Header closeButton>
+              <Modal.Title>{this.state.message}</Modal.Title>
+            </Modal.Header>
           </Modal>
           <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
             <div className="row m-0 justify-content-center primaryColorBackground">
