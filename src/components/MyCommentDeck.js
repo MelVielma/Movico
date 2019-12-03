@@ -256,8 +256,8 @@ class CommentsView extends React.Component {
 	          </Modal>
 	        </div>
 	        { !showButtonMessage ? (
-	        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={!(this.state.wantsToComment)}>
-	        	<div className="indexCardDeck mb-2 row col-md-12 justify-content-center">
+	        <Animated className="whiteColorBackground" animationIn="fadeIn" animationOut="fadeOut" isVisible={!(this.state.wantsToComment)}>
+	        	<div className="whiteColorBackground indexCardDeck pb-2 row col-md-12 justify-content-center">
 		        	<Button className="btnPublicaciones" type="submit" onClick={this.enableComment}>Añadir Comentario</Button>
 		        </div>
 	        </Animated>
@@ -265,7 +265,7 @@ class CommentsView extends React.Component {
 	        :
 	        (
 	        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.wantsToComment}>
-	        	<div className="indexCardDeck mb-2 row col-md-12 justify-content-center">
+	        	<div className="whiteColorBackground indexCardDeck pb-2 row col-md-12 justify-content-center">
 		        	<Card className="indexCardComment mb-0 col-md-8 justify-content-center">
 					    <Card.Body>
 					      <Card.Title>Comentario</Card.Title>
@@ -286,7 +286,7 @@ class CommentsView extends React.Component {
 			</Animated>
 			)}
 			<Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
-			    <div ref='container' className="indexCardDeck row col-md-12 justify-content-center">
+			    <div ref='container' className="whiteColorBackground indexCardDeck row col-md-12 justify-content-center">
 					<Spinner animation="grow" variant="light" />
 					{/* <CardDeck  className="indexCardDeck">
 					</CardDeck> */}

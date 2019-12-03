@@ -236,7 +236,7 @@ class SinglePublicationView extends React.Component{
     }
 
     let singlePublicationHtml = (
-      <Jumbotron className="indexCardDeck col-md-9 mb-4 justify-content-center">
+      <Jumbotron className="whiteColorBackground col-md-9 mb-4 justify-content-center">
         <>
         <div className="row col-11 m-0 textJumbo justify-content-center">
           <h1 className="centerText" ref={this.refPubTitle} contentEditable={this.state.isEditable}>{myPublication.title} </h1>
@@ -314,6 +314,7 @@ class SinglePublicationView extends React.Component{
   }
 
   componentDidMount() {
+    document.body.classList.add("whiteColorBackground")
 		this.getPublicationInfo();
     this.getUserTypee();
 	}
@@ -352,7 +353,7 @@ class SinglePublicationView extends React.Component{
           </Modal>
         </div>
             <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
-              <div className="row col-md-12 mt-4 ml-0 mr-0 justify-content-center" id="SinglePublicationView" ref="putSinglePubHere">
+              <div className="whiteColorBackground row col-md-12 mt-4 ml-0 mr-0 justify-content-center" id="SinglePublicationView" ref="putSinglePubHere">
                   <Spinner animation="grow" variant="light" />
               </div>
             </Animated> 

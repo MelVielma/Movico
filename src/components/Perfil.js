@@ -203,44 +203,65 @@ class Perfil extends React.Component{
     let bStatus = estatus === 'Enable';
 		new_html = (
 			  <>
-        <Card className="indexMiniCard perfilPage col-md-4 col-lg-3 justify-content-center">
-          <>
           {bStatus ? (
-            
+            <>
+            <Card className="indexMiniCard cardEnabled perfilPage col-md-4 col-lg-3 justify-content-center">
             <a href={new_href}>
-             <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} onClick={() => this.updateAnimationStatus()} />
+              <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} onClick={() => this.updateAnimationStatus()} />
             </a>
+            <a href={new_href}>
+             <Card.Body>  
+              <Card.Title>{card.title}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
+              <Card.Text className="cardTextLimit">
+                {card.text}
+              </Card.Text>
+              <Card.Text>
+                <span className="text-muted"> Estatus: </span>
+                {card.status}
+              </Card.Text>
+              <Card.Text>
+                <a className="linkToPublication" href={new_href}>Ver mas</a>
+              </Card.Text>
+              
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted">Fecha de publicación: {new Date(card.date).toLocaleDateString()}</small>
+            </Card.Footer>
+            </a>
+          </Card>
+          </>
           ):
           (
-			     <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} />
+			     <>
+           <Card className="indexMiniCard perfilPage col-md-4 col-lg-3 justify-content-center">
+           <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} />
+            <Card.Body>  
+              <Card.Title>{card.title}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
+              <Card.Text className="cardTextLimit">
+                {card.text}
+              </Card.Text>
+              <Card.Text>
+                <span className="text-muted"> Estatus: </span>
+                {card.status}
+              </Card.Text>
+              {bStatus ? (
+               <a className="linkToPublication" href={new_href}>Ver mas</a>
+               )
+               :
+               (
+                <> </>
+               )
+              }
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted">Fecha de publicación: {new Date(card.date).toLocaleDateString()}</small>
+            </Card.Footer>
+          </Card>
+          </>
 			    )
         }
-          </>
-          <>
-          <Card.Body>  
-            <Card.Title>{card.title}</Card.Title>
-			      <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
-			      <Card.Text>
-			        {card.text}
-			      </Card.Text>
-            <Card.Text>
-              <span className="text-muted"> Estatus: </span>
-              {card.status}
-            </Card.Text>
-            {bStatus ? (
-			       <a className="linkToPublication" href={new_href}>Ver mas</a>
-             )
-             :
-             (
-              <> </>
-             )
-            }
-          </Card.Body>
-			    </>
-          <Card.Footer>
-			      <small className="text-muted">Fecha de publicación: {new Date(card.date).toLocaleDateString()}</small>
-			    </Card.Footer>
-			  </Card>
         </>
 		)
 		return new_html

@@ -40,11 +40,11 @@ code {
   border: 1px solid #E9E3B4 !important;
 }
 
-.indexMiniCard.perfilPage:hover {
+.indexMiniCard.perfilPage:hover.cardEnabled {
   background-color: #E9E3B4 !important;
 }
 
-.indexMiniCard.perfilPage:hover .text-muted {
+.indexMiniCard.perfilPage:hover.cardEnabled .text-muted {
   color: #CE8147 !important;
 }
 
@@ -52,15 +52,15 @@ code {
   border: 1px solid #115571 !important;
 }
 
-.indexMiniCard.perfilPage:hover .card-title,
-.indexMiniCard.perfilPage:hover .card-text,
+.indexMiniCard.perfilPage:hover.cardEnabled .card-title,
+.indexMiniCard.perfilPage:hover.cardEnabled .card-text,
 .indexMiniCard.homePage .card-title, 
 .indexMiniCard.homePage .card-text {
   color: black !important;
 }
 
 .indexMiniCard.perfilPage,
-.indexMiniCard.perfilPage:hover .card-footer,
+.indexMiniCard.perfilPage:hover.cardEnabled .card-footer,
 .indexMiniCard.homePage:hover {
   background-color: #115571 !important;
 }
@@ -87,12 +87,14 @@ code {
 
 .indexMiniCard.perfilPage:hover a {
   color: #2F7C85 !important;
+  text-decoration: none !important;
 }
 
 
 .indexMiniCard.perfilPage a,
 .indexMiniCard.homePage:hover a {
   color: #CE8147 !important;
+  text-decoration: none !important;
 }
 
 
@@ -158,6 +160,13 @@ code {
   background-color: #CE8147 !important;
 }
 
+.whiteColorBackground.mb-2,
+.whiteColorBackground {
+  background-color: #EDF7F6 !important;
+  border-color: #EDF7F6 !important;
+}
+
+
 .primaryColorText {
   color: #2F7C85 !important;
 }
@@ -169,7 +178,6 @@ code {
 .tertiaryColorText {
   color: #CE8147 !important;
 }
-
 
 .table-row.col-12,
 .centerText {

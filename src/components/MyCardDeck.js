@@ -123,7 +123,8 @@ class PublicationDeck extends React.Component {
 		let new_html = '';
 		let new_href = "/publicacion/" + card.id;
 		new_html = (
-			  <Card className="indexMiniCard homePage col-12 col-md-4 col-lg-3 justify-content-center">
+		  	  <Card className="indexMiniCard homePage col-12 col-md-4 col-lg-3 justify-content-center">
+			    <a href={new_href}>
 			    <a href={new_href}>
 			    	<Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} onClick={() => this.updateAnimationStatus()} />
 			    </a>
@@ -138,7 +139,9 @@ class PublicationDeck extends React.Component {
 			    <Card.Footer>
 			      <small className="text-muted">Fecha de publicación: {new Date(card.date).toLocaleDateString()}</small>
 			    </Card.Footer>
+			  </a>
 			  </Card>
+			
 		)
 		return new_html
 	}
@@ -157,15 +160,15 @@ class PublicationDeck extends React.Component {
 	render(){
 		//console.log("tagsToSearch: ",this.state.tagsToSearch)
 		return (
-			<div className="col-10 mx-auto mt-4">
-				<div className="my-4 flex-column d-md-flex flex-md-row-reverse">
+			<div className="whiteColorBackground col-10 mx-auto mt-4">
+				<div className="whiteColorBackground my-4 flex-column d-md-flex flex-md-row-reverse">
 					<Form inline className="justify-content-center" onSubmit={this.handleTagSearch}>
 						<FormControl value={this.state.tagsToSearch} onChange={this.handleTagChange} type="text" placeholder="Etiqueta a buscar" className="tertiaryColorText mr-sm-2" />
 						<Button className="mt-3 mt-md-0 btnPublicaciones" onClick={this.handleTagSearch}>Buscar</Button>
 					</Form>
 				</div>
 				<Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
-					<div ref='container' className="indexCardDeck row justify-content-around">
+					<div ref='container' className="whiteColorBackground indexCardDeck row justify-content-around">
 						<Spinner animation="grow" variant="light" />
 					</div>
 				</Animated>
@@ -174,6 +177,9 @@ class PublicationDeck extends React.Component {
 	}
 
 	componentDidMount() {
+		document.body.classList.add("whiteColorBackground")
+		document.getElementsByClassName('App')[0].classList.add("whiteColorBackground")
+		
 		if(this.props.tags === '' || this.props.tags === undefined ){
 			//console.log("NO voy a buscar", this.state.tagsToSearch)
 			this.getPublications()
