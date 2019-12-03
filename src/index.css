@@ -49,7 +49,40 @@ code {
   background: #115571 !important;
 }
 
-.secondaryColorBackground {
+.primaryColorFadeOneBackground {
+  background: #2F7C85 !important;
+}
+
+.btnBlue {
+  background-color: #2F7C85 !important;
+  border-color: #2F7C85 !important;
+}
+
+.btnSearchTag {
+  background-color: #CE8147 !important;
+  border-color: #CE8147 !important;
+  color: #E9E3B4 !important;
+}
+
+.btnPublicaciones {
+  background-color: #CE8147 !important;
+  border-color: #CE8147 !important;
+  color: white !important;  
+}
+
+.btnSearchNavbar {
+  background-color: #E9E3B4 !important;
+  border-color: #CE8147 !important;
+  color: #CE8147 !important;
+}
+
+.btnSearchNavbar:hover {
+  background-color: #CE8147 !important;
+  border-color: #CE8147 !important;
+  color: #E9E3B4 !important;
+}
+
+.primaryColorBackground {
   background-color: #E9E3B4 !important;
 }
 
@@ -57,12 +90,16 @@ code {
   background-color: #CE8147 !important;
 }
 
+.primaryColorText {
+  color: #2F7C85 !important;
+}
+
 .secondaryColorText {
-  color: #E9E3B4;
+  color: #E9E3B4 !important;
 }
 
 .tertiaryColorText {
-  color: #CE8147;
+  color: #CE8147 !important;
 }
 
 
@@ -80,10 +117,16 @@ code {
 
 .nav-link:hover {
   background-color: #CE8147 !important;
+  color: #E9E3B4 !important;
 }
 
 .nav-pills .show .dropdown-toggle.nav-link {
   background-color: #CE8147 !important;
+  color: #E9E3B4 !important;
+}
+
+.nav-link {
+  color: #CE8147 !important;
 }
 
 .nav-link.active {
@@ -93,10 +136,12 @@ code {
 .dropdown-menu,
 .dropdown-item { 
   background-color: #E9E3B4 !important; 
+  color: #CE8147 !important;
 }
 
 .dropdown-item:hover {
   background-color: #CE8147 !important; 
+  color: #E9E3B4 !important;
 }
 
 .table-row {

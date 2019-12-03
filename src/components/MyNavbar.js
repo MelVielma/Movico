@@ -146,8 +146,8 @@ class MyNavbar extends React.Component{
               <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 <Nav variant="pills" defaultActiveKey="#home">
                   <Form inline className="flex-left" onSubmit={this.handleTagSearch}>
-                    <FormControl value={this.state.tagsToSearch} onChange={this.handleTagChange} type="text" placeholder="Etiqueta a buscar" size="sm" className="mr-sm-2" />
-                    <Button variant="outline-primary" size="sm" onClick={this.handleTagSearch}>Buscar</Button>
+                    <FormControl value={this.state.tagsToSearch} onChange={this.handleTagChange} type="text" placeholder="Etiqueta a buscar" size="sm" className="tertiaryColorText mr-sm-2" />
+                    <Button className="btnSearchNavbar" size="sm" onClick={this.handleTagSearch}>Buscar</Button>
                   </Form>
                   <Nav.Link ref={this.refCreate} className="mx-3 px-3" onClick={this.showCreateModalHandler} href="#1">Crear Publicacion</Nav.Link>
                   <Nav.Link ref={this.refAbout} className="mx-3 px-3" onClick={this.showAboutModalHandler} href='#4'>Acerca</Nav.Link>

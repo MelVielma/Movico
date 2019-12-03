@@ -159,7 +159,7 @@ class Perfil extends React.Component{
       let tempHtml = '';
       tempHtml = (
         <div>
-          <h3 className="text-primary centerText"> ¡No se ha creado ninguna publicación! </h3>
+          <h3 className="secondaryColorText centerText"> ¡No se ha creado ninguna publicación! </h3>
         </div>
       )
       ReactDOM.render(tempHtml, container);

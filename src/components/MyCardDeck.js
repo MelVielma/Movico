@@ -160,8 +160,8 @@ class PublicationDeck extends React.Component {
 			<div className="col-10 mx-auto mt-4">
 				<div className="my-4 flex-column d-md-flex flex-md-row-reverse">
 					<Form inline className="justify-content-center" onSubmit={this.handleTagSearch}>
-						<FormControl value={this.state.tagsToSearch} onChange={this.handleTagChange} type="text" placeholder="Etiqueta a buscar" className="mr-sm-2" />
-						<Button className="mt-3 mt-md-0" variant="primary" onClick={this.handleTagSearch}>Buscar</Button>
+						<FormControl value={this.state.tagsToSearch} onChange={this.handleTagChange} type="text" placeholder="Etiqueta a buscar" className="tertiaryColorText mr-sm-2" />
+						<Button className="mt-3 mt-md-0 btnSearchTag" onClick={this.handleTagSearch}>Buscar</Button>
 					</Form>
 				</div>
 				<Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>

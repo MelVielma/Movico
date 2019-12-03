@@ -282,9 +282,9 @@ class SinglePublicationView extends React.Component{
             )
           }
           {isEditable? (
-              <Button className="m-1 p-3 col-11 col-lg-3" id="btnGuardarCambios" variant="info" onClick={this.handleCambiosPub}>Guardar Cambios</Button>
+              <Button className="btnPublicaciones m-1 p-3 col-11 col-lg-3" id="btnGuardarCambios" variant="info" onClick={this.handleCambiosPub}>Guardar Cambios</Button>
             ):(
-              <Button className="m-1 p-3 col-11 col-lg-3" id="btnHacerCambios" variant="info" onClick={this.updateIsEditable}>Modificar Publicación</Button>
+              <Button className="btnPublicaciones m-1 p-3 col-11 col-lg-3" id="btnHacerCambios" variant="info" onClick={this.updateIsEditable}>Modificar Publicación</Button>
             )
 
           }
