@@ -61,7 +61,7 @@ code {
 .btnSearchTag {
   background-color: #CE8147 !important;
   border-color: #CE8147 !important;
-  color: #E9E3B4 !important;
+  color: white !important;
 }
 
 .btnPublicaciones {
@@ -82,7 +82,7 @@ code {
   color: #E9E3B4 !important;
 }
 
-.primaryColorBackground {
+.secondaryColorBackground {
   background-color: #E9E3B4 !important;
 }
 

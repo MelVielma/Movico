@@ -247,6 +247,7 @@ class Perfil extends React.Component{
   }
 
   componentDidMount() {
+    document.body.classList.add("primaryColorBackground")
 		this.getUserInfo();
     this.getUserPubs();
 	}
@@ -266,7 +267,7 @@ class Perfil extends React.Component{
             </Modal.Header>
             <Modal.Body>
               <p>
-              Seguro de deshabilitar la cuenta? las publicaciones seguirán siendo
+              ¿Seguro de deshabilitar la cuenta? las publicaciones seguirán siendo
               accesibles, sin embargo ya no se podrá acceder a la cuenta.
               </p>
             <div className="row justify-content-around">
@@ -276,7 +277,7 @@ class Perfil extends React.Component{
             </Modal.Body>
           </Modal>
           <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
-            <div className="row m-0 justify-content-center">
+            <div className="row m-0 justify-content-center primaryColorBackground">
                <div className="col-12 p-0" id="PerfilView">
                 <Jumbotron>
                   <div className="row justify-content-around" id="PerfilView" ref="putPerfilHere">
