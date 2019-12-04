@@ -86,7 +86,7 @@ class Perfil extends React.Component{
   }
 
   getUserInfo(event){
-    let fetch_url = "/users/" + this.state.usrId;
+    let fetch_url = "https://movico.herokuapp.com/users/" + this.state.usrId;
     let petition = this.createPetition();
     console.log("url: ", fetch_url)
     console.log("petition: ", petition)
@@ -99,7 +99,7 @@ class Perfil extends React.Component{
   }
 
   getUserPubs(event){
-    let fetch_url = "/publicationsByUser/" + this.state.usrId;
+    let fetch_url = "https://movico.herokuapp.com/publicationsByUser/" + this.state.usrId;
     let petition = this.createPetition();
     console.log("url: ", fetch_url)
     console.log("petition: ", petition)
@@ -113,7 +113,7 @@ class Perfil extends React.Component{
   }
 
   editarPerfil(event) {
-    let fetch_url = "/users/update";
+    let fetch_url = "https://movico.herokuapp.com/users/update";
     let jsonContent = {
       'name': this.refName.current.textContent,
       'about': this.refAbout.current.textContent
@@ -170,10 +170,10 @@ class Perfil extends React.Component{
       <div className="col-12 p-2">
         <h1 className="centerText">¡Hola {userToView.name}!</h1>
       </div>
-      <div className="col-12 p-2">
+      <div className="col-12 p-2 pb-4">
         <h3 className="centerText">Esta es la información que tenemos registrada de tu cuenta</h3>
       </div>
-      <div className="row m-0 p-2 col-lg-8 col-12">
+      <div className="row m-0 p-2 col-lg-4 col-12">
         <div className="col-12">
           <h3 className="centerText"><span className="perfil-row" ref={this.refName} contentEditable={this.state.isEditable}>{userToView.name}</span></h3>
         </div>
@@ -181,9 +181,9 @@ class Perfil extends React.Component{
           <h5 ref={this.refNameTag} className="centerText tertiaryColorText"><b>Nombre</b></h5>
         </div>
       </div>
-      <div className="row m-0 p-2 col-lg-8 col-12">
+      <div className="row m-0 p-2 col-lg-4 col-12">
         <div className="col-12">
-        { userToView.typee === "userOnly" ? 
+        { userToView.typee === "userOnly" ?
           (
             <h3 className="centerText"><span className="perfil-row">Usuario Regular</span></h3>
           ) :
@@ -196,7 +196,7 @@ class Perfil extends React.Component{
           <h5 className="centerText tertiaryColorText"><b>Tipo</b></h5>
         </div>
       </div>
-      <div className="row m-0 p-2 col-lg-8 col-12">
+      <div className="row m-0 p-2 col-lg-4 col-12">
         <div className="col-12">
           <h3 className="centerText"><span className="perfil-row">{userToView.email}</span></h3>
         </div>
@@ -204,29 +204,29 @@ class Perfil extends React.Component{
           <h5 className="centerText tertiaryColorText"><b>Correo</b></h5>
         </div>
       </div>
-      <div className="row m-0 p-2 col-lg-8 col-12">
+      <div className="row m-0 p-2 pt-4 pb-4 col-lg-8 col-12">
         <div className="col-12">
-          <h3 className="centerText"><span ref={this.refAbout} className="perfil-row" contentEditable={this.state.isEditable}>{userToView.about}</span></h3>
+          <h4 className="text-center"><span ref={this.refAbout} className="perfil-row" contentEditable={this.state.isEditable}>{userToView.about}</span></h4>
         </div>
         <div className="col-12 perfil-subtitle">
           <h5 ref={this.refAboutTag} className="centerText tertiaryColorText"><b>Acerca de</b></h5>
         </div>
       </div>
       <div className="row m-0 col-12">
-      { !(this.state.isEditable) ? 
+      { !(this.state.isEditable) ?
         (
         <div className="row m-0 col-12 justify-content-center p-4 p-lg-2">
-          <Button size="sm" className="editPerfil col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.updateIsEditable()}><p className="m-0"><b>Editar</b></p></Button>
+          <Button size="sm" className="editPerfil col-11 col-md-6 col-lg-8 col-xl-6 p-3" onClick={() => this.updateIsEditable()}><p className="m-0"><b>Editar</b></p></Button>
         </div>
         ):
         (
         <div className="row m-0 col-12 justify-content-center p-4 p-lg-2">
-          <Button  size="sm" className="updatePerfil col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.editarPerfil()}><p className="m-0"><b>Guardar Cambios</b></p></Button>
+          <Button  size="sm" className="updatePerfil col-11 col-md-6 col-lg-8 col-xl-6 p-3" onClick={() => this.editarPerfil()}><p className="m-0"><b>Guardar Cambios</b></p></Button>
         </div>
         )
       }
         <div className="row m-0 col-12 justify-content-center p-4 p-lg-2">
-          <Button variant="danger" size="sm" className="col-11 col-md-6 col-lg-4 col-xl-3 p-3" onClick={() => this.confirmElim()}><p className="m-0"><b>Eliminar cuenta</b></p></Button>
+          <Button variant="danger" size="sm" className="col-11 col-md-6 col-lg-8 col-xl-6 p-3" onClick={() => this.confirmElim()}><p className="m-0"><b>Eliminar cuenta</b></p></Button>
         </div>
       </div>
       </>
@@ -272,7 +272,7 @@ class Perfil extends React.Component{
   }
 
   elimCuenta(event){
-    let patch_url = '/users/disable';
+    let patch_url = 'https://movico.herokuapp.com/users/disable';
     let petition = this.createElimPetition();
     fetch(patch_url, petition)
       .then(response => this.afterElimCuenta())
@@ -296,12 +296,12 @@ class Perfil extends React.Component{
 			  <>
           {bStatus ? (
             <>
-            <Card className="indexMiniCard cardEnabled perfilPage col-md-4 col-lg-3 justify-content-center">
+            <Card className="indexMiniCard cardEnabled perfilPage m-3 col-md-5 col-lg-3 justify-content-center">
             <a href={new_href}>
               <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} onClick={() => this.updateAnimationStatus()} />
             </a>
             <a href={new_href}>
-             <Card.Body>  
+             <Card.Body>
               <Card.Title>{card.title}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
               <Card.Text className="cardTextLimit">
@@ -314,7 +314,7 @@ class Perfil extends React.Component{
               <Card.Text>
                 <a className="linkToPublication" href={new_href}>Ver mas</a>
               </Card.Text>
-              
+
             </Card.Body>
             <Card.Footer>
               <small className="text-muted">Fecha de publicación: {new Date(card.date).toLocaleDateString()}</small>
@@ -325,9 +325,9 @@ class Perfil extends React.Component{
           ):
           (
 			     <>
-           <Card className="indexMiniCard perfilPage col-md-4 col-lg-3 justify-content-center">
+           <Card className="indexMiniCard perfilPage m-3 col-md-5 col-lg-3 justify-content-center">
            <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} />
-            <Card.Body>  
+            <Card.Body>
               <Card.Title>{card.title}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
               <Card.Text className="cardTextLimit">
@@ -373,9 +373,9 @@ class Perfil extends React.Component{
 
       return (
         <>
-          <Modal id="confirmEliminacionModal" show={this.state.showElimModal} onHide={this.hideElimModal}>  
-              <Modal.Header closeButton> 
-              <Modal.Title>Deshabilitar cuenta </Modal.Title> 
+          <Modal id="confirmEliminacionModal" show={this.state.showElimModal} onHide={this.hideElimModal}>
+              <Modal.Header closeButton>
+              <Modal.Title>Deshabilitar cuenta </Modal.Title>
               </Modal.Header>
             <Modal.Body>
                 <p>
@@ -397,8 +397,8 @@ class Perfil extends React.Component{
             <div className="row m-0 justify-content-center primaryColorBackground">
                <div className="col-12 p-0" id="PerfilView">
                 <Jumbotron>
-                  <div className="row justify-content-around" id="PerfilView" ref="putPerfilHere">
-                    <div className="row col-12 justify-content-center">
+                  <div className="row col-lg-9 justify-content-around mx-auto" id="PerfilView" ref="putPerfilHere">
+                    <div className="row justify-content-center">
                       <h2 className="centerText">Información de Perfil</h2>
                     </div>
                     <Spinner animation="grow" variant="dark" />

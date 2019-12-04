@@ -12,12 +12,6 @@ code {
     monospace;
 }
 
-.indexCardDeck{
-  margin-right: 0px !important;
-  margin-left: 0px !important;
-
-}
-
 .indexCardComment{
   margin-right: 16px !important;
   margin-left: 16px !important;
@@ -75,7 +69,7 @@ code {
 
 .indexMiniCard.perfilPage .card-title,
 .indexMiniCard.perfilPage .card-text,
-.indexMiniCard.homePage:hover .card-title, 
+.indexMiniCard.homePage:hover .card-title,
 .indexMiniCard.homePage:hover .card-text {
   color: #BCEBCB !important;
 }
@@ -259,7 +253,7 @@ code {
 .perfil-row {
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  border-bottom-color: #CE8147;  
+  border-bottom-color: #CE8147;
 }
 
 .searchTagContainer {
