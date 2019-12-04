@@ -227,6 +227,10 @@ class CommentsView extends React.Component {
 			.catch(err => console.log(err))
 	}
 
+	componentDidMount() {
+		document.getElementsByClassName('App')[0].classList.add("whiteColorBackground")
+	}
+
 	render(){
 		if(this.props.listComments !==undefined && !(this.state.commentsDone)) {
 			this.state.comments = this.props.listComments;

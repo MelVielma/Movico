@@ -398,10 +398,12 @@ class Perfil extends React.Component{
                <div className="col-12 p-0" id="PerfilView">
                 <Jumbotron>
                   <div className="row col-lg-9 justify-content-around mx-auto" id="PerfilView" ref="putPerfilHere">
-                    <div className="row justify-content-center">
+                    <div className="row col-12 justify-content-center mx-auto">
                       <h2 className="centerText">Información de Perfil</h2>
                     </div>
-                    <Spinner animation="grow" variant="dark" />
+                    <div className="row col-12 justify-content-center mx-auto">
+                      <Spinner animation="grow" variant="dark" />
+                    </div>
                   </div>
                 </Jumbotron>
               </div>
