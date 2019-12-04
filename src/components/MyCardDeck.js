@@ -122,23 +122,23 @@ class PublicationDeck extends React.Component {
 		let new_html = '';
 		let new_href = "/publicacion/" + card.id;
 		new_html = (
-		  	  <Card className="indexMiniCard homePage col-12 col-md-4 col-lg-3 justify-content-center">
-			    <a href={new_href}>
-			    <a href={new_href}>
-			    	<Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} onClick={() => this.updateAnimationStatus()} />
-			    </a>
-			    <Card.Body>
-			      <Card.Title>{card.title}</Card.Title>
-			      <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
-			      <Card.Text className="cardTextLimit">
-			        {card.text}
-			      </Card.Text>
-			      <a className="linkToPublication" href={new_href} onClick={() => this.updateAnimationStatus()}>Ver mas</a>
-			    </Card.Body>
-			    <Card.Footer>
-			      <small className="text-muted">Fecha de publicación: {new Date(card.date).toLocaleDateString()}</small>
-			    </Card.Footer>
-			  </a>
+		  	  <Card className="indexMiniCard homePage m-3 col-12 col-md-5 col-lg-3 justify-content-center">
+				    <a href={new_href}>
+				    <a href={new_href}>
+				    	<Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} onClick={() => this.updateAnimationStatus()} />
+				    </a>
+				    <Card.Body>
+				      <Card.Title>{card.title}</Card.Title>
+				      <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
+				      <Card.Text className="cardTextLimit">
+				        {card.text}
+				      </Card.Text>
+				      <a className="linkToPublication" href={new_href} onClick={() => this.updateAnimationStatus()}>Ver mas</a>
+				    </Card.Body>
+				    <Card.Footer>
+				      <small className="text-muted">Fecha de publicación: {new Date(card.date).toLocaleDateString()}</small>
+				    </Card.Footer>
+				  </a>
 			  </Card>
 
 		)
@@ -167,7 +167,7 @@ class PublicationDeck extends React.Component {
 					</Form>
 				</div>
 				<Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
-					<div ref='container' className="whiteColorBackground indexCardDeck row mx-auto container">
+					<div ref='container' className="whiteColorBackground indexCardDeck row mx-auto container justify-content-around">
 						<Spinner animation="grow" variant="light" />
 					</div>
 				</Animated>

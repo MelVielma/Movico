@@ -12,12 +12,6 @@ code {
     monospace;
 }
 
-.indexCardDeck{
-  margin-right: 0px !important;
-  margin-left: 0px !important;
-
-}
-
 .indexCardComment{
   margin-right: 16px !important;
   margin-left: 16px !important;
@@ -54,7 +48,7 @@ code {
 
 .indexMiniCard.perfilPage:hover.cardEnabled .card-title,
 .indexMiniCard.perfilPage:hover.cardEnabled .card-text,
-.indexMiniCard.homePage .card-title, 
+.indexMiniCard.homePage .card-title,
 .indexMiniCard.homePage .card-text {
   color: black !important;
 }
@@ -67,7 +61,7 @@ code {
 
 .indexMiniCard.perfilPage .card-title,
 .indexMiniCard.perfilPage .card-text,
-.indexMiniCard.homePage:hover .card-title, 
+.indexMiniCard.homePage:hover .card-title,
 .indexMiniCard.homePage:hover .card-text {
   color: white !important;
 }
@@ -117,13 +111,13 @@ code {
 .btnPublicaciones {
   background-color: #CE8147 !important;
   border-color: #CE8147 !important;
-  color: white !important;  
+  color: white !important;
 }
 
 .btnPublicaciones:hover {
   background-color: #E9E3B4 !important;
   border-color: #CE8147 !important;
-  color: #CE8147 !important; 
+  color: #CE8147 !important;
 }
 
 .btnSearchNavbar {
@@ -218,13 +212,13 @@ code {
 }
 
 .dropdown-menu,
-.dropdown-item { 
-  background-color: #E9E3B4 !important; 
+.dropdown-item {
+  background-color: #E9E3B4 !important;
   color: #CE8147 !important;
 }
 
 .dropdown-item:hover {
-  background-color: #CE8147 !important; 
+  background-color: #CE8147 !important;
   color: #E9E3B4 !important;
 }
 
@@ -244,7 +238,7 @@ code {
 .perfil-row {
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  border-bottom-color: #CE8147;  
+  border-bottom-color: #CE8147;
 }
 
 .searchTagContainer {

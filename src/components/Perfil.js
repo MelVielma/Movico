@@ -183,7 +183,7 @@ class Perfil extends React.Component{
       </div>
       <div className="row m-0 p-2 col-lg-4 col-12">
         <div className="col-12">
-        { userToView.typee === "userOnly" ? 
+        { userToView.typee === "userOnly" ?
           (
             <h3 className="centerText"><span className="perfil-row">Usuario Regular</span></h3>
           ) :
@@ -213,7 +213,7 @@ class Perfil extends React.Component{
         </div>
       </div>
       <div className="row m-0 col-12">
-      { !(this.state.isEditable) ? 
+      { !(this.state.isEditable) ?
         (
         <div className="row m-0 col-12 justify-content-center p-4 p-lg-2">
           <Button size="sm" className="editPerfil col-11 col-md-6 col-lg-8 col-xl-6 p-3" onClick={() => this.updateIsEditable()}><p className="m-0"><b>Editar</b></p></Button>
@@ -296,12 +296,12 @@ class Perfil extends React.Component{
 			  <>
           {bStatus ? (
             <>
-            <Card className="indexMiniCard cardEnabled perfilPage col-md-4 col-lg-3 justify-content-center">
+            <Card className="indexMiniCard cardEnabled perfilPage m-3 col-md-5 col-lg-3 justify-content-center">
             <a href={new_href}>
               <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} onClick={() => this.updateAnimationStatus()} />
             </a>
             <a href={new_href}>
-             <Card.Body>  
+             <Card.Body>
               <Card.Title>{card.title}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
               <Card.Text className="cardTextLimit">
@@ -314,7 +314,7 @@ class Perfil extends React.Component{
               <Card.Text>
                 <a className="linkToPublication" href={new_href}>Ver mas</a>
               </Card.Text>
-              
+
             </Card.Body>
             <Card.Footer>
               <small className="text-muted">Fecha de publicación: {new Date(card.date).toLocaleDateString()}</small>
@@ -325,9 +325,9 @@ class Perfil extends React.Component{
           ):
           (
 			     <>
-           <Card className="indexMiniCard perfilPage col-md-4 col-lg-3 justify-content-center">
+           <Card className="indexMiniCard perfilPage m-3 col-md-5 col-lg-3 justify-content-center">
            <Card.Img className="reframe index-fluid mt-3" variant="top" src={card.media} alt={card.title} />
-            <Card.Body>  
+            <Card.Body>
               <Card.Title>{card.title}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">{card.author}</Card.Subtitle>
               <Card.Text className="cardTextLimit">
@@ -373,9 +373,9 @@ class Perfil extends React.Component{
 
       return (
         <>
-          <Modal id="confirmEliminacionModal" show={this.state.showElimModal} onHide={this.hideElimModal}>  
-              <Modal.Header closeButton> 
-              <Modal.Title>Deshabilitar cuenta </Modal.Title> 
+          <Modal id="confirmEliminacionModal" show={this.state.showElimModal} onHide={this.hideElimModal}>
+              <Modal.Header closeButton>
+              <Modal.Title>Deshabilitar cuenta </Modal.Title>
               </Modal.Header>
             <Modal.Body>
                 <p>

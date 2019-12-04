@@ -134,7 +134,7 @@ class CreatePostForm extends React.Component{
       this.setState({postMultimedia : event.target.value});
     }
     else if(event.target.id === 'post_Tags'){
-      this.setState({postTags : event.target.value});
+      this.setState({postTags : event.target.value.toLowerCase()});
     }
   }
 
