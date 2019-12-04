@@ -43,7 +43,8 @@ code {
 }
 
 .indexMiniCard.homePage {
-  border: 2px solid #05668D !important;
+  border: 2px solid #BCEBCB !important;
+  border-radius: 5px !important;
 }
 
 .indexMiniCard.perfilPage:hover.cardEnabled .card-title,
@@ -61,16 +62,28 @@ code {
 	font-weight: 500 !important;
 }
 
+.indexMiniCard.homePage:hover .linkToPublication{
+	color: #BCEBCB !important;
+	font-weight: 500 !important;
+}
+
+
 .indexMiniCard.perfilPage,
 .indexMiniCard.perfilPage:hover.cardEnabled .card-footer,
 .indexMiniCard.homePage:hover {
   background-color: #05668D !important;
+  border: 2px solid #05668D  !important;
 }
 
+.indexMiniCard.homePage:hover .card-title{
+	color: #E5B181 !important;
+}
+
+.indexMiniCard.homePage:hover .card-text{
+	color: white !important;
+}
 .indexMiniCard.perfilPage .card-title,
-.indexMiniCard.perfilPage .card-text,
-.indexMiniCard.homePage:hover .card-title,
-.indexMiniCard.homePage:hover .card-text {
+.indexMiniCard.perfilPage .card-text{
   color: #BCEBCB !important;
 }
 
@@ -79,11 +92,29 @@ code {
   color: white !important;
 }
 
+.indexMiniCard.homePage .card-footer{
+	background-color: white !important;
+	border-color: #BCEBCB !important;
+
+}
+
 .indexMiniCard.perfilPage .card-footer,
 .indexMiniCard.homePage:hover .card-footer,
 .btnBlue {
-  background-color: #E5B181 !important;
+  background-color: #05668D !important;
   border-color: #DE6B48 !important;
+}
+
+.btnPostForm{
+	background-color: #307C85 !important;
+	border-color: #307C85 !important ;
+	font-weight: 500 !important;
+}
+
+.btnPostForm:hover{
+	background-color: #E5B181 !important;
+	border-color: #E5B181 !important;
+	font-weight: 500 !important;
 }
 
 .indexMiniCard.perfilPage:hover a {
@@ -279,4 +310,13 @@ code {
 
 .white-text {
   color: white;
+}
+
+.about{
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.titleForm{
+	color: #05668D !important;
 }

@@ -183,7 +183,7 @@ class CreatePostForm extends React.Component{
                       <div className="text-muted"><small><i>Puedes subir la imágen en: <a href="https://imgur.com/upload?beta" target="_blank">https://imgur.com/upload?beta</a></i></small></div>
                     </Form.Group>
                     <div><b> * Son campos requeridos </b></div>
-                    <Button variant="primary" type="submit">
+                    <Button className = "btnPostForm" variant="primary" type="submit">
                       Subir
                     </Button>
                   </Form>

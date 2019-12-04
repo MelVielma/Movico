@@ -179,7 +179,7 @@ class CreateUserForm extends React.Component{
                 <Form.Label>About</Form.Label>
                 <Form.Control id="aboutUser" type="text" value={this.state.about} onChange={this.handleChange} required placeholder="Acerca de ti" />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button className = "btnPostForm" variant="primary" type="submit">
                 Submit
               </Button>
             </Form>

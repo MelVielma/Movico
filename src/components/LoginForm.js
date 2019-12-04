@@ -110,7 +110,7 @@ class LoginForm extends React.Component{
                 <Form.Label>Password</Form.Label>
                 <Form.Control required type="password" value={this.state.password} onChange={this.handleChange} placeholder="Contraseña" />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button className = "btnPostForm"  variant="primary" type="submit">
                 Submit
               </Button>
             </Form>

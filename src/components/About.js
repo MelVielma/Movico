@@ -14,8 +14,8 @@ class About extends React.Component{
 
   render() {
       return (
-        <div id="aboutDiv" className="m-4">
-            <p>{this.state.about}</p>
+        <div id="aboutDiv" className="titleForm m-4">
+            <p className="about" >{this.state.about}</p>
         </div>
       );
     }
