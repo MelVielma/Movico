@@ -92,7 +92,7 @@ class PublicationDeck extends React.Component {
 	afterGet(event) {
 		var container = this.refs.container
 		var cards = [];
-		const pubs = this.state.publications;
+		const pubs = this.state.publications.reverse();
 
 		if(pubs < 1){
 			var cards = '';
@@ -109,7 +109,6 @@ class PublicationDeck extends React.Component {
 				cards.push(tempHtml)
 			}
 		}
-		//console.log("**type of cards", typeof(cards))
 		ReactDOM.render(cards, container);
 	}
 

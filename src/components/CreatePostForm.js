@@ -80,7 +80,7 @@ class CreatePostForm extends React.Component{
 
   //Que hacer si hay error en el login
   handleCreateError(err){
-    console.log(err);
+    //console.log(err);
 
     ReactDOM.render(<div /> , this.refs.createPostFormDiv) //Limpiar el div en donde se pondra el asunto
     var err_html = (
@@ -99,7 +99,7 @@ class CreatePostForm extends React.Component{
     var tagsSeparated = this.state.postTags.split(',').map(function(item) {
       return item.trim();
     });
-    console.log("Tags separados: ", tagsSeparated);
+    //console.log("Tags separados: ", tagsSeparated);
     this.setState({ postTags: tagsSeparated });
 
     //Crear headers y body para la peticion al server
@@ -180,6 +180,7 @@ class CreatePostForm extends React.Component{
                     <Form.Group>
                       <Form.Label> Link de multimedia: *</Form.Label>
                       <Form.Control id="post_Media" required type="text" value={this.state.postMultimedia} onChange={this.handleChange} placeholder="Liga a una imágen, video, etc." />
+                      <div className="text-muted"><small><i>Puedes subir la imágen en: <a href="https://imgur.com/upload?beta" target="_blank">https://imgur.com/upload?beta</a></i></small></div>
                     </Form.Group>
                     <div><b> * Son campos requeridos </b></div>
                     <Button variant="primary" type="submit">
