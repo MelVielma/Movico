@@ -49,39 +49,47 @@ code {
 }
 
 .indexMiniCard.homePage {
-  border: 1px solid #115571 !important;
+  border: 2px solid #05668D !important;
 }
 
 .indexMiniCard.perfilPage:hover.cardEnabled .card-title,
 .indexMiniCard.perfilPage:hover.cardEnabled .card-text,
-.indexMiniCard.homePage .card-title, 
-.indexMiniCard.homePage .card-text {
-  color: black !important;
+.indexMiniCard.homePage .card-title{
+  color: #05668D !important;
+}
+
+.indexMiniCard.homePage .card-text{
+	color: black !important;
+}
+
+.indexMiniCard.homePage .linkToPublication{
+	color: #DE6B48 !important;
+	font-weight: 500 !important;
 }
 
 .indexMiniCard.perfilPage,
 .indexMiniCard.perfilPage:hover.cardEnabled .card-footer,
 .indexMiniCard.homePage:hover {
-  background-color: #115571 !important;
+  background-color: #05668D !important;
 }
 
 .indexMiniCard.perfilPage .card-title,
 .indexMiniCard.perfilPage .card-text,
 .indexMiniCard.homePage:hover .card-title, 
 .indexMiniCard.homePage:hover .card-text {
-  color: white !important;
+  color: #BCEBCB !important;
 }
 
 .indexMiniCard.perfilPage .text-muted,
 .indexMiniCard.homePage:hover .text-muted {
-  color: #E9E3B4 !important;
+  color: white !important;
 }
 
 .indexMiniCard.perfilPage .card-footer,
 .indexMiniCard.homePage:hover .card-footer,
 .btnBlue {
-  background-color: #2F7C85 !important;
-  border-color: #2F7C85 !important;
+  background-color: #E5B181 !important;
+  border-color: #DE6B48 !important;
 }
 
 .indexMiniCard.perfilPage:hover a {
@@ -115,42 +123,47 @@ code {
 }
 
 .btnPublicaciones {
-  background-color: #CE8147 !important;
-  border-color: #CE8147 !important;
-  color: white !important;  
+  background-color: #307C85 !important;
+  border-color:  #307C85 !important;
+  color: #edf7f6 !important; 
+  font-weight: bold !important; 
 }
 
 .btnPublicaciones:hover {
-  background-color: #E9E3B4 !important;
-  border-color: #CE8147 !important;
-  color: #CE8147 !important; 
+  background-color: #E5B181 !important;
+  border-color: #E5B181 !important;
+  color: #307C85 !important; 
+  font-weight: bold !important;
 }
 
 .btnSearchNavbar {
-  background-color: #E9E3B4 !important;
-  border-color: #CE8147 !important;
-  color: #CE8147 !important;
+  background-color:  #307C85 !important;
+  border-color:  #307C85 !important;
+  border-width: 1px !important;
+  color:  #BCEBCB !important;
+  font-weight: bold !important;
 }
 
 .btnSearchNavbar:hover {
-  background-color: #CE8147 !important;
-  border-color: #CE8147 !important;
-  color: #E9E3B4 !important;
+  background-color: #E5B181 !important;
+  border-color:  #E5B181 !important;
+  color: #05668D !important;
+  font-weight: bold !important;
 }
 
 .updatePerfil:hover,
 .editPerfil,
 .btnOpcionesAdmin {
-  background-color: white !important;
-  border-color: #CE8147  !important;
-  color: #CE8147 !important;
+  background-color: #DE6B48 !important;
+  border-color: #DE6B48  !important;
+  color: white !important;
 }
 
 .editPerfil:hover,
 .updatePerfil,
 .btnOpcionesAdmin:hover {
-  background-color: #2F7C85 !important;
-  border-color: #CE8147  !important;
+  background-color: #E5B181 !important;
+  border-color: #E5B181  !important;
   color: white !important;
 }
 
@@ -180,7 +193,7 @@ code {
 }
 
 .secondaryColorText {
-  color: #E9E3B4 !important;
+  color: #E5B181 !important;
 }
 
 .tertiaryColorText {
@@ -190,42 +203,44 @@ code {
 .table-row.col-12,
 .centerText {
   text-align: center;
+  
 }
 
 .navbar-custom {
-  background-color: #E9E3B4;
+  background-color: #BCEBCB;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  border-bottom-color: #CE8147;
+  border-bottom-color: #BCEBCB;
 }
 
 .nav-link:hover {
-  background-color: #CE8147 !important;
-  color: #E9E3B4 !important;
+  background-color: #05668D !important;
+  color: #BCEBCB !important;
 }
 
 .nav-pills .show .dropdown-toggle.nav-link {
-  background-color: #CE8147 !important;
-  color: #E9E3B4 !important;
+  background-color: #05668D !important;
+  color: #BCEBCB !important;
 }
 
 .nav-link {
-  color: #CE8147 !important;
+  color: #05668D !important;
+  font-weight: 500;
 }
 
 .nav-link.active {
-  background-color: #CE8147 !important;
+  background-color: #05668D !important;
 }
 
 .dropdown-menu,
 .dropdown-item { 
-  background-color: #E9E3B4 !important; 
-  color: #CE8147 !important;
+  background-color: #BCEBCB !important; 
+  color: #05668D !important;
 }
 
 .dropdown-item:hover {
-  background-color: #CE8147 !important; 
-  color: #E9E3B4 !important;
+  background-color: #05668D !important; 
+  color: #BCEBCB !important;
 }
 
 .table-row {
