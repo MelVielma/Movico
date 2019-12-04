@@ -166,7 +166,7 @@ class SinglePublicationView extends React.Component{
     let dateMonth = 0;
     let dateYear = 0;
     let dateString = new Date();
-    
+
     try {
     dateDay = parseInt(dateTemp[1]);
     dateMonth = parseInt(dateTemp[2])-1;
@@ -209,7 +209,7 @@ class SinglePublicationView extends React.Component{
       this.refPubDate.current.classList.remove('editable-text');
     }
     this.state.isEditable = !this.state.isEditable;
-    
+
     this.afterGet();
   }
 
@@ -235,30 +235,35 @@ class SinglePublicationView extends React.Component{
       isUserLogged = true;
     }
 
+    //Generar ligas de a las etiquetas
+    myPublication.tags = myPublication.tags.map(item => (
+      <a target="_blank" href={`/etiquetas/${item}`} > {item} </a>
+    ));
+
     let singlePublicationHtml = (
-      <Jumbotron className="whiteColorBackground col-md-9 mb-4 justify-content-center">
+      <Jumbotron className="whiteColorBackground col-md-9 py-3 mb-4 justify-content-center">
         <>
         <div className="row col-11 m-0 textJumbo justify-content-center">
           <h1 className="centerText" ref={this.refPubTitle} contentEditable={this.state.isEditable}>{myPublication.title} </h1>
         </div>
         <div className="row col-11 m-0 textJumbo justify-content-center">
           <h5 className="centerText">
-            Realizado por <span ref={this.refPubAuthor} contentEditable={this.state.isEditable}>{myPublication.author} </span> 
+            Realizado por <span ref={this.refPubAuthor} contentEditable={this.state.isEditable}>{myPublication.author} </span>
             el <span ref={this.refPubDate} contentEditable={this.state.isEditable}>{new Date(myPublication.date).toLocaleDateString()} </span>
             para la empresa <span ref={this.refPubBusiness} contentEditable={this.state.isEditable}>{myPublication.business_name}</span>
           </h5>
         </div>
         <div className="row col-11 m-0 textJumbo justify-content-center">
           <h5 className="centerText text-muted">
-            Etiquetas: {myPublication.tags.join(", ")}
+            Etiquetas: {myPublication.tags}
           </h5>
         </div>
         <div className="row col-11 m-0 justify-content-center">
           <div className="row justify-content-center">
-            <img src={myPublication.media} alt={myPublication.title} className="responsive-image" />
+            <img src={myPublication.media} alt={myPublication.title} className="responsive-image mt-3" />
           </div>
           {isEditable ?
-            ( 
+            (
               <div className="row col-11 justify-content-center">
                 <p className="textJumbo editable-text">Link: <span ref={this.refImgSrc} contentEditable={this.state.isEditable}>{myPublication.media}</span></p>
               </div>
@@ -353,12 +358,12 @@ class SinglePublicationView extends React.Component{
           </Modal>
         </div>
             <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
-              <div className="whiteColorBackground row col-md-12 mt-4 ml-0 mr-0 justify-content-center" id="SinglePublicationView" ref="putSinglePubHere">
+              <div className="whiteColorBackground row col-md-12 ml-0 mr-0 justify-content-center" id="SinglePublicationView" ref="putSinglePubHere">
                   <Spinner animation="grow" variant="light" />
               </div>
-            </Animated> 
+            </Animated>
             <CommentsView listComments={comments} isUserLogged={isUserLogged} userTypee={this.state.userTypee}/>
-           
+
           </>
       )
     }

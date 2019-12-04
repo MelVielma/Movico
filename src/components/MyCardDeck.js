@@ -140,7 +140,7 @@ class PublicationDeck extends React.Component {
 			    </Card.Footer>
 			  </a>
 			  </Card>
-			
+
 		)
 		return new_html
 	}
@@ -167,7 +167,7 @@ class PublicationDeck extends React.Component {
 					</Form>
 				</div>
 				<Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={this.state.displayAnimation}>
-					<div ref='container' className="whiteColorBackground indexCardDeck row justify-content-around mx-auto container">
+					<div ref='container' className="whiteColorBackground indexCardDeck row mx-auto container">
 						<Spinner animation="grow" variant="light" />
 					</div>
 				</Animated>
@@ -178,7 +178,7 @@ class PublicationDeck extends React.Component {
 	componentDidMount() {
 		document.body.classList.add("whiteColorBackground")
 		document.getElementsByClassName('App')[0].classList.add("whiteColorBackground")
-		
+
 		if(this.props.tags === '' || this.props.tags === undefined ){
 			//console.log("NO voy a buscar", this.state.tagsToSearch)
 			this.getPublications()
