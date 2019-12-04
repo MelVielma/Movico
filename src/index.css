@@ -1,0 +1,322 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.indexCardComment{
+  margin-right: 16px !important;
+  margin-left: 16px !important;
+  margin-top: 0px !important;
+  margin-bottom: 16px !important;
+}
+
+.indexCardContainer{
+  margin-top:7vh;
+}
+
+.cardTextLimit {
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+.indexMiniCard.perfilPage {
+  border: 1px solid #E9E3B4 !important;
+}
+
+.indexMiniCard.perfilPage:hover.cardEnabled {
+  background-color: #E9E3B4 !important;
+}
+
+.indexMiniCard.perfilPage:hover.cardEnabled .text-muted {
+  color: #CE8147 !important;
+}
+
+.indexMiniCard.homePage {
+  border: 2px solid #BCEBCB !important;
+  border-radius: 5px !important;
+}
+
+.indexMiniCard.perfilPage:hover.cardEnabled .card-title,
+.indexMiniCard.perfilPage:hover.cardEnabled .card-text,
+.indexMiniCard.homePage .card-title{
+  color: #05668D !important;
+}
+
+.indexMiniCard.homePage .card-text{
+	color: black !important;
+}
+
+.indexMiniCard.homePage .linkToPublication{
+	color: #DE6B48 !important;
+	font-weight: 500 !important;
+}
+
+.indexMiniCard.homePage:hover .linkToPublication{
+	color: #BCEBCB !important;
+	font-weight: 500 !important;
+}
+
+
+.indexMiniCard.perfilPage,
+.indexMiniCard.perfilPage:hover.cardEnabled .card-footer,
+.indexMiniCard.homePage:hover {
+  background-color: #05668D !important;
+  border: 2px solid #05668D  !important;
+}
+
+.indexMiniCard.homePage:hover .card-title{
+	color: #E5B181 !important;
+}
+
+.indexMiniCard.homePage:hover .card-text{
+	color: white !important;
+}
+.indexMiniCard.perfilPage .card-title,
+.indexMiniCard.perfilPage .card-text{
+  color: #BCEBCB !important;
+}
+
+.indexMiniCard.perfilPage .text-muted,
+.indexMiniCard.homePage:hover .text-muted {
+  color: white !important;
+}
+
+.indexMiniCard.homePage .card-footer{
+	background-color: white !important;
+	border-color: #BCEBCB !important;
+
+}
+
+.indexMiniCard.perfilPage .card-footer,
+.indexMiniCard.homePage:hover .card-footer,
+.btnBlue {
+  background-color: #05668D !important;
+  border-color: #DE6B48 !important;
+}
+
+.btnPostForm{
+	background-color: #307C85 !important;
+	border-color: #307C85 !important ;
+	font-weight: 500 !important;
+}
+
+.btnPostForm:hover{
+	background-color: #E5B181 !important;
+	border-color: #E5B181 !important;
+	font-weight: 500 !important;
+}
+
+.indexMiniCard.perfilPage:hover a {
+  color: #2F7C85 !important;
+  text-decoration: none !important;
+}
+
+.indexMiniCard.perfilPage a,
+.indexMiniCard.homePage:hover a {
+  color: #CE8147 !important;
+  text-decoration: none !important;
+}
+
+
+
+.reframe {
+  height: 150px;
+  overflow: hidden;
+}
+
+.responsive-image {
+  max-width: 100%;
+}
+
+.primaryColorBackground {
+  background: #115571 !important;
+}
+
+.primaryColorFadeOneBackground {
+  background: #2F7C85 !important;
+}
+
+.btnPublicaciones {
+  background-color: #307C85 !important;
+  border-color:  #307C85 !important;
+  color: #edf7f6 !important; 
+  font-weight: bold !important; 
+}
+
+.btnPublicaciones:hover {
+  background-color: #E5B181 !important;
+  border-color: #E5B181 !important;
+  color: #307C85 !important; 
+  font-weight: bold !important;
+}
+
+.btnSearchNavbar {
+  background-color:  #307C85 !important;
+  border-color:  #307C85 !important;
+  border-width: 1px !important;
+  color:  #BCEBCB !important;
+  font-weight: bold !important;
+}
+
+.btnSearchNavbar:hover {
+  background-color: #E5B181 !important;
+  border-color:  #E5B181 !important;
+  color: #05668D !important;
+  font-weight: bold !important;
+}
+
+.updatePerfil:hover,
+.editPerfil,
+.btnOpcionesAdmin {
+  background-color: #DE6B48 !important;
+  border-color: #DE6B48  !important;
+  color: white !important;
+}
+
+.editPerfil:hover,
+.updatePerfil,
+.btnOpcionesAdmin:hover {
+  background-color: #E5B181 !important;
+  border-color: #E5B181  !important;
+  color: white !important;
+}
+
+.editable-perfil {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #115571;
+}
+
+.secondaryColorBackground {
+  background-color: #E9E3B4 !important;
+}
+
+.tertiaryColorBackground {
+  background-color: #CE8147 !important;
+}
+
+.whiteColorBackground.mb-2,
+.whiteColorBackground {
+  background-color: #EDF7F6 !important;
+  border-color: #EDF7F6 !important;
+}
+
+
+.primaryColorText {
+  color: #2F7C85 !important;
+}
+
+.secondaryColorText {
+  color: #E5B181 !important;
+}
+
+.tertiaryColorText {
+  color: #CE8147 !important;
+}
+
+.table-row.col-12,
+.centerText {
+  text-align: center;
+  
+}
+
+.navbar-custom {
+  background-color: #BCEBCB;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #BCEBCB;
+}
+
+.nav-link:hover {
+  background-color: #05668D !important;
+  color: #BCEBCB !important;
+}
+
+.nav-pills .show .dropdown-toggle.nav-link {
+  background-color: #05668D !important;
+  color: #BCEBCB !important;
+}
+
+.nav-link {
+  color: #05668D !important;
+  font-weight: 500;
+}
+
+.nav-link.active {
+  background-color: #05668D !important;
+}
+
+.dropdown-menu,
+.dropdown-item { 
+  background-color: #BCEBCB !important; 
+  color: #05668D !important;
+}
+
+.dropdown-item:hover {
+  background-color: #05668D !important; 
+  color: #BCEBCB !important;
+}
+
+.table-row {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #CE8147;
+}
+
+.editable-text,
+.last-row {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #CE8147;
+}
+
+.perfil-row {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #CE8147;
+}
+
+.searchTagContainer {
+  flex: 1;
+  flexDirection: row;
+  justifyContent: flex-end;
+  alignItems: center;
+}
+
+.textJumbo {
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+#SinglePublicationView .jumbotron > div {
+  margin: auto !important;
+  justify-content: center !important;
+}
+
+.perfil-subtitle{
+  margin-top: -5px;
+}
+
+.white-text {
+  color: white;
+}
+
+.about{
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.titleForm{
+	color: #05668D !important;
+}

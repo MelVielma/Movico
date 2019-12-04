@@ -1,0 +1,27 @@
+.App {
+  text-align: left;
+  background-color: white;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  margin-top: 5vh;
+  min-height: 62vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+#NavigationBar{
+  height: 56px;
+}
