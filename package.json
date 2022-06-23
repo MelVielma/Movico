@@ -11,7 +11,7 @@
     "cors": "^2.8.5",
     "create-react-class": "^15.6.3",
     "express": "^4.17.1",
-    "jsdom": "^15.2.0",
+    "jsdom": "^16.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.6",
     "react": "16.10.2",
