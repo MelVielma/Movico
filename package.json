@@ -12,7 +12,7 @@
     "create-react-class": "^15.6.3",
     "express": "^4.17.1",
     "jsdom": "^15.2.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.7.6",
     "react": "16.10.2",
     "react-animated-css": "^1.2.1",
